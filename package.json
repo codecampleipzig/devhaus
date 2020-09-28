@@ -6,7 +6,10 @@
     "install:frontend": "cd frontend && yarn install",
     "postinstall": "yarn install:functions && yarn install:frontend",
     "start:emulators": "firebase emulators:start",
-    "start:frontend": "cd frontend && yarn serve"
+    "start:frontend": "cd frontend && yarn serve",
+    "lint:functions": "cd functions && yarn lint --fix",
+    "lint:frontend": "cd frontend && yarn lint --fix",
+    "lint": "yarn lint:functions && yarn lint:frontend"
   },
   "devDependencies": {
     "eslint": "7.2.0",
