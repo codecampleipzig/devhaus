@@ -5,5 +5,8 @@ module.exports = {
     ecmaVersion: 2017,
   },
   extends: 'airbnb',
-  rules: {},
+  rules: {
+    eqeqeq: 0,
+    'comma-dangle': ['error', 'always-multiline'],
+  },
 };
