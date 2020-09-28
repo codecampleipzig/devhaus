@@ -1,0 +1,11 @@
+{
+  "name": "devhaus",
+  "version": "1.0.0",
+  "scripts": {
+    "install:functions": "cd functions && yarn install",
+    "install:frontend": "cd frontend && yarn install",
+    "postinstall": "yarn install:functions && yarn install:frontend",
+    "start:emulators": "firebase emulators:start",
+    "start:frontend": "cd frontend && yarn serve"
+  }
+}
