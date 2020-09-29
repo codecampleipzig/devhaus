@@ -76,7 +76,6 @@ export default {
 
 nav {
   top: 0;
-
   padding: 2rem;
   width: 100%;
   position: fixed;
@@ -96,8 +95,4 @@ nav {
   color: red;
 }
 
-.title {
-  margin: 10rem;
-  font-size: 30px;
-}
 </style>

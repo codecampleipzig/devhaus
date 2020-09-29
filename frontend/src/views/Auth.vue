@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">
+    <div class="m-40 text-3xl">
       <h1>Auth</h1>
     </div>
   </div>
