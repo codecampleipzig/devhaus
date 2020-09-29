@@ -6,12 +6,13 @@ import Auth from '../views/Auth.vue';
 import EditProfile from '../views/EditProfile.vue';
 import Community from '../views/Community.vue';
 import Profile from '../views/Profile.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/auth',
+    path: '/auth/:mode',
     name: 'Auth',
     component: Auth,
   },
@@ -39,7 +40,6 @@ const routes = [
         name: 'EditProfile',
         component: EditProfile,
       },
-
     ],
   },
 ];
@@ -48,6 +48,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name == 'Home' && store.state.user == null) {
+    next('/auth/signin');
+  } else {
+    next();
+  }
 });
 
 export default router;

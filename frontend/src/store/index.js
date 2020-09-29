@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import CreatePersistedState from 'vuex-persistedstate';
+import { vuexFireMutations } from 'vuexfire';
 
 Vue.use(Vuex);
 
@@ -8,8 +10,11 @@ let lastUsedId = 0;
 export default new Vuex.Store({
   state: {
     notifications: [],
+    user: null,
   },
+  plugins: [CreatePersistedState()],
   mutations: {
+    ...vuexFireMutations,
     PUSH_NOTIFICATION(state, notification) {
       state.notifications.push(notification);
     },
@@ -17,6 +22,9 @@ export default new Vuex.Store({
       state.notifications = state.notifications.filter(
         (notification) => notification.id != notificationToRemove.id,
       );
+    },
+    SET_USER(state, user) {
+      state.user = user;
     },
   },
   actions: {
