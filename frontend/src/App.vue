@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="app">
+    <router-view />
     <div class="button-container">
       <button @click="notify({type: 'info', text:'You have been notified!!!'})">Notify Me!!</button>
       <button @click="notify({type: 'error', text:'You have been errored!!!'})">Error Me!!!</button>
@@ -71,5 +72,32 @@ export default {
 
 .fade-leave-to {
   transform: translateX(-100%);
+}
+
+nav {
+  top: 0;
+  margin: 0 2rem;
+  padding: 2rem;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: black;
+  color: white;
+  font-size: 30px;
+}
+
+.link {
+  text-decoration-line: none;
+  color: white;
+}
+
+.link:hover {
+  color: red;
+}
+
+.title {
+  margin: 10rem;
+  font-size: 30px;
 }
 </style>
