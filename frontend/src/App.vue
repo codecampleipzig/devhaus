@@ -50,7 +50,6 @@ export default {
 .button-container {
   position: fixed;
   bottom: 0;
-  padding:
 }
 
 .notification-container {
