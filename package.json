@@ -11,7 +11,11 @@
     "start:frontend": "cd frontend && yarn serve",
     "lint:functions": "cd functions && yarn lint --fix",
     "lint:frontend": "cd frontend && yarn lint --fix",
-    "lint": "yarn lint:functions && yarn lint:frontend"
+    "lint": "yarn lint:functions && yarn lint:frontend",
+    "test:e2e": "cd frontend && yarn test:e2e",
+    "test:unit": "cd frontend && yarn test:unit",
+    "test:ci": "yarn test:unit && yarn test:e2e --headless",
+    "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {
     "eslint": "7.2.0",
