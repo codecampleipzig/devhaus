@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <h1 class="text-red-600">Hello DevHaus</h1>
+    <h1 class="text-red-600">
+      Hello DevHaus
+    </h1>
   </div>
 </template>
 
