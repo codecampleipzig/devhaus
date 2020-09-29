@@ -3,7 +3,7 @@
     <nav>
     <router-link class="link" :to="{ name: 'Home'}">Home</router-link>
     <router-link class="link" :to="{ name: 'Profile'}">Profile</router-link>
-    <router-link class="link" :to="{ name: 'Edit Profile'}">Edit Profile</router-link>
+    <router-link class="link" :to="{ name: 'EditProfile'}">Edit Profile</router-link>
     <router-link class="link" :to="{ name: 'Community'}">Community</router-link>
     <router-link class="link" :to="{ name: 'Auth'}">Logout</router-link>
     </nav>

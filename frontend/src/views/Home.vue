@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style scoped>
-
+h1 {
+  margin: 10rem;
+  font-size: 30px;
+}
 </style>

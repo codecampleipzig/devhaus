@@ -27,7 +27,4 @@ nav {
   color: red;
 }
 
-h1 {
-  margin: 10rem;
-}
 </style>
