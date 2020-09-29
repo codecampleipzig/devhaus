@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.fixAll": true }
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.fixAll": true }
+  },
+  "eslint.format.enable": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }]
+}
