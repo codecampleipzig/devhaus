@@ -1,15 +1,65 @@
 export default [
-  {
-    profileName: I-ssah,
-    FirstName: Issah,
-    LastName: Yussif,
-    Email: "chemical@gmail.com" ,
-    profilePicture: null,
-    Links: "https/github.com/i-ssah",
-    Password: Lotta123,
-    Role: Admin,
-    userClass: Class 3,
-    mentorToggle: False,
-    userLanguages: Python
-  }
+    {
+        profileId: () ,
+        profileName: I-ssah,
+        FirstName: Issah,
+        LastName: Yussif,
+        Email: "chemical@gmail.com" ,
+        profilePicture: null,
+        Links: ["https/github.com/i-ssah"],
+        Password: Lotta123,
+        Role: Admin,
+        userClass: Class3 ,
+        mentorToggle: False,
+        userLanguages: [Python, JavaScript],
+        //profficiency??
+        currentProjects: null,
+        // Last login, implement now or for next sprint??
+    },
+    {
+        profileId: () ,
+        profileName: Franzi,
+        FirstName: Franciska,
+        LastName: Ingrid,
+        Email: "HanniIngrid@gmail.com" ,
+        profilePicture: null,
+        Links: ["https/github.com/Hanni-Ingrid"],
+        Password: Lotta123,
+        Role: User,
+        userClass: Class1 ,
+        mentorToggle: True,
+        userLanguages: [HTML, JavaScript],
+        currentProjects: Finder,
+        },
+        {
+        profileId: () ,
+        profileName: Mathias,
+        FirstName: Mathias,
+        LastName: Fidel,
+        Email: "mathias.fidel@gmail.com" ,
+        profilePicture: null,
+        Links: ["https/github.com/mfidel"],
+        Password: Lotta123,
+        Role: User,
+        userClass: Class3 ,
+        mentorToggle: True,
+        userLanguages: [Python, JavaScript, C++ , Vue, C, HTML, CSS, COBOL, LOLCODE],
+        currentProjects: null,
+        }
+        {
+        profileId: () ,
+        profileName: "Breaking Bad",
+        FirstName: Mou,
+        LastName: Dilmi,
+        Email: "walter.white@gmail.com" ,
+        profilePicture: null,
+        Links: ["https/github.com/mfidel"],
+        Password: femaleDog,
+        Role: User,
+        userClass: Class3 ,
+        mentorToggle: False,
+        userLanguages: [Python, JavaScript, C++ , Vue, C, HTML, CSS, COBOL, LOLCODE],
+        currentProjects: null,
+        }
 ];
+
