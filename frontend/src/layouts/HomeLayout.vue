@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="top-0 right-0 left-0 p-8 flex justify-evenly bg-black text-white text-3xl">
+    <nav class="top-0 right-0 left-0 p-8 flex justify-evenly bg-teal-100 text-blue-900 text-3xl">
       <router-link :to="{ name: 'Home'}">
         Home
       </router-link>
