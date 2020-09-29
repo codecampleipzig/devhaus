@@ -38,6 +38,11 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@posva/vuefire-core@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@posva/vuefire-core/-/vuefire-core-2.3.3.tgz#b22bcbd6cff89e0b1d5a122c82b40fc19d7128d8"
+  integrity sha512-mF5kyswrEd/+ZwTVFxaGoU4vCQ5G8aXHH83+VJerbjqYrh5p7BJURcGntpJR63ajvvK9IaFJMthyymAgICjkow==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -1500,6 +1505,20 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+vuefire@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/vuefire/-/vuefire-2.2.4.tgz#055138e01caf1b4cb8defb0dd2ef351a2190f9bc"
+  integrity sha512-f2NuSAH8bjbYJz1E8Bu9fVJVxbYwMrMp/9zowyRZi31JaWZc/eYYXqmTWB3y7cANFtWfTUXWlHNc1M//ZuH5iQ==
+  dependencies:
+    "@posva/vuefire-core" "^2.3.3"
+
+vuexfire@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/vuexfire/-/vuexfire-3.2.4.tgz#3754380f65f83a087d7547e7d350e987f7294db3"
+  integrity sha512-h72fK2VRppNtrn8aAKmc3ayIvEa6AElKfI/oa9Cn01JJv7xD+EFAufo+luyASZdBc+8OxxZ53oMTz1QnZCLt3g==
+  dependencies:
+    "@posva/vuefire-core" "^2.3.3"
 
 which@^2.0.1:
   version "2.0.2"

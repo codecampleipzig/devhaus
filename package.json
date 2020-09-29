@@ -25,5 +25,8 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "4.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vuefire": "^2.2.4",
+    "vuexfire": "^3.2.4"
+  }
 }
