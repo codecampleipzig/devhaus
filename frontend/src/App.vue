@@ -50,24 +50,7 @@ export default {
 }
 
 nav {
-  top: 0;
-  padding: 2rem;
-  width: 100%;
   position: fixed;
-  display: flex;
-  justify-content: space-evenly;
-  background-color: black;
-  color: white;
-  font-size: 30px;
-}
-
-.link {
-  text-decoration-line: none;
-  color: white;
-}
-
-.link:hover {
-  color: red;
 }
 
 </style>
