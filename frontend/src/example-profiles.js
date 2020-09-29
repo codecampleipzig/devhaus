@@ -1,15 +1,15 @@
 export default [
   {
-    profileName: null,
-    userFirstName: null,
-    userLastName: null,
-    userEmail: null,
+    profileName: I-ssah,
+    FirstName: Issah,
+    LastName: Yussif,
+    Email: "chemical@gmail.com" ,
     profilePicture: null,
-    profileLinks: null,
-    userPassword: null,
-    userRole: null,
-    userClass: null,
-    mentorToggel: null,
-    userLanguages: null
+    Links: "https/github.com/i-ssah",
+    Password: Lotta123,
+    Role: Admin,
+    userClass: Class 3,
+    mentorToggle: False,
+    userLanguages: Python
   }
 ];
