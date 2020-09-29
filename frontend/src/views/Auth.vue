@@ -3,6 +3,7 @@
     <div class="m-40 text-3xl">
       <button @click="$router.push('/auth/signin')">Sign In</button>
       <button @click="$router.push('/auth/signup')">Sign Up</button>
+      <button @click="logout">Logout</button>
       <h1>{{ modeTitle }}</h1>
 
       <form @submit.prevent="submit">
@@ -55,6 +56,7 @@ export default {
           await auth.signInWithEmailAndPassword(this.email, this.password);
           this.email = '';
           this.password = '';
+          this.$router.push('/');
         } catch (error) {
           this.error = 'Invalid email or password.';
         }
@@ -67,7 +69,6 @@ export default {
           this.error = 'User already exists!';
         }
       }
-      this.$router.push('/');
     },
     async gitLogin() {
       const provider = new firebase.auth.GithubAuthProvider();
@@ -82,6 +83,9 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    logout() {
+      auth.signOut();
     },
   },
   computed: {

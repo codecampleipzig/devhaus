@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import { auth } from 'firebase';
 import HomeLayout from '../layouts/HomeLayout.vue';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
@@ -24,21 +25,25 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
+        meta: { requiresAuth: true },
       },
       {
         path: '/community',
         name: 'Community',
         component: Community,
+        meta: { requiresAuth: true },
       },
       {
         path: '/profile',
         name: 'Profile',
         component: Profile,
+        meta: { requiresAuth: true },
       },
       {
         path: '/edit-profile',
         name: 'EditProfile',
         component: EditProfile,
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -51,8 +56,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name == 'Home' && store.state.user == null) {
-    next('/auth/signin');
+  if (to.meta.requiresAuth && store.state.user == null) {
+    next({ name: 'Auth', params: { mode: 'signin' } });
   } else {
     next();
   }
