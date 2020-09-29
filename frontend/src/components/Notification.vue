@@ -1,5 +1,9 @@
 <template>
-  <div class="notification" :class="`notification-${type}`" @click="$emit('remove')">
+  <div
+    class="notification"
+    :class="`notification-${type}`"
+    @click="$emit('remove')"
+  >
     <h1>This is a Notification</h1>
     <p>{{ text }}</p>
   </div>
