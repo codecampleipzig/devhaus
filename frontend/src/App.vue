@@ -27,4 +27,8 @@ nav {
   color: red;
 }
 
+.title {
+  margin: 10rem;
+  font-size: 30px;
+}
 </style>

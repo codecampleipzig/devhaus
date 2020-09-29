@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="text-red-600">Hello DevHaus</h1>
+    <div class="title">
+      <h1 class="text-red-600">Hello DevHaus</h1>
+    </div>
   </div>
 </template>
 
@@ -11,8 +13,5 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  margin: 10rem;
-  font-size: 30px;
-}
+
 </style>
