@@ -1,6 +1,6 @@
 <template>
   <div
-    class="notification"
+    class="p-4 text-center"
     :class="`notification-${type}`"
     @click="$emit('remove')"
   >
@@ -27,10 +27,6 @@ export default {
 </script>
 
 <style scoped>
-.notification {
-  padding: 1rem;
-  text-align: center;
-}
 
 .notification-info {
   background-color: #44CB8F;
