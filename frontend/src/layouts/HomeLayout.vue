@@ -1,11 +1,11 @@
 <template>
   <div>
     <nav>
-    <router-link class="link" to="/">Home</router-link>
-    <router-link class="link" to="/profile">Profile</router-link>
-    <router-link class="link" to="/edit-profile">Edit Profile</router-link>
-    <router-link class="link" to="/community">Community</router-link>
-    <router-link class="link" to="/auth">Logout</router-link>
+    <router-link class="link" :to="{ name: 'Home'}">Home</router-link>
+    <router-link class="link" :to="{ name: 'Profile'}">Profile</router-link>
+    <router-link class="link" :to="{ name: 'Edit Profile'}">Edit Profile</router-link>
+    <router-link class="link" :to="{ name: 'Community'}">Community</router-link>
+    <router-link class="link" :to="{ name: 'Auth'}">Logout</router-link>
     </nav>
     <router-view></router-view>
   </div>
