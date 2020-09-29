@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .button-container {
   position: fixed;
   bottom: 0;
@@ -76,7 +76,7 @@ export default {
 
 nav {
   top: 0;
-  margin: 0 2rem;
+
   padding: 2rem;
   width: 100%;
   position: fixed;
