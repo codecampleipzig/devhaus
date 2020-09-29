@@ -7,13 +7,7 @@ let lastUsedId = 0;
 
 export default new Vuex.Store({
   state: {
-    notifications: [
-      {
-        id: 255,
-        type: 'info',
-        text: 'Hello from the store',
-      },
-    ],
+    notifications: [],
   },
   mutations: {
     PUSH_NOTIFICATION(state, notification) {
