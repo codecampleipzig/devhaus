@@ -1,5 +1,9 @@
 <template>
-  <div class="notification" :class="`notification-${type}`" @click="$emit('remove')">
+  <div
+    class="p-4 text-center"
+    :class="`notification-${type}`"
+    @click="$emit('remove')"
+  >
     <h1>This is a Notification</h1>
     <p>{{ text }}</p>
   </div>
@@ -23,10 +27,6 @@ export default {
 </script>
 
 <style scoped>
-.notification {
-  padding: 1rem;
-  text-align: center;
-}
 
 .notification-info {
   background-color: #44CB8F;

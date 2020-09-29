@@ -18,15 +18,5 @@
     "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {
-    "eslint": "7.2.0",
-    "eslint-config-airbnb": "18.2.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jsx-a11y": "^6.3.0",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "4.0.0"
-  },
-  "dependencies": {
-    "vuefire": "^2.2.4",
-    "vuexfire": "^3.2.4"
   }
 }

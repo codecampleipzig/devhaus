@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-   <Notifications />
+    <Notifications />
   </div>
 </template>
 
@@ -9,23 +9,19 @@
 import Notifications from '@/components/Notifications.vue';
 
 export default {
+  name: 'App',
+  components: {
+    Notifications,
+  },
   data() {
     return {
       notificationType: 'info',
     };
-  },
-  name: 'App',
-  components: {
-    Notifications,
   },
 
 };
 </script>
 
 <style>
-
-nav {
-  position: fixed;
-}
 
 </style>

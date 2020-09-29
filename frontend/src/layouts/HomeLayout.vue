@@ -8,7 +8,7 @@
     <button @click="logout">Logout</button>
     <!-- <router-link to="/auth/signin">Logout</router-link> -->
     </nav>
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 

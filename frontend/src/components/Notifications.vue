@@ -1,10 +1,14 @@
 <template>
   <div>
- <div class="button-container">
-      <button @click="notify({type: 'info', text:'You have been notified!!!'})">Notify Me!!</button>
-      <button @click="notify({type: 'error', text:'You have been errored!!!'})">Error Me!!!</button>
+    <div class="fixed bottom-0 mb-1 z-50">
+      <button @click="notify({type: 'info', text:'You have been notified!!!'})">
+        Notify Me!!
+      </button>
+      <button @click="notify({type: 'error', text:'You have been errored!!!'})">
+        Error Me!!!
+      </button>
     </div>
-    <div class="notification-container">
+    <div class="fixed bottom-0 left-0 w-full z-40">
       <transition-group name="fade">
         <Notification
           v-for="notification in notifications"
@@ -43,14 +47,6 @@ export default {
 .button-container {
   position: fixed;
   bottom: 4;
-}
-
-.notification-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
 }
 
 .fade-enter-active,
