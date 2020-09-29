@@ -12,6 +12,7 @@
     "lint": "yarn lint:functions && yarn lint:frontend",
     "test:e2e": "cd frontend && yarn test:e2e",
     "test:unit": "cd frontend && yarn test:unit",
+    "test:ci": "yarn test:unit && yarn test:e2e --headless",
     "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {
