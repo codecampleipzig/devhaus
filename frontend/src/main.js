@@ -1,13 +1,21 @@
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+  faCoffee, faSpinner, faEdit, faCircle, faCheck,
+  faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
+} from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import './assets/tailwind.css';
 
-library.add(faCoffee);
+library.add(
+  faCoffee, faSpinner, faEdit, faCircle, faCheck,
+  faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
+);
+
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
