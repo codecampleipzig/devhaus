@@ -2,3 +2,7 @@
 # yarn lockfile v1
 
 
+"@iconify/icons-jam@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-jam/-/icons-jam-1.0.5.tgz#fc3fac1a6163cefb68a9bd31531df22bf7825416"
+  integrity sha512-S48G7bmEzj+FCuYtq4syreiPB181T92gyMZ0z1mQedf/5Gg+GfLl0Jtuldi/rmJKEkRbftZX9RuValUFpnLTrQ==

@@ -14,7 +14,7 @@
       </router-link>
       <input
         type="text"
-        placeholder="...search"
+        placeholder="...Search"
       >
       <router-link :to="{ name: 'EditProfile'}">
         Edit Profile

@@ -1,68 +1,56 @@
 <template>
-  <div>
-    <div class="cards">
-      <div class="info-card">
-        <h2>Michaela Pearson</h2>
+  <div class="profile-page">
+    <section class="name">
+      <div class="profile-picture" />
+      <div class="info">
+        <h1>John Doe</h1>
         <p class="role">
           Class #3 Alumni
         </p>
-        <p>Interested in CSS animation, database structures, and cloud services!</p>
+
         <a
           href="github.com/mnapearson"
           class="github"
-        >Fork me on GitHub</a> |
-        <a
-          href="kedin.com/in/michaela-pearson-58643260/"
-          class="linkedin"
-        >Add me on LinkedIn
-        </a>
+        >Fork me on GitHub</a>
       </div>
-      <div class="about-card">
-        <h2>About Me</h2>
-        <p>Job Title: Fullstack Web Developer</p>
-        <p>Company: Artsy</p>
-        <p>Programming since: 2020</p>
-        <p>Knowledge of: CSS, JS, Vue, Firebase</p>
-        <p>Hobbies: Writing, painting, walking</p>
-        <p />
+    </section>
+    <section class="middle">
+      <div class="about-info">
+        <h2>About</h2>
+        <h3>Question?</h3>
+        <p>Answer</p>
+        <h3>Question?</h3>
+        <p>Answer</p>
       </div>
-
-      <div class="projects-card">
+      <div class="project-info">
         <h2>Recent Projects</h2>
-        <h3>Celestial Weather</h3>
+        <h3>Project Title</h3>
         <p>
-          A weather update, making API calls to various sources
-          and providing daily horoscope information.
+          Project description
         </p>
-        <a href="celestial-weather.netlify.app">check it out</a>
-        <h3>Zen Cal </h3>
-        <p>
-          A Calendar with task/event adding.  Using
-          firebase for authentication and data storage.
-        </p><a href="zencal-b5217.web.app">check it out</a>
+        <div class="project-website">
+          <a href="celestial-weather.netlify.app">Website</a>
+        </div>
+        <div class="project-github">
+          <a href="https://github.com/mnapearson/celestial-weather">View on Github</a>
+        </div>
       </div>
-      <div class="contact-card">
-        <h2>Contact Me</h2>
+    </section>
+    <section class="contact">
+      <div class="contact-form">
+        <h2>Contact</h2>
         <div class="contact-input">
           <textarea
             id="message"
             name="message"
-            cols="30"
-            rows="10"
-            placeholder="write your message..."
+            cols="50"
+            rows="8"
+            placeholder="Your message..."
           />
-          <input
-            type="text"
-            placeholder="insert link"
-          >
-          <input
-            type="text"
-            placeholder="attach documents"
-          >
-          <button>Send</button>
         </div>
+        <button>Send</button>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -74,13 +62,30 @@ export default {
 
 <style scoped>
 
-.cards {
-  margin: 3rem;
+h1 {
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+color: #2E354F;
+text-decoration-line: underline;
+
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+h3 {
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+color: #2E354F;
+
 }
 
 p {
-  font-size: 20px;
-  margin: .5rem 0;
+  font-size: 18px;
   color: #2E354F
 }
 
@@ -89,73 +94,70 @@ a {
   color: #2E354F
 }
 
-.info-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 450px;
-  max-height: 250px;
-  text-align: left;
-  padding: 1rem;
-  background-color: #FFF7F4;
-
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-h2 {
-  font-size: 30px;
- text-align: center;
-  color: #2E354F
+.middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
-.about-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 450px;
-  max-height: 300px;
-  text-align: left;
-  padding: 1rem;
-  background-color: #FFF7F4;
+.name {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  justify-content: center;
 }
 
-h3 {
-  margin-top: 1rem;
-  font-size: 24px;
-  color: #2E354F
+.profile-picture {
+margin: 1rem;
+width: 160px;
+height: 160px;
+left: 374px;
+top: 114px;
+border: 1px solid #000000;
+box-sizing: border-box;
 }
 
-.projects-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 450px;
-  text-align: left;
-  padding: 1rem;
-  background-color: #FFF7F4;
-}
-
-.contact-card {
+.contact{
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 450px;
   padding: 1rem;
-  background-color: #FFF7F4;
   align-content: center;
 }
 
 .contact-input {
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  border: solid 1px black;
   padding: 1rem;
-}
-
-input {
-  padding: .5rem;
-  margin: 1rem;
 }
 
 button {
   color: #2E354F;
   font-weight: 500;
   border: solid 1px;
-
+  padding: .5rem 2rem;
 }
 
+.project-website {
+  margin: 1rem;
+  border: solid 1px;
+  padding: .5rem;
+  text-align: center;
+  max-width: 100px;
+}
+.project-github {
+  margin: 1rem;
+  border: solid 1px;
+  padding: .5rem;
+  text-align: center;
+  max-width: 150px;
+}
 </style>

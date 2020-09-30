@@ -17,6 +17,8 @@
     "test:ci": "yarn test:unit && yarn test:e2e --headless",
     "test": "yarn test:unit && yarn test:e2e"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "@iconify/icons-jam": "^1.0.5"
   }
 }
