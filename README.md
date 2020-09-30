@@ -23,13 +23,13 @@ The application runs a backend server on fire stack for the data storage and aut
 ### start emulators
 
 ```bash
-yarn start
+yarn start:emulators
 ```
 
 ### start frontend
 
 ```bash
-yarn serve
+yarn start:frontend
 ```
 
 ### front awesome
