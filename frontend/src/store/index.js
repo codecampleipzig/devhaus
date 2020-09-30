@@ -1,7 +1,9 @@
+import { auth } from '@/firebase';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import CreatePersistedState from 'vuex-persistedstate';
 import { vuexFireMutations } from 'vuexfire';
+import router from '@/router';
 
 Vue.use(Vuex);
 
@@ -41,6 +43,15 @@ export default new Vuex.Store({
       setTimeout(() => {
         commit('REMOVE_NOTIFICATION', notification);
       }, 5000);
+    },
+    async logout() {
+      await auth.signOut();
+      router.push({
+        name: 'Auth',
+        params: {
+          mode: 'signin',
+        },
+      });
     },
   },
   modules: {},

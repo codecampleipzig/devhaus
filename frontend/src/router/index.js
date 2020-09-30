@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import { auth } from 'firebase';
 import HomeLayout from '../layouts/HomeLayout.vue';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';

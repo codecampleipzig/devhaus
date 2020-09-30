@@ -1,36 +1,50 @@
 <template>
   <div>
     <div class="m-40 text-3xl">
-      <button @click="$router.push('/auth/signin')">Sign In</button>
-      <button @click="$router.push('/auth/signup')">Sign Up</button>
-      <button @click="logout">Logout</button>
+      <router-link :to="{name: 'Auth', params: {mode: 'signin'}}">
+        Sign In
+      </router-link>
+      <router-link :to="{name: 'Auth', params: {mode: 'signup'}}">
+        Sign Up
+      </router-link>
+      <button @click="$store.dispatch('logout')">
+        Logout
+      </button>
       <h1>{{ modeTitle }}</h1>
 
       <form @submit.prevent="submit">
         <input
-        type="text"
-        placeholder="Email"
-        v-model="email"
-        required
+          v-model="email"
+          type="text"
+          placeholder="Email"
+          required
         >
         <input
-        type="password"
-        placeholder="Password"
-        v-model="password"
-        required
+          v-model="password"
+          type="password"
+          placeholder="Password"
+          required
         >
 
-        <input type="submit" :value="modeTitle">
+        <input
+          type="submit"
+          :value="modeTitle"
+        >
       </form>
-      <h4 v-if="error">{{ error }}</h4>
+      <h4 v-if="error">
+        {{ error }}
+      </h4>
       <button>Sign Up with GitHub</button>
 
       <button
-      @click="gitLogin"
-      >Sign In with GitHub</button>
+        @click="gitLogin"
+      >
+        Sign In with GitHub
+      </button>
 
-      <p v-if="$store.state.user">{{$store.state.user.email}}</p>
-
+      <p v-if="$store.state.user">
+        {{ $store.state.user.email }}
+      </p>
     </div>
   </div>
 </template>
@@ -49,6 +63,15 @@ export default {
       error: null,
     };
   },
+  computed: {
+    ...mapState(['user']),
+    mode() {
+      return this.$route.params.mode;
+    },
+    modeTitle() {
+      return this.mode == 'signup' ? 'Sign Up' : 'Sign In';
+    },
+  },
   methods: {
     async submit() {
       if (this.mode == 'signin') {
@@ -56,7 +79,7 @@ export default {
           await auth.signInWithEmailAndPassword(this.email, this.password);
           this.email = '';
           this.password = '';
-          this.$router.push('/');
+          this.$router.push({ name: 'Home' });
         } catch (error) {
           this.error = 'Invalid email or password.';
         }
@@ -65,6 +88,7 @@ export default {
           await auth.createUserWithEmailAndPassword(this.email, this.password);
           this.email = '';
           this.password = '';
+          this.$router.push({ name: 'Home' });
         } catch (error) {
           this.error = 'User already exists!';
         }
@@ -74,10 +98,7 @@ export default {
       const provider = new firebase.auth.GithubAuthProvider();
       try {
         await firebase.auth().signInWithPopup(provider).then((result) => {
-          // const token = result.credential.accessToken;
-          // const { user } = result;
           this.email = result.credential.email;
-          console.log(result);
           this.$router.replace('home');
         });
       } catch (error) {
@@ -86,15 +107,6 @@ export default {
     },
     logout() {
       auth.signOut();
-    },
-  },
-  computed: {
-    ...mapState(['user']),
-    mode() {
-      return this.$route.params.mode;
-    },
-    modeTitle() {
-      return this.mode == 'signup' ? 'Sign Up' : 'Sign In';
     },
   },
 };

@@ -44,10 +44,6 @@ export default {
 </script>
 
 <style scoped>
-.button-container {
-  position: fixed;
-  bottom: 4;
-}
 
 .fade-enter-active,
 .fade-leave-active {
