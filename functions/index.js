@@ -24,7 +24,7 @@ exports.sendTestEmail = functions.https.onRequest((request, response) => {
       response.send(error);
     }
     console.log('Message sent: %s', info.messageId);
-    response.send("Message sent: %s', info.messageId");
+    response.send('Email has been sent!');
   });
 });
 // Create and Deploy Your First Cloud Functions
