@@ -58,9 +58,11 @@ export default {
   name: 'Auth',
   data() {
     return {
+      error: null,
+
       email: null,
       password: null,
-      error: null,
+
     };
   },
   computed: {
@@ -83,12 +85,13 @@ export default {
         } catch (error) {
           this.error = 'Invalid email or password.';
         }
-      } else {
+      }
+      if (this.mode == 'signup') {
         try {
           await auth.createUserWithEmailAndPassword(this.email, this.password);
           this.email = '';
           this.password = '';
-          this.$router.push({ name: 'Home' });
+          this.$router.push({ name: 'Register' });
         } catch (error) {
           this.error = 'User already exists!';
         }
@@ -104,9 +107,6 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    },
-    logout() {
-      auth.signOut();
     },
   },
 };
