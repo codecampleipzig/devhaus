@@ -75,18 +75,6 @@ export default {
       return this.profiles.find((profile) => profile.userId == profileUID);
     },
   },
-  methods: {
-  //   getProfileInfo() {
-  //     db.collection('profiles')
-  //       .where('userId', '==', profileUID)
-  //       .get()
-  //       .then((querySnapshot) => {
-  //         this.profileInfo.firstName = querySnapshot.docs[0].data().firstName;
-  //         this.profileInfo.lastName = querySnapshot.docs[0].data().lastName;
-  //         this.profileInfo.classNumber = querySnapshot.docs[0].data().classNumber;
-  //       });
-  //   },
-  },
 };
 </script>
 
