@@ -2,9 +2,14 @@
   <div>
     <div class="m-40 text-3xl">
       <h1>Community</h1>
+      <input
+        v-model="search"
+        type="text"
+        class="bg-gray-600"
+      >
       <div
-        v-for="(profile, index) in profiles"
-        :key="index"
+        v-for="profile in results"
+        :key="profile.id"
         class="profiles"
       >
         <div class="profile">
@@ -29,14 +34,40 @@
 
 <script>
 import exampleProfiles from '@/example-profiles';
+import Fuse from 'fuse.js';
 
 export default {
   name: 'Community',
   data() {
     return {
+      fuse: null,
       profiles: exampleProfiles,
-
+      search: '',
     };
+  },
+  computed: {
+    results() {
+      if (!this.fuse || this.search == '') {
+        return this.profiles;
+      }
+      return this.fuse.search(this.search.trim()).map((result) => result.item);
+    },
+  },
+  // watch: {
+  //   search() {
+  //     if (this.search.trim() === '') {
+  //       this.result = this.profiles;
+  //     } else {
+  //       this.result = this.fuse.search(this.search.trim());
+  //     }
+  //   },
+  // },
+  created() {
+    const options = {
+      includeScore: true,
+      keys: ['profileName', 'firstName', 'lastName', 'email', 'role', 'userlanguages', 'currentProjects.name'],
+    };
+    this.fuse = new Fuse(this.profiles, options);
   },
 };
 </script>
