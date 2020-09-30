@@ -13,15 +13,16 @@
       <router-link :to="{ name: 'Community'}">
         Community
       </router-link>
-      <router-link :to="{ name: 'Auth'}">
+      <button @click="$store.dispatch('signOut')">
         Logout
-      </router-link>
+      </button>
     </nav>
     <router-view />
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'HomeLayout',
 };

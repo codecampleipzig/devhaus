@@ -4,6 +4,7 @@
       <h1 class="text-red-600">
         Hello DevHaus
       </h1>
+      <p>logged in as: {{ $store.state.user.email }}</p>
     </div>
   </div>
 </template>
