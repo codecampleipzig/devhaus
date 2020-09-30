@@ -29,7 +29,7 @@ export default {
   watch: {
     search() {
       if (this.search.trim() === '') {
-        this.result = this.list;
+        this.result = this.profiles;
       } else {
         this.result = this.fuse.search(this.search.trim());
       }
