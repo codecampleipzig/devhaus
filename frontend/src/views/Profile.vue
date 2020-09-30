@@ -76,9 +76,6 @@ export default {
 
 .cards {
   margin: 3rem;
-  display: grid;
-  grid-template-columns: 500px 500px;
-  grid-template-rows: 500px 500px;
 }
 
 p {
