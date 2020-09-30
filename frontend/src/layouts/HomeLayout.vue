@@ -19,15 +19,19 @@
       <router-link :to="{ name: 'EditProfile'}">
         Edit Profile
       </router-link>
-      <router-link :to="{ name: 'Auth'}">
-        Logout
+      <router-link :to="{ name: 'Community'}">
+        Community
       </router-link>
+      <button @click="$store.dispatch('signOut')">
+        Logout
+      </button>
     </nav>
     <router-view />
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'HomeLayout',
 };
