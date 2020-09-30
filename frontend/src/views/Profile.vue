@@ -44,6 +44,7 @@
         <h2>Contact</h2>
         <textarea
           id="message"
+          v-model="text"
           class="resize-none contact-input"
           name="message"
           cols="50"
@@ -52,6 +53,7 @@
         />
         <button
           class="button"
+          @click="send"
         >
           Send
         </button>
@@ -62,9 +64,16 @@
 
 <script>
 import { mapState } from 'vuex';
+import { functions } from 'firebase';
 
 export default {
   name: 'Profile',
+  data() {
+    return {
+      text: '',
+
+    };
+  },
   computed: {
     ...mapState(['profiles', 'user']),
     userId() {
@@ -73,6 +82,17 @@ export default {
     profileInfo() {
       const profileUID = this.userId;
       return this.profiles.find((profile) => profile.userId == profileUID);
+    },
+  },
+  methods: {
+    send() {
+      const data = {
+        email: this.user.email,
+        message: this.text,
+        username: `${this.profileInfo.firstName} ${this.profileInfo.lastName}`,
+      };
+      const sendTestEmail = functions().httpsCallable('sendTestEmail');
+      sendTestEmail(data);
     },
   },
 };

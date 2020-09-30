@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 
-exports.sendTestEmail = functions.https.onRequest((request, response) => {
+exports.sendTestEmail = functions.https.onCall((data, context) => {
   const transport = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
     port: 2525,
@@ -10,21 +10,23 @@ exports.sendTestEmail = functions.https.onRequest((request, response) => {
       pass: '8c96275b450dbb',
     },
   });
+  // set this to the data that is incoming
   const mailOptions = {
     from: '"Test" <testuser@testemail.com>',
-    to: 'anothertestuser@testemail.com',
+    to: data.email,
     subject: 'Nice Nodemailer test',
-    text: 'Hey there, it’s our first message sent with Nodemailer ;) ',
-    html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer',
+    text: data.message,
+    // destructure the html stuff
+    html: `<b>${data.username}</b><br>${data.message}`,
   };
 
   transport.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
-      response.send(error);
+      return error;
     }
-    console.log('Message sent: %s', info.messageId);
-    response.send('Email has been sent!');
+    console.log('Message sent');
+    return `Message sent: %s', ${info.messageId}`;
   });
 });
 // Create and Deploy Your First Cloud Functions

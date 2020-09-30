@@ -29,3 +29,4 @@ if (process.env.NODE_ENV !== 'production') {
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 export const storage = firebase.storage();
+export const functions = firebase.functions();
