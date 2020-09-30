@@ -1,17 +1,23 @@
 <template>
   <div>
-    <nav class="top-0 right-0 left-0 p-8 flex justify-evenly bg-teal-100 text-blue-900 text-3xl">
+    <nav
+      class="top-0 right-0 left-0 p-5
+    flex justify-evenly bg-blue-900 text-white text-2xl font-medium"
+    >
       <router-link :to="{ name: 'Home'}">
         Home
+      </router-link><router-link :to="{ name: 'Community'}">
+        Community
       </router-link>
       <router-link :to="{ name: 'Profile'}">
         Profile
       </router-link>
+      <input
+        type="text"
+        placeholder="...search"
+      >
       <router-link :to="{ name: 'EditProfile'}">
         Edit Profile
-      </router-link>
-      <router-link :to="{ name: 'Community'}">
-        Community
       </router-link>
       <router-link :to="{ name: 'Auth'}">
         Logout
