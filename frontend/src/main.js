@@ -8,9 +8,7 @@ import App from './App.vue';
 
 auth.onAuthStateChanged((user) => {
   if (user) {
-    console.log('You are logged in');
-  } else {
-    console.log('You are not logged in');
+    store.dispatch('bindProfiles');
   }
   store.commit('SET_USER', user);
 });
