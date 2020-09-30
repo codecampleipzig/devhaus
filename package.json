@@ -18,7 +18,5 @@
     "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {},
-  "dependencies": {
-    "@iconify/icons-jam": "^1.0.5"
-  }
+  "dependencies": {}
 }

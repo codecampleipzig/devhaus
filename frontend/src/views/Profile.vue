@@ -1,54 +1,58 @@
 <template>
-  <div class="profile-page">
-    <section class="name">
+  <div class="mx-auto w-screen max-w-md mt-8">
+    <section class="flex space-x-4 mb-4">
       <div class="profile-picture" />
       <div class="info">
         <h1>John Doe</h1>
         <p class="role">
           Class #3 Alumni
         </p>
-
         <a
           href="github.com/mnapearson"
           class="github"
         >Fork me on GitHub</a>
       </div>
     </section>
-    <section class="middle">
-      <div class="about-info">
-        <h2>About</h2>
-        <h3>Question?</h3>
-        <p>Answer</p>
-        <h3>Question?</h3>
-        <p>Answer</p>
-      </div>
+    <section class="middle mb-4">
+      <h2>About</h2>
+      <h3>Question?</h3>
+      <p>Answer</p>
+      <h3>Question?</h3>
+      <p>Answer</p>
+    </section>
+    <section class="mb-4">
       <div class="project-info">
         <h2>Recent Projects</h2>
         <h3>Project Title</h3>
         <p>
           Project description
         </p>
-        <div class="project-website">
-          <a href="celestial-weather.netlify.app">Website</a>
-        </div>
-        <div class="project-github">
-          <a href="https://github.com/mnapearson/celestial-weather">View on Github</a>
+        <div class="flex space-x-4 mt-4">
+          <a
+            class="button"
+            href="celestial-weather.netlify.app"
+          >Website</a>
+          <a
+            class="button"
+            href="https://github.com/mnapearson/celestial-weather"
+          >View on Github</a>
         </div>
       </div>
     </section>
     <section class="contact">
       <div class="contact-form">
         <h2>Contact</h2>
-        <div class="contact-input">
-          <textarea
-            id="message"
-            name="message"
-            cols="50"
-            rows="8"
-            placeholder="Your message..."
-          />
-        </div>
-        <button>Send</button>
+        <textarea
+          id="message"
+          class="resize-none contact-input"
+          name="message"
+          cols="50"
+          rows="8"
+          placeholder="Your message..."
+        />
+        <button class="button">
+          Send
+        </button>
       </div>
     </section>
   </div>
@@ -63,12 +67,10 @@ export default {
 <style scoped>
 
 h1 {
-font-style: normal;
-font-weight: bold;
-font-size: 24px;
-color: #2E354F;
-text-decoration-line: underline;
-
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  color: #2E354F;
 }
 
 h2 {
@@ -77,15 +79,13 @@ h2 {
 }
 
 h3 {
-font-style: normal;
-font-weight: bold;
-font-size: 20px;
-color: #2E354F;
-
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: #2E354F;
 }
 
 p {
-  font-size: 18px;
   color: #2E354F
 }
 
@@ -94,34 +94,10 @@ a {
   color: #2E354F
 }
 
-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.middle {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.name {
-  display: flex;
-  flex-direction: row;
-  margin-top: 3rem;
-  justify-content: center;
-}
-
 .profile-picture {
-margin: 1rem;
-width: 160px;
-height: 160px;
-left: 374px;
-top: 114px;
-border: 1px solid #000000;
-box-sizing: border-box;
+  width: 160px;
+  height: 160px;
+  border: 1px solid #000000;
 }
 
 .contact{
@@ -139,25 +115,7 @@ box-sizing: border-box;
   padding: 1rem;
 }
 
-button {
-  color: #2E354F;
-  font-weight: 500;
-  border: solid 1px;
-  padding: .5rem 2rem;
-}
-
-.project-website {
-  margin: 1rem;
-  border: solid 1px;
-  padding: .5rem;
-  text-align: center;
-  max-width: 100px;
-}
-.project-github {
-  margin: 1rem;
-  border: solid 1px;
-  padding: .5rem;
-  text-align: center;
-  max-width: 150px;
+.button {
+  @apply border border-black py-2 px-6 text-center font-bold cursor-pointer
 }
 </style>
