@@ -45,14 +45,16 @@ const routes = [
         component: EditProfile,
         meta: { requiresAuth: true },
       },
-      {
-        path: '/register',
-        name: 'Register',
-        component: Register,
-        meta: { requiresAuth: true },
-      },
+
     ],
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresAuth: true },
+  },
+
 ];
 
 const router = new VueRouter({
