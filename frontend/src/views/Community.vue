@@ -53,15 +53,6 @@ export default {
       return this.fuse.search(this.search.trim()).map((result) => result.item);
     },
   },
-  // watch: {
-  //   search() {
-  //     if (this.search.trim() === '') {
-  //       this.result = this.profiles;
-  //     } else {
-  //       this.result = this.fuse.search(this.search.trim());
-  //     }
-  //   },
-  // },
   created() {
     const options = {
       includeScore: true,
