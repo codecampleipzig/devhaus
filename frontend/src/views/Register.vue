@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user', 'profile']),
   },
   methods: {
     async submit() {

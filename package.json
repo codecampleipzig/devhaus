@@ -17,6 +17,6 @@
     "test:ci": "yarn test:unit && yarn test:e2e --headless",
     "test": "yarn test:unit && yarn test:e2e"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {},
+  "dependencies": {}
 }

@@ -6,10 +6,8 @@ Devhaus is an online tool that enables collaboration between affiliates of CodeC
 
 ### yarn install
 
-yarn install
-
 ```bash
-sudo apt update && sudo apt install yarn
+yarn install
 ```
 
 ```bash
@@ -22,16 +20,43 @@ Use: authentication, hosting and storage
 
 The application runs a backend server on fire stack for the data storage and authentication. It is started with the emulators. The frontend is implemented via vue and has to be stgarted separately.
 
-start:emulators:
+### start emulators
 
 ```bash
-firebase emulators:start
+yarn start:emulators
 ```
 
-start:frontend:
+### start frontend
 
 ```bash
-cd frontend && yarn serve
+yarn start:frontend
+```
+
+### front awesome
+
+we are using the fontawsome icons with vue, in order to use it please follow the instructions:
+
+#### Using Icons
+
+import the icons you need from either the light or the duotone library, by adding the name of the icon to the following line inside the main.js file.
+
+```javascript
+import { faCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
+```
+
+then add them to the library
+
+```javascript
+library.add(faCircle, faCheck);
+```
+
+use them as follows in kebab case
+
+```javascript
+// circle icon
+<font-awesome-icon icon="circle" />
+// check icon
+<font-awesome-icon icon="check" />
 ```
 
 ## Tools

@@ -16,6 +16,7 @@ const routes = [
     path: '/auth/:mode',
     name: 'Auth',
     component: Auth,
+    meta: { requiresAuth: false },
   },
   {
     path: '/',
@@ -34,7 +35,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: '/profile',
+        path: '/profile/:userId',
         name: 'Profile',
         component: Profile,
         meta: { requiresAuth: true },
@@ -64,9 +65,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && store.state.user == null) {
     next({ name: 'Auth', params: { mode: 'signin' } });
-  } else {
-    next();
-  }
+  } else { next(); }
 });
 
 export default router;
