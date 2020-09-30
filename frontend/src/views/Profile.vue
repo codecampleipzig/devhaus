@@ -52,7 +52,6 @@
         />
         <button
           class="button"
-          @click="getProfileInfo"
         >
           Send
         </button>
@@ -66,11 +65,6 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Profile',
-  data() {
-    return {
-
-    };
-  },
   computed: {
     ...mapState(['profiles', 'user']),
     userId() {

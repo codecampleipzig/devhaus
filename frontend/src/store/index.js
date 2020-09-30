@@ -29,9 +29,6 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       state.user = user;
     },
-    // SET_PROFILE(state, profile) {
-    //   const query = profilesRef.where('uid', '==', state.user.uid);
-    // },
   },
   actions: {
     notify({ commit }, { type, text }) {
