@@ -141,7 +141,7 @@ export default [{
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
     name: 'CodeCampArcade',
-    description: 'an pixal arcade adventure for you to find out if you want to be a code camper',
+    description: 'an pixel arcade adventure for you to find out if you want to be a code camper',
     links: [],
   }],
 },
