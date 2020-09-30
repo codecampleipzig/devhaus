@@ -16,7 +16,7 @@ const routes = [
     path: '/auth/:mode',
     name: 'Auth',
     component: Auth,
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: false, requiresProfile: false },
   },
   {
     path: '/',
@@ -26,31 +26,31 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/community',
         name: 'Community',
         component: Community,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/profile/:userId',
         name: 'Profile',
         component: Profile,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/edit-profile',
         name: 'EditProfile',
         component: EditProfile,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/register',
         name: 'Register',
         component: Register,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: false },
       },
     ],
   },
@@ -65,6 +65,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && store.state.user == null) {
     next({ name: 'Auth', params: { mode: 'signin' } });
+  } else if
+  (to.meta.requiresProfile
+    && !store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
+    next({ name: 'Register' });
+  } else if (to.name == 'Register'
+    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
+    next({ name: 'Home' });
   } else { next(); }
 });
 
