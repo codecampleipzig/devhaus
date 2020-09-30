@@ -87,9 +87,9 @@ export default {
   methods: {
     send() {
       const data = {
-        email: this.user.email,
+        email: this.profileInfo.email,
         message: this.text,
-        username: `${this.profileInfo.firstName} ${this.profileInfo.lastName}`,
+        sender: this.$store.state.user.email,
       };
       const sendTestEmail = functions().httpsCallable('sendTestEmail');
       sendTestEmail(data);

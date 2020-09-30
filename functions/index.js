@@ -17,7 +17,7 @@ exports.sendTestEmail = functions.https.onCall((data, context) => {
     subject: 'Nice Nodemailer test',
     text: data.message,
     // destructure the html stuff
-    html: `<b>${data.username}</b><br>${data.message}`,
+    html: `<b>${data.sender}</b><br>${data.message}`,
   };
 
   transport.sendMail(mailOptions, (error, info) => {

@@ -56,6 +56,8 @@ export default {
         lastName: this.userInfo.lastName,
         classNumber: this.userInfo.class,
         userId: this.user.uid,
+        // added email to profile
+        email: this.user.email,
       });
       this.userInfo.userName = '';
       this.userInfo.firstName = '';
