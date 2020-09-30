@@ -105,7 +105,7 @@ export default [{
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
     name: 'friendsWithPlants',
-    description: 'a platform wher people can swap plants',
+    description: 'a platform where people can swap plants',
     links: [],
   }],
 },
@@ -123,7 +123,7 @@ export default [{
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
     name: 'finder',
-    description: 'you can findout about the language, public transport and the weather in a place',
+    description: 'you can find out about the language, public transport and the weather in a place',
     links: [],
   }],
 },
