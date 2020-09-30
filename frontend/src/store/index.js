@@ -44,7 +44,7 @@ export default new Vuex.Store({
         commit('REMOVE_NOTIFICATION', notification);
       }, 5000);
     },
-    async logout() {
+    async signOut() {
       await auth.signOut();
       router.push({
         name: 'Auth',

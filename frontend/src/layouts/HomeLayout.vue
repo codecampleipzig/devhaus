@@ -13,7 +13,7 @@
       <router-link :to="{ name: 'Community'}">
         Community
       </router-link>
-      <button @click="$store.dispatch('logout')">
+      <button @click="$store.dispatch('signOut')">
         Logout
       </button>
     </nav>

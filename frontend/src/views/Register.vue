@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     async submit() {
-      await db.collection('user').add({
+      await db.collection('profiles').add({
         userName: this.userInfo.userName,
         firstName: this.userInfo.firstName,
         lastName: this.userInfo.lastName,
@@ -67,6 +67,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

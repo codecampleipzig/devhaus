@@ -7,7 +7,7 @@
       <router-link :to="{name: 'Auth', params: {mode: 'signup'}}">
         Sign Up
       </router-link>
-      <button @click="$store.dispatch('logout')">
+      <button @click="$store.dispatch('signOut')">
         Logout
       </button>
       <h1>{{ modeTitle }}</h1>
@@ -75,26 +75,30 @@ export default {
     },
   },
   methods: {
-    async submit() {
+    submit() {
       if (this.mode == 'signin') {
-        try {
-          await auth.signInWithEmailAndPassword(this.email, this.password);
-          this.email = '';
-          this.password = '';
-          this.$router.push({ name: 'Home' });
-        } catch (error) {
-          this.error = 'Invalid email or password.';
-        }
+        return this.signIn();
       }
-      if (this.mode == 'signup') {
-        try {
-          await auth.createUserWithEmailAndPassword(this.email, this.password);
-          this.email = '';
-          this.password = '';
-          this.$router.push({ name: 'Register' });
-        } catch (error) {
-          this.error = 'User already exists!';
-        }
+      return this.signUp();
+    },
+    async signIn() {
+      try {
+        await auth.signInWithEmailAndPassword(this.email, this.password);
+        this.email = '';
+        this.password = '';
+        this.$router.push({ name: 'Home' });
+      } catch (error) {
+        this.error = 'Invalid email or password.';
+      }
+    },
+    async signUp() {
+      try {
+        await auth.createUserWithEmailAndPassword(this.email, this.password);
+        this.email = '';
+        this.password = '';
+        this.$router.push({ name: 'Register' });
+      } catch (error) {
+        this.error = 'User already exists!';
       }
     },
     async gitLogin() {
