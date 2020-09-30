@@ -9,6 +9,7 @@
         <font-awesome-icon icon="spinner" />
         <font-awesome-icon icon="comment" />
       </div>
+      <p>logged in as: {{ $store.state.user.email }}</p>
     </div>
   </div>
 </template>
