@@ -1371,6 +1371,11 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@popperjs/core@^2.5.3":
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.5.3.tgz#4982b0b66b7a4cf949b86f5d25a8cf757d3cfd9d"
+  integrity sha512-RFwCobxsvZ6j7twS7dHIZQZituMIDJJNHS/qY6iuthVebxS3zhRY+jaC2roEKiAYaVuTcGmX6Luc6YBcf6zJVg==
+
 "@posva/vuefire-core@^2.3.3":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@posva/vuefire-core/-/vuefire-core-2.3.3.tgz#b22bcbd6cff89e0b1d5a122c82b40fc19d7128d8"
