@@ -42,7 +42,7 @@ export default [{
   firstName: 'mathias',
   lastName: 'fidel',
   email: 'mathias.fidel@gmail.com',
-  photo: 'https://imgur.com/AlNofek';,
+  photo: 'https://imgur.com/AlNofek',
   links: ['https/github.com/mfidel'],
   role: 'User',
   userClass: 'Class3',
@@ -145,5 +145,4 @@ export default [{
     links: [],
   }],
 },
-
 ];
