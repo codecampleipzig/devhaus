@@ -73,17 +73,7 @@ export default {
   text-align: center;
 }
 
-.imageHolder {
-  max-width: 1024px;
-  display: flex;
-  flex-flow: wrap;
-  text-align: center;
-  margin: 0 auto;
-  padding: 1rem;
-  justify-content: center;
-}
-
-.profileDescription {
+.infoContainer {
   max-width: 400px;
   margin: 0 auto;
   display: flex;
