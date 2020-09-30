@@ -9,7 +9,7 @@
       </router-link><router-link :to="{ name: 'Community'}">
         Community
       </router-link>
-      <router-link :to="{ name: 'Profile'}">
+      <router-link :to="{ name: 'Profile', params: {userId: $store.state.user.uid}}">
         Profile
       </router-link>
       <input

@@ -1,8 +1,8 @@
-import { auth } from '@/firebase';
+import { auth, db } from '@/firebase';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import CreatePersistedState from 'vuex-persistedstate';
-import { vuexFireMutations } from 'vuexfire';
+import { vuexfireMutations, firestoreAction } from 'vuexfire';
 import router from '@/router';
 
 Vue.use(Vuex);
@@ -13,10 +13,11 @@ export default new Vuex.Store({
   state: {
     notifications: [],
     user: null,
+    profiles: [],
   },
   plugins: [CreatePersistedState()],
   mutations: {
-    ...vuexFireMutations,
+    ...vuexfireMutations,
     PUSH_NOTIFICATION(state, notification) {
       state.notifications.push(notification);
     },
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       state.user = user;
     },
+    // SET_PROFILE(state, profile) {
+    //   const query = profilesRef.where('uid', '==', state.user.uid);
+    // },
   },
   actions: {
     notify({ commit }, { type, text }) {
@@ -53,6 +57,7 @@ export default new Vuex.Store({
         },
       });
     },
+    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles', db.collection('profiles'))),
   },
   modules: {},
 });

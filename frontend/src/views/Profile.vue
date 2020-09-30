@@ -3,9 +3,9 @@
     <section class="flex space-x-4 mb-4">
       <div class="profile-picture" />
       <div class="info">
-        <h1>John Doe</h1>
+        <h1>{{ profileInfo.firstName }} {{ profileInfo.lastName }}</h1>
         <p class="role">
-          Class #3 Alumni
+          Class #{{ profileInfo.classNumber }} Alumni
         </p>
         <a
           href="github.com/mnapearson"
@@ -50,7 +50,10 @@
           rows="8"
           placeholder="Your message..."
         />
-        <button class="button">
+        <button
+          class="button"
+          @click="getProfileInfo"
+        >
           Send
         </button>
       </div>
@@ -59,18 +62,46 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Profile',
+  data() {
+    return {
+
+    };
+  },
+  computed: {
+    ...mapState(['profiles', 'user']),
+    userId() {
+      return this.$route.params.userId;
+    },
+    profileInfo() {
+      const profileUID = this.userId;
+      return this.profiles.find((profile) => profile.userId == profileUID);
+    },
+  },
+  methods: {
+  //   getProfileInfo() {
+  //     db.collection('profiles')
+  //       .where('userId', '==', profileUID)
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         this.profileInfo.firstName = querySnapshot.docs[0].data().firstName;
+  //         this.profileInfo.lastName = querySnapshot.docs[0].data().lastName;
+  //         this.profileInfo.classNumber = querySnapshot.docs[0].data().classNumber;
+  //       });
+  //   },
+  },
 };
 </script>
 
 <style scoped>
-
 h1 {
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  color: #2E354F;
+  color: #2e354f;
 }
 
 h2 {
@@ -82,16 +113,16 @@ h3 {
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
-  color: #2E354F;
+  color: #2e354f;
 }
 
 p {
-  color: #2E354F
+  color: #2e354f;
 }
 
 a {
   font-size: 16px;
-  color: #2E354F
+  color: #2e354f;
 }
 
 .profile-picture {
@@ -100,7 +131,7 @@ a {
   border: 1px solid #000000;
 }
 
-.contact{
+.contact {
   display: flex;
   justify-content: center;
   padding: 1rem;
@@ -116,6 +147,6 @@ a {
 }
 
 .button {
-  @apply border border-black py-2 px-6 text-center font-bold cursor-pointer
+  @apply border border-black py-2 px-6 text-center font-bold cursor-pointer;
 }
 </style>
