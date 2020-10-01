@@ -4,7 +4,7 @@ import HomeLayout from '../layouts/HomeLayout.vue';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import EditProfile from '../views/EditProfile.vue';
-import Community from '../views/Community.vue';
+import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import store from '../store';
@@ -35,9 +35,9 @@ const routes = [
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
-        path: '/community',
-        name: 'Community',
-        component: Community,
+        path: '/members',
+        name: 'Members',
+        component: Members,
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
