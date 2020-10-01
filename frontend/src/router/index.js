@@ -63,6 +63,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.name == 'Auth' && store.state.user) {
+    return next({ name: 'Home' });
+  }
   if (to.meta.requiresAuth && store.state.user == null) {
     return next({ name: 'Auth', params: { mode: 'signin' } });
   } if
