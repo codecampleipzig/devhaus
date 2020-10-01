@@ -52,7 +52,7 @@
 <script>
 import firebase from 'firebase';
 import { auth } from '@/firebase';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Auth',
@@ -75,6 +75,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['bindProfiles']),
     submit() {
       if (this.mode == 'signin') {
         return this.signIn();
@@ -84,6 +85,7 @@ export default {
     async signIn() {
       try {
         await auth.signInWithEmailAndPassword(this.email, this.password);
+        await this.bindProfiles();
         this.email = '';
         this.password = '';
         this.$router.push({ name: 'Home' });
@@ -94,6 +96,7 @@ export default {
     async signUp() {
       try {
         await auth.createUserWithEmailAndPassword(this.email, this.password);
+        await this.bindProfiles();
         this.email = '';
         this.password = '';
         this.$router.push({ name: 'Register' });
@@ -106,7 +109,7 @@ export default {
       try {
         await firebase.auth().signInWithPopup(provider).then((result) => {
           this.email = result.credential.email;
-          this.$router.replace('home');
+          this.$router.push({ name: 'Home' });
         });
       } catch (error) {
         console.error(error);

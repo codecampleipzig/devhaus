@@ -16,7 +16,13 @@ const routes = [
     path: '/auth/:mode',
     name: 'Auth',
     component: Auth,
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: false, requiresProfile: false },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresAuth: true, requiresProfile: false },
   },
   {
     path: '/',
@@ -26,31 +32,25 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/community',
         name: 'Community',
         component: Community,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/profile/:userId',
         name: 'Profile',
         component: Profile,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/edit-profile',
         name: 'EditProfile',
         component: EditProfile,
-        meta: { requiresAuth: true },
-      },
-      {
-        path: '/register',
-        name: 'Register',
-        component: Register,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
     ],
   },
@@ -63,9 +63,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.name == 'Auth' && store.state.user) {
+    return next({ name: 'Home' });
+  }
   if (to.meta.requiresAuth && store.state.user == null) {
-    next({ name: 'Auth', params: { mode: 'signin' } });
-  } else { next(); }
+    return next({ name: 'Auth', params: { mode: 'signin' } });
+  } if
+  (to.meta.requiresProfile
+    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+    == false) {
+    return next({ name: 'Register' });
+  }
+  if (to.name == 'Register'
+  && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+  == true) {
+    return next({ name: 'Home' });
+  }
+  return next();
 });
 
 export default router;
