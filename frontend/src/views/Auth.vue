@@ -88,7 +88,6 @@ export default {
         await this.bindProfiles();
         this.email = '';
         this.password = '';
-        console.log(this.$store.state.user);
         this.$router.push({ name: 'Home' });
       } catch (error) {
         this.error = 'Invalid email or password.';
