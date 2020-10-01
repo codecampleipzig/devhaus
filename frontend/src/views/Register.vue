@@ -6,6 +6,11 @@
         v-model="userInfo.userName"
         type="text"
         placeholder="User Name"
+      ><input
+        v-model="userInfo.githubUsername"
+        type="text"
+        placeholder="Github Username"
+        required
       >
       <input
         v-model="userInfo.firstName"
@@ -39,6 +44,7 @@ export default {
     return {
       userInfo: {
         userName: null,
+        githubUsername: null,
         firstName: null,
         lastName: null,
         class: null,
@@ -52,12 +58,14 @@ export default {
     async submit() {
       await db.collection('profiles').add({
         userName: this.userInfo.userName,
+        githubUsername: this.userInfo.githubUsername,
         firstName: this.userInfo.firstName,
         lastName: this.userInfo.lastName,
         classNumber: this.userInfo.class,
         userId: this.user.uid,
       });
       this.userInfo.userName = '';
+      this.userInfo.githubUsername = '';
       this.userInfo.firstName = '';
       this.userInfo.lastName = '';
       this.userInfo.class = '';

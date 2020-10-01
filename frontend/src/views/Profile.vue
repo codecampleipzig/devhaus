@@ -4,13 +4,11 @@
       <div class="profile-picture" />
       <div class="info">
         <h1>{{ profileInfo.firstName }} {{ profileInfo.lastName }}</h1>
+        <p>{{ $store.state.user.email }}</p>
         <p class="role">
-          Class #{{ profileInfo.classNumber }} Alumni
+          Class #{{ profileInfo.classNumber }}
         </p>
-        <a
-          href="github.com/mnapearson"
-          class="github"
-        >Fork me on GitHub</a>
+        <p>{{ profileInfo.githubUsername }}</p>
       </div>
     </section>
     <section class="middle mb-4">
