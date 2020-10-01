@@ -75,10 +75,6 @@
         icon="edit"
         title="Edit section"
       />
-      <h3>Why are you here?</h3>
-      <p>Answer</p>
-      <h3>What are you currently learning?</h3>
-      <p>Answer</p>
     </section>
     <section class="mb-4">
       <div class="project-info">

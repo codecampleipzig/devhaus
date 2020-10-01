@@ -31,7 +31,6 @@
         v-model="userInfo.class"
         type="number"
         placeholder="Class #"
-        required
       > <input
         v-model="userInfo.gender"
         type="text"
@@ -63,9 +62,41 @@ export default {
         firstName: null,
         lastName: null,
         class: null,
+        role: null,
         gender: null,
         birthday: null,
         location: null,
+        jobTitle: null,
+        company: null,
+        hobbies: [],
+        languages: [
+          {
+            natural: {},
+          },
+          {
+            technical: {},
+          },
+        ],
+        about: [
+          {
+            first: {
+              question: 'Why do you love coding?',
+              answer: '',
+            },
+          },
+          {
+            second: {
+              question: 'Why are you here?',
+              answer: '',
+            },
+          },
+        ],
+        projects: [
+          {
+            title: 'My Project',
+            URL: '',
+          },
+        ],
       },
     };
   },
@@ -75,6 +106,8 @@ export default {
   methods: {
     async submit() {
       await db.collection('profiles').add({
+        userId: this.user.uid,
+        userEmail: this.user.email,
         userName: this.userInfo.userName,
         githubUsername: this.userInfo.githubUsername,
         firstName: this.userInfo.firstName,
@@ -83,8 +116,15 @@ export default {
         gender: this.userInfo.gender,
         birthday: this.userInfo.birthday,
         location: this.userInfo.location,
-        userId: this.user.uid,
+        role: this.userInfo.role,
+        languages: this.userInfo.languages,
+        about: this.userInfo.about,
+        hobbies: this.userInfo.hobbies,
+        projects: this.userInfo.projects,
+        jobTitle: this.userInfo.jobTitle,
+        company: this.userInfo.company,
       });
+      this.$router.push({ name: 'Home' });
       this.userInfo.userName = '';
       this.userInfo.githubUsername = '';
       this.userInfo.firstName = '';
@@ -93,7 +133,6 @@ export default {
       this.userInfo.gender = '';
       this.userInfo.birthday = '';
       this.userInfo.location = '';
-      this.$router.push({ name: 'Home' });
     },
   },
 };
