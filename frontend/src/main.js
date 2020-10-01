@@ -5,6 +5,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
+  faGithub, faFacebookF, faLinkedin, faInstagram,
+} from '@fortawesome/fontawesome-free-brands';
+import {
   faCoffee, faSpinner, faEdit, faCircle, faCheck,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 } from '@fortawesome/free-solid-svg-icons';
@@ -18,10 +21,9 @@ auth.onAuthStateChanged((user) => {
   store.commit('SET_USER', user);
 });
 
-library.add(
+library.add(faGithub, faFacebookF, faLinkedin, faInstagram,
   faCoffee, faSpinner, faEdit, faCircle, faCheck,
-  faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
-);
+  faPlus, faEquals, faArrowRight, faPencilAlt, faComment);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
