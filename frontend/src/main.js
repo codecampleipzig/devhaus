@@ -7,9 +7,6 @@ import './assets/tailwind.css';
 import App from './App.vue';
 
 auth.onAuthStateChanged((user) => {
-  if (user) {
-    store.dispatch('bindProfiles');
-  }
   store.commit('SET_USER', user);
 });
 

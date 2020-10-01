@@ -19,6 +19,12 @@ const routes = [
     meta: { requiresAuth: false, requiresProfile: false },
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresAuth: true, requiresProfile: false },
+  },
+  {
     path: '/',
     component: HomeLayout,
     children: [
@@ -46,12 +52,6 @@ const routes = [
         component: EditProfile,
         meta: { requiresAuth: true, requiresProfile: true },
       },
-      {
-        path: '/register',
-        name: 'Register',
-        component: Register,
-        meta: { requiresAuth: true, requiresProfile: false },
-      },
     ],
   },
 ];
@@ -64,15 +64,19 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && store.state.user == null) {
-    next({ name: 'Auth', params: { mode: 'signin' } });
-  } else if
+    return next({ name: 'Auth', params: { mode: 'signin' } });
+  } if
   (to.meta.requiresProfile
-    && !store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
-    next({ name: 'Register' });
-  } else if (to.name == 'Register'
-    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
-    next({ name: 'Home' });
-  } else { next(); }
+    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+    == false) {
+    return next({ name: 'Register' });
+  }
+  if (to.name == 'Register'
+  && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+  == true) {
+    return next({ name: 'Home' });
+  }
+  return next();
 });
 
 export default router;
