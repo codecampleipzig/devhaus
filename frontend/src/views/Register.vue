@@ -5,7 +5,7 @@
       <input
         v-model="userInfo.userName"
         type="text"
-        placeholder="User Name"
+        placeholder="User Name (optional)"
       ><input
         v-model="userInfo.githubUsername"
         type="text"
@@ -29,6 +29,18 @@
         type="number"
         placeholder="Class #"
         required
+      > <input
+        v-model="userInfo.gender"
+        type="text"
+        placeholder="Gender (optional)"
+      > <input
+        v-model="userInfo.birthday"
+        type="date"
+        placeholder="Birthday (optional)"
+      > <input
+        v-model="userInfo.location"
+        type="text"
+        placeholder="Location (optional)"
       >
       <input type="submit">
     </form>
@@ -48,6 +60,9 @@ export default {
         firstName: null,
         lastName: null,
         class: null,
+        gender: null,
+        birthday: null,
+        location: null,
       },
     };
   },
@@ -62,6 +77,9 @@ export default {
         firstName: this.userInfo.firstName,
         lastName: this.userInfo.lastName,
         classNumber: this.userInfo.class,
+        gender: this.userInfo.gender,
+        birthday: this.userInfo.birthday,
+        location: this.userInfo.location,
         userId: this.user.uid,
       });
       this.userInfo.userName = '';
@@ -69,6 +87,9 @@ export default {
       this.userInfo.firstName = '';
       this.userInfo.lastName = '';
       this.userInfo.class = '';
+      this.userInfo.gender = '';
+      this.userInfo.birthday = '';
+      this.userInfo.location = '';
       this.$router.push({ name: 'Home' });
     },
   },

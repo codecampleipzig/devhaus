@@ -9,13 +9,34 @@
           Class #{{ profileInfo.classNumber }}
         </p>
         <p>{{ profileInfo.githubUsername }}</p>
+        <p>{{ profileInfo.gender }}</p>
+        <p>{{ profileInfo.birthday }}</p>
+        <p>{{ profileInfo.location }}</p>
       </div>
     </section>
-    <section class="middle mb-4">
+    <section>
+      <h2 class="mt-2">
+        Tags
+      </h2><p>
+        Role:
+      </p><p>Extra:</p>
+      <h2 class="mt-2">
+        Social Links
+      </h2><p>Facebook:</p><p>
+        LinkedIn:
+      </p><p>Instagram:</p>
+      <h2 class="mt-2">
+        Languages
+      </h2><p>Technical:</p><p>Natural:</p>
+      <h2 class="mt-2">
+        Hobbies
+      </h2>
+    </section>
+    <section class="middle mb-4 mt-3">
       <h2>About</h2>
-      <h3>Question?</h3>
+      <h3>Why are you here?</h3>
       <p>Answer</p>
-      <h3>Question?</h3>
+      <h3>What are you currently learning?</h3>
       <p>Answer</p>
     </section>
     <section class="mb-4">
@@ -25,6 +46,7 @@
         <p>
           Project description
         </p>
+        <p>Tools used: </p>
         <div class="flex space-x-4 mt-4">
           <a
             class="button"
