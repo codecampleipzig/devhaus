@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-40 text-3xl">
-      <h1>Community</h1>
+      <h1>Members</h1>
       <input
         v-model="search"
         type="text"
@@ -37,7 +37,7 @@ import exampleProfiles from '@/example-profiles';
 import Fuse from 'fuse.js';
 
 export default {
-  name: 'Community',
+  name: 'Members',
   data() {
     return {
       fuse: null,
