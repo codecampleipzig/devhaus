@@ -1,9 +1,8 @@
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1
-workflows:
+jobs:
   build:
-    jobs:
-      - cypress/run:
-          yarn: true
-          command: yarn test:ci
+    docker:
+      - image: "dodoesk/firebase-cypress-test-ci:0.2"
+    steps:
+      - checkout
+      - run: yarn install && yarn test:ci
