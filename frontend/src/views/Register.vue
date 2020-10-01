@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3>logged in as {{ $store.state.user.email }}</h3>
+    <button @click="$store.dispatch('signOut')">
+      Logout
+    </button>
     <form @submit.prevent="submit">
       <input
         v-model="userInfo.userName"
