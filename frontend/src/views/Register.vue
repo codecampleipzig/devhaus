@@ -43,6 +43,9 @@
         placeholder="Location (optional)"
       >
       <input type="submit">
+      <button @click="enter">
+        Enter
+      </button>
     </form>
   </div>
 </template>
@@ -90,6 +93,8 @@ export default {
       this.userInfo.gender = '';
       this.userInfo.birthday = '';
       this.userInfo.location = '';
+    },
+    async enter() {
       this.$router.push({ name: 'Home' });
     },
   },
