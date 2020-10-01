@@ -5,10 +5,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  faGithub, faFacebookF, faLinkedin, faInstagram,
+  faGithub, faFacebookF, faLinkedin, faInstagram, faJsSquare, faReact, faVuejs,
 } from '@fortawesome/fontawesome-free-brands';
 import {
-  faCoffee, faSpinner, faEdit, faCircle, faCheck,
+  faCoffee, faSpinner, faEdit, faCircle, faCheck, faCode,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,7 +21,7 @@ auth.onAuthStateChanged((user) => {
   store.commit('SET_USER', user);
 });
 
-library.add(faGithub, faFacebookF, faLinkedin, faInstagram,
+library.add(faCode, faGithub, faFacebookF, faLinkedin, faInstagram, faJsSquare, faVuejs, faReact,
   faCoffee, faSpinner, faEdit, faCircle, faCheck,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment);
 
