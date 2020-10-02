@@ -3,4 +3,8 @@ describe('example unit test', () => {
     const result = 1 + 1;
     expect(result).toBe(2);
   });
+  it('process.env should be develop', () => {
+    const result = process.env.NODE_ENV;
+    expect(result).toBe('test');
+  });
 });

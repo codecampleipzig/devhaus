@@ -4,7 +4,7 @@ import HomeLayout from '../layouts/HomeLayout.vue';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import EditProfile from '../views/EditProfile.vue';
-import Community from '../views/Community.vue';
+import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import store from '../store';
@@ -16,6 +16,13 @@ const routes = [
     path: '/auth/:mode',
     name: 'Auth',
     component: Auth,
+    meta: { requiresAuth: false, requiresProfile: false },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresAuth: true, requiresProfile: false },
   },
   {
     path: '/',
@@ -25,27 +32,26 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
-        path: '/community',
-        name: 'Community',
-        component: Community,
-        meta: { requiresAuth: true },
+        path: '/members',
+        name: 'Members',
+        component: Members,
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
-        path: '/profile',
+        path: '/profile/:userId',
         name: 'Profile',
         component: Profile,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
       {
         path: '/edit-profile',
         name: 'EditProfile',
         component: EditProfile,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresProfile: true },
       },
-
     ],
   },
   {
@@ -64,11 +70,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && store.state.user == null) {
-    next({ name: 'Auth', params: { mode: 'signin' } });
-  } else {
-    next();
+  if (to.name == 'Auth' && store.state.user) {
+    return next({ name: 'Home' });
   }
+  if (to.meta.requiresAuth && store.state.user == null) {
+    return next({ name: 'Auth', params: { mode: 'signin' } });
+  } if
+  (to.meta.requiresProfile
+    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+    == false) {
+    return next({ name: 'Register' });
+  }
+  if (to.name == 'Register'
+  && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
+  == true) {
+    return next({ name: 'Home' });
+  }
+  return next();
 });
 
 export default router;
