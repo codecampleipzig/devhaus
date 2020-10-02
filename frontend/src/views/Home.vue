@@ -8,7 +8,6 @@
         <font-awesome-icon icon="circle" />
         <font-awesome-icon icon="spinner" />
         <font-awesome-icon icon="comment" />
-        <font-awesome-icon icon="github" />
       </div>
       <p>logged in as: {{ $store.state.user.email }}</p>
     </div>

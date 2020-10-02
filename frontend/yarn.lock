@@ -2590,7 +2590,7 @@ async@2.6.1:
   dependencies:
     lodash "^4.17.10"
 
-async@^2.6.2:
+async@^2.0.0-rc.6, async@^2.6.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
@@ -4573,6 +4573,13 @@ elliptic@^6.5.3:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+email-existence@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/email-existence/-/email-existence-0.1.6.tgz#e10655f65b3a66c10f400eed279baab173a74f14"
+  integrity sha512-mg7vWBaddlMxBFpNMG4h5CZHdBBjcMkN2mFVwGxglRPdgnAD5ashVwhGbQudL2lrvElWyzpR1M61bsvUuzi8Pg==
+  dependencies:
+    async "^2.0.0-rc.6"
 
 emoji-regex@^7.0.1:
   version "7.0.3"

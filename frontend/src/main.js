@@ -5,7 +5,7 @@ import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  faCoffee, faSpinner,faGithub, faEdit, faCircle, faCheck,
+  faCoffee, faSpinner, faEdit, faCircle, faCheck,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 } from '@fortawesome/free-solid-svg-icons';
 import router from './router';
@@ -19,7 +19,7 @@ auth.onAuthStateChanged((user) => {
 });
 
 library.add(
-  faCoffee, faSpinner, faEdit, faCircle, faCheck, faGithub
+  faCoffee, faSpinner, faEdit, faCircle, faCheck,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 );
 

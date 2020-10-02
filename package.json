@@ -18,5 +18,7 @@
     "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "email-existence": "^0.1.6"
+  }
 }
