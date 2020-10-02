@@ -12,6 +12,9 @@
       <router-link :to="{ name: 'Profile', params: {userId: $store.state.user.uid}}">
         Profile
       </router-link>
+      <router-link :to="{ name: 'Calender'}">
+        Calender
+      </router-link>
 
       <button @click="$store.dispatch('signOut')">
         Logout
