@@ -71,8 +71,6 @@ router.beforeEach(async (to, from, next) => {
       // is the user logged in and needs a profile to continue?
       await boundProfiles;
       if (to.meta.requiresProfile) {
-        console.log(store.state.profiles.slice());
-        console.log('checking profiles');
         // check that the logged-in user has a profile
         if (store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
           return next();

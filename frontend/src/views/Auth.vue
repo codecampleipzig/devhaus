@@ -81,7 +81,7 @@ export default {
           await this.signIn();
         } else { await this.signUp(); }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     async signIn() {

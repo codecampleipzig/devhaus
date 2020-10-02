@@ -32,10 +32,8 @@ auth.onAuthStateChanged(async (user) => {
     firebaseAuthBoolean = true;
   }
   store.commit('SET_USER', user);
-  console.log(user);
   if (user) {
     await store.dispatch('bindProfiles');
-    console.log(store.state.profiles.slice());
     if (profileBoolean == false) {
       markProfilesAsBound();
       profileBoolean = true;
