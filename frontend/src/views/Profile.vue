@@ -28,9 +28,19 @@
       <div id="social">
         <h2 class="mt-2">
           Social Links
-        </h2><p>Facebook:</p><p>
-          LinkedIn:
-        </p><p>Instagram:</p>
+        </h2><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'facebook-f']"
+        /><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'linkedin']"
+        /><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'instagram']"
+        />
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
@@ -171,6 +181,10 @@ export default {
 </script>
 
 <style scoped>
+
+.icon {
+
+}
 h1 {
   font-style: normal;
   font-weight: bold;

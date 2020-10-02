@@ -5,7 +5,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  faCoffee, faSpinner, faEdit, faCircle, faCheck,
+  faGithub, faFacebookF, faLinkedin, faInstagram, faJsSquare, faReact, faVuejs,
+} from '@fortawesome/fontawesome-free-brands';
+import {
+  faCoffee, faSpinner, faEdit, faCircle, faCheck, faCode,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,10 +22,9 @@ auth.onAuthStateChanged((user) => {
   console.log(user);
 });
 
-library.add(
+library.add(faCode, faGithub, faFacebookF, faLinkedin, faInstagram, faJsSquare, faVuejs, faReact,
   faCoffee, faSpinner, faEdit, faCircle, faCheck,
-  faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
-);
+  faPlus, faEquals, faArrowRight, faPencilAlt, faComment);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
