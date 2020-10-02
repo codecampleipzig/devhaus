@@ -1,51 +1,78 @@
 <template>
-  <div>
-    <div class="m-40 text-3xl">
-      <router-link :to="{name: 'Auth', params: {mode: 'signin'}}">
-        Sign In
-      </router-link>
-      <router-link :to="{name: 'Auth', params: {mode: 'signup'}}">
-        Sign Up
-      </router-link>
-      <button @click="$store.dispatch('signOut')">
-        Logout
-      </button>
-      <h1>{{ modeTitle }}</h1>
-
-      <form @submit.prevent="submit">
-        <input
-          v-model="email"
-          type="text"
-          placeholder="Email"
-          required
+  <div class="flex items-center justify-center space-x-24 min-h-screen">
+    <section>
+      <div>
+        <img
+          src="https://codecampleipzig.de/images/code-camp-leipzig-logo.svg"
+          alt="logo"
         >
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          required
-        >
+        <h1 class="text-6xl font-bold">
+          DEVHAUS
+        </h1>
+      </div>
+    </section>
 
-        <input
-          type="submit"
-          :value="modeTitle"
-        >
-      </form>
-      <h4 v-if="error">
-        {{ error }}
-      </h4>
-      <button>Sign Up with GitHub</button>
-
-      <button
-        @click="gitLogin"
+    <section>
+      <div
+        class="bg-blue-900 py-10 w-screen
+      max-w-sm px-6 my-10 text-white shadow-md rounded"
       >
-        Sign In with GitHub
-      </button>
+        <div class="flex justify-center space-x-8 text-2xl mb-6 font-bold ">
+          <router-link
+            class="opacity-25"
+            :to="{name: 'Auth', params: {mode: 'signin'}}"
+          >
+            Sign In
+          </router-link>
 
-      <p v-if="$store.state.user">
-        {{ $store.state.user.email }}
-      </p>
-    </div>
+          <router-link
+            class="opacity-25"
+            :to="{name: 'Auth', params: {mode: 'signup'}}"
+          >
+            Sign Up
+          </router-link>
+        </div>
+
+        <!-- Do we need the mode here? <h1>{{ modeTitle }}</h1> -->
+
+        <form
+          class="flex flex-col"
+          @submit.prevent="submit"
+        >
+          <input
+            v-model="email"
+            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
+            type="text"
+            placeholder="Email"
+            required
+          >
+          <input
+            v-model="password"
+            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
+            type="password"
+            placeholder="Password"
+            required
+          >
+
+          <input
+            class="mt-2 py-2 bg-blue-600 cursor-pointer hover:bg-blue-500"
+            type="submit"
+            :value="modeTitle"
+          >
+        </form>
+
+        <h4 v-if="error">
+          {{ error }}
+        </h4>
+
+        <button
+          class="mt-4 py-2 bg-red-800 hover:bg-red-700 cursor-pointer block w-full"
+          @click="gitLogin"
+        >
+          Sign In with GitHub
+        </button>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -120,8 +147,9 @@ export default {
 </script>
 
 <style scoped>
-.hidden {
-  display: none;
+
+.router-link-active {
+  @apply opacity-100;
 }
 
 </style>
