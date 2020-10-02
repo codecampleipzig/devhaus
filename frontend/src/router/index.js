@@ -25,8 +25,8 @@ const routes = [
     component: Register,
     meta: { requiresAuth: true, requiresProfile: false },
   },
-  { path: '*', component: NotFound },
-
+  { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: false } },
+  { path: '*', component: NotFound, meta: { requiresAuth: false, requiresProfile: false } },
   {
     path: '/',
     component: HomeLayout,
@@ -37,6 +37,8 @@ const routes = [
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true },
       },
+      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
+
       {
         path: '/members',
         name: 'Members',
