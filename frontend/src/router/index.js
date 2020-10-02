@@ -9,6 +9,7 @@ import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import store from '../store';
 import NotFound from '../views/404.vue';
+import { firebaseAuthConnected, boundProfiles } from '../main';
 
 Vue.use(VueRouter);
 
@@ -58,6 +59,13 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresAuth: true },
+  },
+
 ];
 
 const router = new VueRouter({
@@ -66,22 +74,36 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.name == 'Auth' && store.state.user) {
-    return next({ name: 'Home' });
-  }
-  if (to.meta.requiresAuth && store.state.user == null) {
-    return next({ name: 'Auth', params: { mode: 'signin' } });
-  } if
-  (to.meta.requiresProfile
-    && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
-    == false) {
-    return next({ name: 'Register' });
-  }
-  if (to.name == 'Register'
-  && store.state.profiles.some((profile) => profile.userId == store.state.user.uid)
-  == true) {
-    return next({ name: 'Home' });
+router.beforeEach(async (to, from, next) => {
+  await firebaseAuthConnected;
+  if (to.meta.requiresAuth) {
+    // is the user logged in?
+    if (store.state.user) {
+      // is the user logged in and needs a profile to continue?
+      await boundProfiles;
+      if (to.meta.requiresProfile) {
+        // check that the logged-in user has a profile
+        if (store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
+          return next();
+        }
+        // if not, redirect user to the register page to create a profile
+        return next({ name: 'Register' });
+      }
+      // profile was not required to move forward
+      // TODO: if profile exists, move forward to home
+      console.assert(to.name == 'Register');
+      if (store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
+        return next({ name: 'Home' });
+      }
+      return next();
+    }
+    // user is trying to navigate to a page that requires authentication
+    return next({
+      name: 'Auth',
+      params: {
+        mode: 'signin',
+      },
+    });
   }
   return next();
 });
