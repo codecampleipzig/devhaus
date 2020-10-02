@@ -63,12 +63,7 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      userInfo: {
-        userName: null,
-        firstName: null,
-        lastName: null,
-        class: null,
-      },
+      userInfo: this.createEmptyUserInfo(),
     };
   },
   computed: {
@@ -77,17 +72,19 @@ export default {
   methods: {
     async submit() {
       await db.collection('profiles').add({
-        userName: this.userInfo.userName,
-        firstName: this.userInfo.firstName,
-        lastName: this.userInfo.lastName,
-        classNumber: this.userInfo.class,
+        ...this.userInfo,
         userId: this.user.uid,
       });
-      this.userInfo.userName = '';
-      this.userInfo.firstName = '';
-      this.userInfo.lastName = '';
-      this.userInfo.class = '';
-      this.$router.push({ name: 'Home' });
+      this.userInfo = this.createEmptyUserInfo();
+      await this.$router.push({ name: 'Home' });
+    },
+    createEmptyUserInfo() {
+      return {
+        userName: '',
+        firstName: '',
+        lastName: '',
+        classNumber: '',
+      };
     },
   },
 };

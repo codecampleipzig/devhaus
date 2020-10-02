@@ -27,7 +27,15 @@ export default {
 
 * {
   font-family: 'Raleway', sans-serif;
+
+}
+
+p {
   font-weight: 200;
   letter-spacing: 20%;
+}
+
+body {
+  color: #2E354F;
 }
 </style>

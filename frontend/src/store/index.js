@@ -14,8 +14,11 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
+
   },
-  plugins: [CreatePersistedState()],
+  plugins: [CreatePersistedState({
+    paths: ['user', 'profiles'],
+  })],
   mutations: {
     ...vuexfireMutations,
     PUSH_NOTIFICATION(state, notification) {
@@ -46,15 +49,18 @@ export default new Vuex.Store({
       }, 5000);
     },
     async signOut() {
-      await auth.signOut();
-      router.push({
+      await router.push({
         name: 'Auth',
         params: {
           mode: 'signin',
         },
       });
+      await auth.signOut();
     },
-    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles', db.collection('profiles'))),
+    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles',
+      db.collection('profiles'),
+      { wait: true })),
+
   },
   modules: {},
 });
