@@ -8,6 +8,7 @@
     <p class="justify-center m-16 text-xl">
       or
     </p>
+
     <p class="justify-center m-16 text-xl">
       there was an error in the link you followed or typed.
     </p>

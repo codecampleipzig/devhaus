@@ -26,7 +26,6 @@ const routes = [
     meta: { requiresAuth: true, requiresProfile: false },
   },
   { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: false } },
-  { path: '*', component: NotFound, meta: { requiresAuth: false, requiresProfile: false } },
   {
     path: '/',
     component: HomeLayout,
@@ -63,8 +62,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  // routes: [
-  //   { path: '*', component: NotFound }],
   base: process.env.BASE_URL,
   routes,
 });
