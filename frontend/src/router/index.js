@@ -8,6 +8,7 @@ import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import store from '../store';
+import NotFound from '../views/404.vue';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,8 @@ const routes = [
     component: Register,
     meta: { requiresAuth: true, requiresProfile: false },
   },
+  { path: '*', component: NotFound },
+
   {
     path: '/',
     component: HomeLayout,
@@ -58,6 +61,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
+  // routes: [
+  //   { path: '*', component: NotFound }],
   base: process.env.BASE_URL,
   routes,
 });
