@@ -79,7 +79,7 @@
 <script>
 import firebase from 'firebase';
 import { auth } from '@/firebase';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Auth',
@@ -102,20 +102,21 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['bindProfiles']),
-    submit() {
-      if (this.mode == 'signin') {
-        return this.signIn();
+    async submit() {
+      try {
+        if (this.mode == 'signin') {
+          await this.signIn();
+        } else { await this.signUp(); }
+      } catch (error) {
+        console.error(error);
       }
-      return this.signUp();
     },
     async signIn() {
       try {
         await auth.signInWithEmailAndPassword(this.email, this.password);
-        await this.bindProfiles();
         this.email = '';
         this.password = '';
-        this.$router.push({ name: 'Home' });
+        await this.$router.push({ name: 'Home' });
       } catch (error) {
         this.error = 'Invalid email or password.';
       }
@@ -123,10 +124,9 @@ export default {
     async signUp() {
       try {
         await auth.createUserWithEmailAndPassword(this.email, this.password);
-        await this.bindProfiles();
         this.email = '';
         this.password = '';
-        this.$router.push({ name: 'Register' });
+        await this.$router.push({ name: 'Register' });
       } catch (error) {
         this.error = 'User already exists!';
       }
@@ -134,10 +134,8 @@ export default {
     async gitLogin() {
       const provider = new firebase.auth.GithubAuthProvider();
       try {
-        await firebase.auth().signInWithPopup(provider).then((result) => {
-          this.email = result.credential.email;
-          this.$router.push({ name: 'Home' });
-        });
+        await firebase.auth().signInWithPopup(provider);
+        await this.$router.push({ name: 'Home' });
       } catch (error) {
         console.error(error);
       }

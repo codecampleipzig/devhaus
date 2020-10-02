@@ -14,8 +14,31 @@ import store from './store';
 import './assets/tailwind.css';
 import App from './App.vue';
 
-auth.onAuthStateChanged((user) => {
+let markProfilesAsBound = null;
+let profileBoolean = false;
+export const boundProfiles = new Promise((resolve) => {
+  markProfilesAsBound = resolve;
+});
+
+let markFirebaseAuthAsConnected;
+let firebaseAuthBoolean = false;
+export const firebaseAuthConnected = new Promise((resolve) => {
+  markFirebaseAuthAsConnected = resolve;
+});
+
+auth.onAuthStateChanged(async (user) => {
+  if (firebaseAuthBoolean == false) {
+    markFirebaseAuthAsConnected();
+    firebaseAuthBoolean = true;
+  }
   store.commit('SET_USER', user);
+  if (user) {
+    await store.dispatch('bindProfiles');
+    if (profileBoolean == false) {
+      markProfilesAsBound();
+      profileBoolean = true;
+    }
+  }
 });
 
 library.add(

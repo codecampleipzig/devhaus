@@ -15,7 +15,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV == 'test') {
   firebase.firestore().settings({
