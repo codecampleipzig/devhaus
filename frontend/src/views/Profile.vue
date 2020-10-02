@@ -22,6 +22,7 @@
         id="icon"
         icon="edit"
         title="Edit profile"
+        @click="editBasic"
       />
     </section>
     <section>
@@ -46,23 +47,43 @@
           id="icon"
           icon="edit"
           title="Edit section"
+          @click="editSocialLinks"
         />
       </div>
       <div id="languages">
         <h2 class="mt-2">
           Languages
         </h2>
-        <p>Technical</p><p
+        <p>Technical:</p><p
           v-for="technical in profileInfo.languages.technical"
           :key="technical.name"
         >
           {{ technical }}
-        </p><p>Natural:</p>
+        </p>
+        <form v-if="editLanguages == true">
+          <div
+            v-for="language in languages.technical"
+            :key="language.name"
+          >
+            <input
+              v-model="language.value"
+              type="checkbox"
+              true-value="true"
+              false-value="false"
+            >
+            <label
+              :for="language.name"
+            > {{ language.name }} </label>
+          </div>
+          <input type="submit">
+        </form>
+        <p>Natural:</p>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
           icon="edit"
           title="Edit section"
+          @click="editLang"
         />
       </div>
       <div id="hobbies">
@@ -73,7 +94,7 @@
           v-for="hobby in myHobbies"
           :key="hobby.name"
         /> -->
-        <form v-if="edit == true">
+        <form v-if="editHobbies == true">
           <div
             v-for="hobby in hobbies"
             :key="hobby.name"
@@ -95,7 +116,7 @@
           id="icon"
           icon="edit"
           title="Edit section"
-          @click="editProfile"
+          @click="editHobby"
         />
       </div>
     </section>
@@ -106,6 +127,7 @@
         id="icon"
         icon="edit"
         title="Edit section"
+        @click="editQuestions"
       />
       <div
         v-for="question in profileInfo.questions"
@@ -176,7 +198,12 @@ export default {
 
   data() {
     return {
-      edit: false,
+      editInfo: false,
+      editLanguages: false,
+      editAbout: false,
+      editProjects: false,
+      editSocial: false,
+      editHobbies: false,
       userName: null,
       githubUsername: null,
       firstName: null,
@@ -429,9 +456,34 @@ export default {
     },
   },
   methods: {
-    editProfile() {
-      if (this.edit == false) { this.edit = true; } else {
-        this.edit = false;
+    editLang() {
+      if (this.editLanguages == false) { this.editLanguages = true; } else {
+        this.editLanguages = false;
+      }
+    },
+    editQuestions() {
+      if (this.editAbout == false) { this.editAbout = true; } else {
+        this.editAbout = false;
+      }
+    },
+    editBasic() {
+      if (this.editInfo == false) { this.ediInfo = true; } else {
+        this.editInfo = false;
+      }
+    },
+    editSocialLinks() {
+      if (this.editSocial == false) { this.editSocial = true; } else {
+        this.editSocial = false;
+      }
+    },
+    editHobby() {
+      if (this.editHobbies == false) { this.editHobbies = true; } else {
+        this.editHobbies = false;
+      }
+    },
+    editProject() {
+      if (this.editProjects == false) { this.editProjects = true; } else {
+        this.editProjects = false;
       }
     },
   },
