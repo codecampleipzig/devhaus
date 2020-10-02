@@ -1,7 +1,7 @@
 import { auth, db } from '@/firebase';
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import CreatePersistedState from 'vuex-persistedstate';
+import CreatePersistedState from 'vuex-persistedstate';
 import { vuexfireMutations, firestoreAction } from 'vuexfire';
 import router from '@/router';
 
@@ -16,7 +16,9 @@ export default new Vuex.Store({
     profiles: [],
 
   },
-  // plugins: [CreatePersistedState()],
+  plugins: [CreatePersistedState({
+    paths: ['user', 'profiles'],
+  })],
   mutations: {
     ...vuexfireMutations,
     PUSH_NOTIFICATION(state, notification) {
