@@ -1,58 +1,56 @@
 <template>
-  <div class="py-10 flex justify-center">
-    <div
-      class="bg-teal-600 p-16
-  flex flex-col justify-center
-  max-w-screen-sm rounded-lg shadow-lg"
-    >
-      <div class="flex flex-row justify-center">
-        <img
-          class="w-auto rounded-l-full opacity-75"
-          src="https://cdn.wedevs.com/uploads/2019/12/How-to-Customize-Your-WordPress-Login-Screen.png"
-          alt=""
+  <div class="py-6 flex justify-center">
+    <div class="child">
+      <h1 class="green flex h-40 w-40 pl-1 text-2xl font-medium">
+        DEV
+        HAUS
+        LEIPZIG
+      </h1>
+    </div>
+    <div class="parent rounded-lg">
+      <div class="bg-teal-700 rounded-lg p-16 shadow-lg">
+        <h1
+          class="text-3xl text-gray-400
+      font-bold flex justify-center mt-8 border-b border-black"
         >
-
-        <div class="bg-indigo-400 rounded-r-lg p-4 shadow-lg">
-          <h1 class="text-3xl font-bold flex justify-center mt-8">
-            REGISTRATION INFO
-          </h1>
-          <form
-            class="m-12 text-2xl flex flex-col space-y-8 rounded-lg"
-            @submit.prevent="submit"
+          REGISTRATION INFO
+        </h1>
+        <form
+          class="m-12 text-2xl flex flex-col space-y-8 rounded-lg"
+          @submit.prevent="submit"
+        >
+          <input
+            v-model="userInfo.userName"
+            class="p-1 bg-blue-200 max-w-sm rounded"
+            type="text"
+            placeholder="User Name"
           >
-            <input
-              v-model="userInfo.userName"
-              class="p-1 bg-blue-200 max-w-sm rounded"
-              type="text"
-              placeholder="User Name"
-            >
-            <input
-              v-model="userInfo.firstName"
-              class="p-1 bg-blue-200 max-w-sm rounded"
-              type="text"
-              placeholder="First Name"
-              required
-            >
-            <input
-              v-model="userInfo.lastName"
-              class="p-1 bg-blue-200 max-w-sm rounded"
-              type="text"
-              placeholder="Last Name"
-              required
-            >
-            <input
-              v-model="userInfo.class"
-              class="p-1 bg-blue-200 max-w-sm rounded"
-              type="number"
-              placeholder="Class #"
-              required
-            >
-            <input
-              class="p-1 bg-blue-700 max-w-sm rounded-full shadow font-medium"
-              type="submit"
-            >
-          </form>
-        </div>
+          <input
+            v-model="userInfo.firstName"
+            class="p-1 bg-blue-200 max-w-sm rounded"
+            type="text"
+            placeholder="First Name"
+            required
+          >
+          <input
+            v-model="userInfo.lastName"
+            class="p-1 bg-blue-200 max-w-sm rounded"
+            type="text"
+            placeholder="Last Name"
+            required
+          >
+          <input
+            v-model="userInfo.class"
+            class="p-1 bg-blue-200 max-w-sm rounded"
+            type="number"
+            placeholder="Class #"
+            required
+          >
+          <input
+            class="p-1 bg-gray-700 text-gray-400 max-w-sm rounded-full shadow font-medium"
+            type="submit"
+          >
+        </form>
       </div>
     </div>
   </div>
@@ -97,4 +95,30 @@ export default {
 
 <style scoped>
 
+h1 {
+  display: flex;
+  align-items: flex-end;
+  margin: 1rem;
+}
+
+.green {
+  background-color:#AFCBC9;
+  color:#847971;
+}
+
+.parent {
+  position: relative;
+  padding: 5rem;
+  z-index: 0;
+  opacity: 80%;
+}
+
+.child {
+  position: absolute;
+  z-index: 100;
+  top: 20;
+  left: 10%;
+  opacity: 80%;
+
+}
 </style>
