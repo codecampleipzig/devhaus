@@ -71,13 +71,197 @@ export default {
         location: null,
         jobTitle: null,
         company: null,
-        hobbies: [],
-        languages: [
+        hobbies: [
           {
-            natural: {},
+            name: 'Hiking',
+            value: false,
           },
           {
-            technical: {},
+            name: 'Reading',
+            value: false,
+          },
+          {
+            name: 'Swimming',
+            value: false,
+          },
+          {
+            name: 'Rowing',
+            value: false,
+          },
+          {
+            name: 'Gaming',
+            value: false,
+          },
+          {
+            name: 'Music',
+            value: false,
+          },
+          {
+            name: 'Cooking',
+            value: false,
+          },
+          {
+            name: 'Knitting',
+            value: false,
+          },
+          {
+            name: 'Painting',
+            value: false,
+          },
+          {
+            name: 'Travelling',
+            value: false,
+          },
+          {
+            name: 'Movies',
+            value: false,
+          },
+          {
+            name: 'Writing',
+            value: false,
+          },
+          {
+            name: 'Bouldering',
+            value: false,
+          },
+          {
+            name: 'Complaining',
+            value: false,
+          },
+          {
+            name: 'Coding',
+            value: false,
+          },
+          {
+            name: 'Sports',
+            value: false,
+          }],
+        languages: [
+          {
+            natural: [
+              {
+                name: 'English',
+                value: false,
+              },
+              {
+                name: 'German',
+                value: false,
+              },
+              {
+                name: 'Spanish',
+                value: false,
+              },
+              {
+                name: 'Mandarin',
+                value: false,
+              },
+              {
+                name: 'Italian',
+                value: false,
+              },
+              {
+                name: 'French',
+                value: false,
+              },
+              {
+                name: 'Croatian',
+                value: false,
+              },
+              {
+                name: 'Polish',
+                value: false,
+              },
+              {
+                name: 'Russian',
+                value: false,
+              },
+              {
+                name: 'Portuguese',
+                value: false,
+              },
+              {
+                name: 'Hebrew',
+                value: false,
+              },
+              {
+                name: 'Japanese',
+                value: false,
+              },
+              {
+                name: 'Arabic',
+                value: false,
+              },
+            ],
+          },
+          {
+            technical:
+           [
+             {
+               name: 'HTML',
+               value: false,
+             },
+             {
+               name: 'CSS',
+               value: false,
+             },
+             {
+               name: 'JavaScript',
+               value: false,
+             },
+             {
+               name: 'SQL',
+               value: false,
+             },
+             {
+               name: 'JSON',
+               value: false,
+             },
+             {
+               name: 'Markdown',
+               value: false,
+             },
+             {
+               name: 'Vue',
+               value: false,
+             },
+             {
+               name: 'Java',
+               value: false,
+             },
+             {
+               name: 'C',
+               value: false,
+             },
+             {
+               name: 'C++',
+               value: false,
+             },
+             {
+               name: 'TypeScript',
+               value: false,
+             },
+             {
+               name: 'Python',
+               value: false,
+             },
+             {
+               name: 'Rust',
+               value: false,
+             },
+             {
+               name: 'REST',
+               value: false,
+             },
+             {
+               name: 'Cypress',
+               value: false,
+             },
+             {
+               name: 'Express',
+               value: false,
+             },
+           ]
+            ,
           },
         ],
         questions: [
@@ -114,22 +298,7 @@ export default {
     async submit() {
       await db.collection('profiles').add({
         userId: this.user.uid,
-        userEmail: this.user.email,
-        userName: this.userInfo.userName,
-        githubUsername: this.userInfo.githubUsername,
-        firstName: this.userInfo.firstName,
-        lastName: this.userInfo.lastName,
-        classNumber: this.userInfo.class,
-        gender: this.userInfo.gender,
-        birthday: this.userInfo.birthday,
-        location: this.userInfo.location,
-        role: this.userInfo.role,
-        languages: this.userInfo.languages,
-        questions: this.userInfo.questions,
-        hobbies: this.userInfo.hobbies,
-        projects: this.userInfo.projects,
-        jobTitle: this.userInfo.jobTitle,
-        company: this.userInfo.company,
+        ...this.userInfo,
       });
       this.$router.push({ name: 'Home' });
       this.userInfo.userName = '';

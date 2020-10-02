@@ -22,6 +22,7 @@
         id="icon"
         icon="edit"
         title="Edit profile"
+        @click="editBasic"
       />
     </section>
     <section>
@@ -46,34 +47,76 @@
           id="icon"
           icon="edit"
           title="Edit section"
+          @click="editSocialLinks"
         />
       </div>
       <div id="languages">
         <h2 class="mt-2">
           Languages
-        </h2><p>Technical:</p><p>Natural:</p>
+        </h2>
+        <p>Technical:</p><p
+          v-for="technical in profileInfo.languages.technical"
+          :key="technical.name"
+        >
+          {{ technical }}
+        </p>
+        <form v-if="editLanguages == true">
+          <div
+            v-for="language in languages.technical"
+            :key="language.name"
+          >
+            <input
+              v-model="language.value"
+              type="checkbox"
+              true-value="true"
+              false-value="false"
+            >
+            <label
+              :for="language.name"
+            > {{ language.name }} </label>
+          </div>
+          <input type="submit">
+        </form>
+        <p>Natural:</p>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
           icon="edit"
           title="Edit section"
+          @click="editLang"
         />
       </div>
       <div id="hobbies">
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <p />
-        <input
-          v-if="edit == true"
-          type="text"
-        >
+        <!-- <p
+          v-for="hobby in myHobbies"
+          :key="hobby.name"
+        /> -->
+        <form v-if="editHobbies == true">
+          <div
+            v-for="hobby in hobbies"
+            :key="hobby.name"
+          >
+            <input
+              v-model="hobby.value"
+              type="checkbox"
+              true-value="true"
+              false-vale="false"
+            >
+            <label
+              :for="hobby.name"
+            > {{ hobby.name }} </label>
+          </div>
+          <input type="submit">
+        </form>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
           icon="edit"
           title="Edit section"
-          @click="editProfile"
+          @click="editHobby"
         />
       </div>
     </section>
@@ -84,13 +127,14 @@
         id="icon"
         icon="edit"
         title="Edit section"
+        @click="editQuestions"
       />
       <div
         v-for="question in profileInfo.questions"
         :key="question.id"
       >
-        <h2>question.qA.question</h2>
-        <p>question.qA.answer</p>
+        <h2>{{ question.qA.question }}</h2>
+        <p>{{ question.qA.answer }}</p>
       </div>
     </section>
     <section
@@ -151,12 +195,247 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Profile',
+
   data() {
     return {
-      edit: false,
-      questions: null,
+      editInfo: false,
+      editLanguages: false,
+      editAbout: false,
+      editProjects: false,
+      editSocial: false,
+      editHobbies: false,
+      userName: null,
+      githubUsername: null,
+      firstName: null,
+      lastName: null,
+      class: null,
+      role: null,
+      gender: null,
+      birthday: null,
+      location: null,
+      jobTitle: null,
+      company: null,
+      hobbies: [
+        {
+          name: 'Hiking',
+          value: false,
+        },
+        {
+          name: 'Reading',
+          value: false,
+        },
+        {
+          name: 'Swimming',
+          value: false,
+        },
+        {
+          name: 'Rowing',
+          value: false,
+        },
+        {
+          name: 'Gaming',
+          value: false,
+        },
+        {
+          name: 'Music',
+          value: false,
+        },
+        {
+          name: 'Cooking',
+          value: false,
+        },
+        {
+          name: 'Knitting',
+          value: false,
+        },
+        {
+          name: 'Painting',
+          value: false,
+        },
+        {
+          name: 'Travelling',
+          value: false,
+        },
+        {
+          name: 'Movies',
+          value: false,
+        },
+        {
+          name: 'Writing',
+          value: false,
+        },
+        {
+          name: 'Bouldering',
+          value: false,
+        },
+        {
+          name: 'Complaining',
+          value: false,
+        },
+        {
+          name: 'Coding',
+          value: false,
+        },
+        {
+          name: 'Sports',
+          value: false,
+        }],
+      languages: [
+        {
+          natural: [
+            {
+              name: 'English',
+              value: false,
+            },
+            {
+              name: 'German',
+              value: false,
+            },
+            {
+              name: 'Spanish',
+              value: false,
+            },
+            {
+              name: 'Mandarin',
+              value: false,
+            },
+            {
+              name: 'Italian',
+              value: false,
+            },
+            {
+              name: 'French',
+              value: false,
+            },
+            {
+              name: 'Croatian',
+              value: false,
+            },
+            {
+              name: 'Polish',
+              value: false,
+            },
+            {
+              name: 'Russian',
+              value: false,
+            },
+            {
+              name: 'Portuguese',
+              value: false,
+            },
+            {
+              name: 'Hebrew',
+              value: false,
+            },
+            {
+              name: 'Japanese',
+              value: false,
+            },
+            {
+              name: 'Arabic',
+              value: false,
+            },
+          ],
+        },
+        {
+          technical:
+           [
+             {
+               name: 'HTML',
+               value: false,
+             },
+             {
+               name: 'CSS',
+               value: false,
+             },
+             {
+               name: 'JavaScript',
+               value: false,
+             },
+             {
+               name: 'SQL',
+               value: false,
+             },
+             {
+               name: 'JSON',
+               value: false,
+             },
+             {
+               name: 'Markdown',
+               value: false,
+             },
+             {
+               name: 'Vue',
+               value: false,
+             },
+             {
+               name: 'Java',
+               value: false,
+             },
+             {
+               name: 'C',
+               value: false,
+             },
+             {
+               name: 'C++',
+               value: false,
+             },
+             {
+               name: 'TypeScript',
+               value: false,
+             },
+             {
+               name: 'Python',
+               value: false,
+             },
+             {
+               name: 'Rust',
+               value: false,
+             },
+             {
+               name: 'REST',
+               value: false,
+             },
+             {
+               name: 'Cypress',
+               value: false,
+             },
+             {
+               name: 'Express',
+               value: false,
+             },
+           ]
+          ,
+        },
+      ],
+      questions: [
+        {
+          id: 1,
+          qA: {
+            question: 'Why do you love coding?',
+            answer: 'Because it\'s fun!',
+          },
+
+        },
+        {
+          id: 2,
+          qA: {
+            question: 'Why are you here?',
+            answer: 'I don\'t quite know!',
+          },
+
+        },
+      ],
+      projects: [
+        {
+          title: 'My Project',
+          URL: '',
+        },
+      ],
+
     };
   },
+
   computed: {
     ...mapState(['profiles', 'user']),
     userId() {
@@ -169,11 +448,42 @@ export default {
     myProfile() {
       return this.$route.params.userId == this.$store.state.user.uid;
     },
+    // myHobbies() {
+    //   return this.profileInfo.hobbies.find((hobby) => hobby.name == true);
+    // },
+    myNatLanguages() {
+      return this.profileInfo.languages.natural.find((language) => language.natural.name == true);
+    },
   },
   methods: {
-    editProfile() {
-      if (this.edit == false) { this.edit = true; } else {
-        this.edit = false;
+    editLang() {
+      if (this.editLanguages == false) { this.editLanguages = true; } else {
+        this.editLanguages = false;
+      }
+    },
+    editQuestions() {
+      if (this.editAbout == false) { this.editAbout = true; } else {
+        this.editAbout = false;
+      }
+    },
+    editBasic() {
+      if (this.editInfo == false) { this.ediInfo = true; } else {
+        this.editInfo = false;
+      }
+    },
+    editSocialLinks() {
+      if (this.editSocial == false) { this.editSocial = true; } else {
+        this.editSocial = false;
+      }
+    },
+    editHobby() {
+      if (this.editHobbies == false) { this.editHobbies = true; } else {
+        this.editHobbies = false;
+      }
+    },
+    editProject() {
+      if (this.editProjects == false) { this.editProjects = true; } else {
+        this.editProjects = false;
       }
     },
   },
