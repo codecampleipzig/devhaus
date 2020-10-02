@@ -1,58 +1,68 @@
 <template>
-  <div class="py-6 flex justify-center">
-    <div class="child">
-      <h1 class="green flex h-40 w-40 pl-1 text-2xl font-medium">
-        DEV
-        HAUS
-        LEIPZIG
-      </h1>
-    </div>
-    <div class="parent rounded-lg">
-      <div class="bg-teal-700 rounded-lg p-16 shadow-lg">
+  <div class="flex items-center justify-center space-x-24 min-h-screen bg-gray-100">
+    <section>
+      <div class="bg-red-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
+        </h1>
+      </div>
+      <div class="bg-gray-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
+        </h1>
+      </div>
+      <div class="bg-yellow-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
+        </h1>
+      </div>
+    </section>
+    <section class="parent rounded-lg">
+      <div class="bg-white rounded-lg p-16 shadow-lg">
         <h1
-          class="text-3xl text-gray-400
+          class="text-3xl text-black
       font-bold flex justify-center mt-8 border-b border-black"
         >
           REGISTRATION INFO
         </h1>
         <form
-          class="m-12 text-2xl flex flex-col space-y-8 rounded-lg"
+          class="flex flex-col"
           @submit.prevent="submit"
         >
           <input
             v-model="userInfo.userName"
-            class="p-1 bg-blue-200 max-w-sm rounded"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="User Name"
           >
           <input
             v-model="userInfo.firstName"
-            class="p-1 bg-blue-200 max-w-sm rounded"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="First Name"
             required
           >
           <input
             v-model="userInfo.lastName"
-            class="p-1 bg-blue-200 max-w-sm rounded"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="Last Name"
             required
           >
           <input
             v-model="userInfo.class"
-            class="p-1 bg-blue-200 max-w-sm rounded"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="number"
             placeholder="Class #"
             required
           >
           <input
-            class="p-1 bg-gray-700 text-gray-400 max-w-sm rounded-full shadow font-medium"
+            class="mt-2 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
             type="submit"
           >
         </form>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -91,31 +101,4 @@ export default {
 </script>
 
 <style scoped>
-
-h1 {
-  display: flex;
-  align-items: flex-end;
-  margin: 1rem;
-}
-
-.green {
-  background-color:#AFCBC9;
-  color:#847971;
-}
-
-.parent {
-  position: relative;
-  padding: 5rem;
-  z-index: 0;
-  opacity: 80%;
-}
-
-.child {
-  position: absolute;
-  z-index: 100;
-  top: 20;
-  left: 10%;
-  opacity: 80%;
-
-}
 </style>
