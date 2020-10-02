@@ -1,32 +1,47 @@
 <template>
-  <div class="flex items-center justify-center space-x-24 min-h-screen">
+  <div class="flex items-center justify-center space-x-24 min-h-screen bg-gray-100">
     <section>
-      <div>
-        <img
-          src="https://codecampleipzig.de/images/code-camp-leipzig-logo.svg"
-          alt="logo"
-        >
-        <h1 class="text-6xl font-bold">
-          DEVHAUS
+      <div class="bg-red-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
+        </h1>
+      </div>
+      <div class="bg-gray-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
+        </h1>
+      </div>
+      <div class="bg-yellow-300 h-64 w-64 opacity-75">
+        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
+          DEV HAUS LEIPZIG
         </h1>
       </div>
     </section>
 
     <section>
       <div
-        class="bg-blue-900 py-10 w-screen
-      max-w-sm px-6 my-10 text-white shadow-md rounded"
+        class="
+        bg-white
+        py-16
+        w-screen
+        max-w-sm
+        px-6
+        my-10
+        text-black
+        shadow-md
+        rounded
+        "
       >
         <div class="flex justify-center space-x-8 text-2xl mb-6 font-bold ">
           <router-link
-            class="opacity-25"
+            class="opacity-25 underline"
             :to="{name: 'Auth', params: {mode: 'signin'}}"
           >
             Sign In
           </router-link>
 
           <router-link
-            class="opacity-25"
+            class="opacity-25 underline"
             :to="{name: 'Auth', params: {mode: 'signup'}}"
           >
             Sign Up
@@ -41,7 +56,7 @@
         >
           <input
             v-model="email"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="Email"
             required
@@ -55,7 +70,7 @@
           >
 
           <input
-            class="mt-2 py-2 bg-blue-600 cursor-pointer hover:bg-blue-500"
+            class="mt-2 py-2 cursor-pointer hover:underline bg-white"
             type="submit"
             :value="modeTitle"
           >
@@ -64,9 +79,17 @@
         <h4 v-if="error">
           {{ error }}
         </h4>
-
+        <div class="flex justify-center">
+          <p
+            class="bg-black border rounded-full
+            h-6 w-10  shadow text-center text-white font-bold mt-2
+        "
+          >
+            OR
+          </p>
+        </div>
         <button
-          class="mt-4 py-2 bg-red-800 hover:bg-red-700 cursor-pointer block w-full"
+          class="mt-2 py-2  hover:underline cursor-pointer block w-full"
           @click="gitLogin"
         >
           Sign In with GitHub
