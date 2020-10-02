@@ -1,7 +1,7 @@
 import { auth, db } from '@/firebase';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import CreatePersistedState from 'vuex-persistedstate';
+// import CreatePersistedState from 'vuex-persistedstate';
 import { vuexfireMutations, firestoreAction } from 'vuexfire';
 import router from '@/router';
 
@@ -14,8 +14,9 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
+
   },
-  plugins: [CreatePersistedState()],
+  // plugins: [CreatePersistedState()],
   mutations: {
     ...vuexfireMutations,
     PUSH_NOTIFICATION(state, notification) {
@@ -46,15 +47,18 @@ export default new Vuex.Store({
       }, 5000);
     },
     async signOut() {
-      await auth.signOut();
-      router.push({
+      await router.push({
         name: 'Auth',
         params: {
           mode: 'signin',
         },
       });
+      await auth.signOut();
     },
-    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles', db.collection('profiles'))),
+    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles',
+      db.collection('profiles'),
+      { wait: true })),
+
   },
   modules: {},
 });
