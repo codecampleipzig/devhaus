@@ -51,7 +51,13 @@
       <div id="languages">
         <h2 class="mt-2">
           Languages
-        </h2><p>Technical:</p><p>Natural:</p>
+        </h2>
+        <p>Technical</p><p
+          v-for="technical in profileInfo.languages.technical"
+          :key="technical.name"
+        >
+          {{ technical }}
+        </p><p>Natural:</p>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
@@ -63,11 +69,27 @@
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <p />
-        <input
-          v-if="edit == true"
-          type="text"
-        >
+        <!-- <p
+          v-for="hobby in myHobbies"
+          :key="hobby.name"
+        /> -->
+        <form v-if="edit == true">
+          <div
+            v-for="hobby in hobbies"
+            :key="hobby.name"
+          >
+            <input
+              v-model="hobby.value"
+              type="checkbox"
+              true-value="true"
+              false-vale="false"
+            >
+            <label
+              :for="hobby.name"
+            > {{ hobby.name }} </label>
+          </div>
+          <input type="submit">
+        </form>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
@@ -89,8 +111,8 @@
         v-for="question in profileInfo.questions"
         :key="question.id"
       >
-        <h2>question.qA.question</h2>
-        <p>question.qA.answer</p>
+        <h2>{{ question.qA.question }}</h2>
+        <p>{{ question.qA.answer }}</p>
       </div>
     </section>
     <section
@@ -151,12 +173,242 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Profile',
+
   data() {
     return {
       edit: false,
-      questions: null,
+      userName: null,
+      githubUsername: null,
+      firstName: null,
+      lastName: null,
+      class: null,
+      role: null,
+      gender: null,
+      birthday: null,
+      location: null,
+      jobTitle: null,
+      company: null,
+      hobbies: [
+        {
+          name: 'Hiking',
+          value: false,
+        },
+        {
+          name: 'Reading',
+          value: false,
+        },
+        {
+          name: 'Swimming',
+          value: false,
+        },
+        {
+          name: 'Rowing',
+          value: false,
+        },
+        {
+          name: 'Gaming',
+          value: false,
+        },
+        {
+          name: 'Music',
+          value: false,
+        },
+        {
+          name: 'Cooking',
+          value: false,
+        },
+        {
+          name: 'Knitting',
+          value: false,
+        },
+        {
+          name: 'Painting',
+          value: false,
+        },
+        {
+          name: 'Travelling',
+          value: false,
+        },
+        {
+          name: 'Movies',
+          value: false,
+        },
+        {
+          name: 'Writing',
+          value: false,
+        },
+        {
+          name: 'Bouldering',
+          value: false,
+        },
+        {
+          name: 'Complaining',
+          value: false,
+        },
+        {
+          name: 'Coding',
+          value: false,
+        },
+        {
+          name: 'Sports',
+          value: false,
+        }],
+      languages: [
+        {
+          natural: [
+            {
+              name: 'English',
+              value: false,
+            },
+            {
+              name: 'German',
+              value: false,
+            },
+            {
+              name: 'Spanish',
+              value: false,
+            },
+            {
+              name: 'Mandarin',
+              value: false,
+            },
+            {
+              name: 'Italian',
+              value: false,
+            },
+            {
+              name: 'French',
+              value: false,
+            },
+            {
+              name: 'Croatian',
+              value: false,
+            },
+            {
+              name: 'Polish',
+              value: false,
+            },
+            {
+              name: 'Russian',
+              value: false,
+            },
+            {
+              name: 'Portuguese',
+              value: false,
+            },
+            {
+              name: 'Hebrew',
+              value: false,
+            },
+            {
+              name: 'Japanese',
+              value: false,
+            },
+            {
+              name: 'Arabic',
+              value: false,
+            },
+          ],
+        },
+        {
+          technical:
+           [
+             {
+               name: 'HTML',
+               value: false,
+             },
+             {
+               name: 'CSS',
+               value: false,
+             },
+             {
+               name: 'JavaScript',
+               value: false,
+             },
+             {
+               name: 'SQL',
+               value: false,
+             },
+             {
+               name: 'JSON',
+               value: false,
+             },
+             {
+               name: 'Markdown',
+               value: false,
+             },
+             {
+               name: 'Vue',
+               value: false,
+             },
+             {
+               name: 'Java',
+               value: false,
+             },
+             {
+               name: 'C',
+               value: false,
+             },
+             {
+               name: 'C++',
+               value: false,
+             },
+             {
+               name: 'TypeScript',
+               value: false,
+             },
+             {
+               name: 'Python',
+               value: false,
+             },
+             {
+               name: 'Rust',
+               value: false,
+             },
+             {
+               name: 'REST',
+               value: false,
+             },
+             {
+               name: 'Cypress',
+               name: false,
+             },
+             {
+               name: 'Express',
+               value: false,
+             },
+           ]
+          ,
+        },
+      ],
+      questions: [
+        {
+          id: 1,
+          qA: {
+            question: 'Why do you love coding?',
+            answer: 'Because it\'s fun!',
+          },
+
+        },
+        {
+          id: 2,
+          qA: {
+            question: 'Why are you here?',
+            answer: 'I don\'t quite know!',
+          },
+
+        },
+      ],
+      projects: [
+        {
+          title: 'My Project',
+          URL: '',
+        },
+      ],
+
     };
   },
+
   computed: {
     ...mapState(['profiles', 'user']),
     userId() {
@@ -168,6 +420,12 @@ export default {
     },
     myProfile() {
       return this.$route.params.userId == this.$store.state.user.uid;
+    },
+    // myHobbies() {
+    //   return this.profileInfo.hobbies.find((hobby) => hobby.name == true);
+    // },
+    myNatLanguages() {
+      return this.profileInfo.languages.natural.find((language) => language.natural.name == true);
     },
   },
   methods: {
