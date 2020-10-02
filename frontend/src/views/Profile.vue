@@ -12,46 +12,99 @@
         <p>{{ profileInfo.gender }}</p>
         <p>{{ profileInfo.birthday }}</p>
         <p>{{ profileInfo.location }}</p>
+        <p>{{ profileInfo.role }}</p>
+        <p v-if="profileInfo.mentor == true">
+          Mentor
+        </p>
       </div>
+      <font-awesome-icon
+        v-if="myProfile == true"
+        id="icon"
+        icon="edit"
+        title="Edit profile"
+      />
     </section>
     <section>
-      <h2 class="mt-2">
-        Tags
-      </h2><p>
-        Role:
-      </p><p>Extra:</p>
-      <h2 class="mt-2">
-        Social Links
-      </h2><font-awesome-icon
-        class="m-3"
-        :icon="['fab',
-                'facebook-f']"
-      /><font-awesome-icon
-        class="m-3"
-        :icon="['fab',
-                'linkedin']"
-      /><font-awesome-icon
-        class="m-3"
-        :icon="['fab',
-                'instagram']"
-      />
-      <h2 class="mt-2">
-        Languages
-      </h2><p>Technical:</p><p>Natural:</p>
-      <h2 class="mt-2">
-        Hobbies
-      </h2>
+      <div id="social">
+        <h2 class="mt-2">
+          Social Links
+        </h2><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'facebook-f']"
+        /><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'linkedin']"
+        /><font-awesome-icon
+          class="m-3"
+          :icon="['fab',
+                  'instagram']"
+        />
+        <font-awesome-icon
+          v-if="myProfile == true"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+        />
+      </div>
+      <div id="languages">
+        <h2 class="mt-2">
+          Languages
+        </h2><p>Technical:</p><p>Natural:</p>
+        <font-awesome-icon
+          v-if="myProfile == true"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+        />
+      </div>
+      <div id="hobbies">
+        <h2 class="mt-2">
+          Hobbies
+        </h2>
+        <p />
+        <input
+          v-if="edit == true"
+          type="text"
+        >
+        <font-awesome-icon
+          v-if="myProfile == true"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+          @click="editProfile"
+        />
+      </div>
     </section>
     <section class="middle mb-4 mt-3">
       <h2>About</h2>
-      <h3>Why are you here?</h3>
-      <p>Answer</p>
-      <h3>What are you currently learning?</h3>
-      <p>Answer</p>
+      <font-awesome-icon
+        v-if="myProfile == true"
+        id="icon"
+        icon="edit"
+        title="Edit section"
+      />
+      <div
+        v-for="question in profileInfo.questions"
+        :key="question.id"
+      >
+        <h2>question.qA.question</h2>
+        <p>question.qA.answer</p>
+      </div>
     </section>
-    <section class="mb-4">
+    <section
+      class="
+        mb-4"
+    >
       <div class="project-info">
         <h2>Recent Projects</h2>
+        <font-awesome-icon
+          v-if="myProfile == true"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+        />
         <h3>Project Title</h3>
         <p>
           Project description
@@ -69,7 +122,10 @@
         </div>
       </div>
     </section>
-    <section class="contact">
+    <section
+      v-if="myProfile == false"
+      class="contact"
+    >
       <div class="contact-form">
         <h2>Contact</h2>
         <textarea
@@ -95,6 +151,12 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Profile',
+  data() {
+    return {
+      edit: false,
+      questions: null,
+    };
+  },
   computed: {
     ...mapState(['profiles', 'user']),
     userId() {
@@ -103,6 +165,16 @@ export default {
     profileInfo() {
       const profileUID = this.userId;
       return this.profiles.find((profile) => profile.userId == profileUID);
+    },
+    myProfile() {
+      return this.$route.params.userId == this.$store.state.user.uid;
+    },
+  },
+  methods: {
+    editProfile() {
+      if (this.edit == false) { this.edit = true; } else {
+        this.edit = false;
+      }
     },
   },
 };
@@ -139,6 +211,14 @@ p {
 a {
   font-size: 16px;
   color: #2e354f;
+}
+
+input {
+  border: 1px solid black;
+}
+
+#icon {
+  cursor: pointer;
 }
 
 .profile-picture {

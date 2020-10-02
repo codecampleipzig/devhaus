@@ -19,6 +19,7 @@ import App from './App.vue';
 
 auth.onAuthStateChanged((user) => {
   store.commit('SET_USER', user);
+  console.log(user);
 });
 
 library.add(faCode, faGithub, faFacebookF, faLinkedin, faInstagram, faJsSquare, faVuejs, faReact,

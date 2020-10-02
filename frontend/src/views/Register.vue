@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3>logged in as {{ $store.state.user.email }}</h3>
+    <button @click="$store.dispatch('signOut')">
+      Logout
+    </button>
     <form @submit.prevent="submit">
       <input
         v-model="userInfo.userName"
@@ -28,7 +31,6 @@
         v-model="userInfo.class"
         type="number"
         placeholder="Class #"
-        required
       > <input
         v-model="userInfo.gender"
         type="text"
@@ -63,9 +65,45 @@ export default {
         firstName: null,
         lastName: null,
         class: null,
+        role: null,
         gender: null,
         birthday: null,
         location: null,
+        jobTitle: null,
+        company: null,
+        hobbies: [],
+        languages: [
+          {
+            natural: {},
+          },
+          {
+            technical: {},
+          },
+        ],
+        questions: [
+          {
+            id: 1,
+            qA: {
+              question: 'Why do you love coding?',
+              answer: 'Because it\'s fun!',
+            },
+
+          },
+          {
+            id: 2,
+            qA: {
+              question: 'Why are you here?',
+              answer: 'I don\'t quite know!',
+            },
+
+          },
+        ],
+        projects: [
+          {
+            title: 'My Project',
+            URL: '',
+          },
+        ],
       },
     };
   },
@@ -75,6 +113,8 @@ export default {
   methods: {
     async submit() {
       await db.collection('profiles').add({
+        userId: this.user.uid,
+        userEmail: this.user.email,
         userName: this.userInfo.userName,
         githubUsername: this.userInfo.githubUsername,
         firstName: this.userInfo.firstName,
@@ -83,8 +123,15 @@ export default {
         gender: this.userInfo.gender,
         birthday: this.userInfo.birthday,
         location: this.userInfo.location,
-        userId: this.user.uid,
+        role: this.userInfo.role,
+        languages: this.userInfo.languages,
+        questions: this.userInfo.questions,
+        hobbies: this.userInfo.hobbies,
+        projects: this.userInfo.projects,
+        jobTitle: this.userInfo.jobTitle,
+        company: this.userInfo.company,
       });
+      this.$router.push({ name: 'Home' });
       this.userInfo.userName = '';
       this.userInfo.githubUsername = '';
       this.userInfo.firstName = '';
@@ -93,9 +140,6 @@ export default {
       this.userInfo.gender = '';
       this.userInfo.birthday = '';
       this.userInfo.location = '';
-    },
-    async enter() {
-      this.$router.push({ name: 'Home' });
     },
   },
 };
