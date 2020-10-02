@@ -371,7 +371,7 @@ export default {
              },
              {
                name: 'Cypress',
-               name: false,
+               value: false,
              },
              {
                name: 'Express',
