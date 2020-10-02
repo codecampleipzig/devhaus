@@ -75,8 +75,18 @@
         icon="edit"
         title="Edit section"
       />
+      <div
+        v-for="question in profileInfo.questions"
+        :key="question.id"
+      >
+        <h2>question.qA.question</h2>
+        <p>question.qA.answer</p>
+      </div>
     </section>
-    <section class="mb-4">
+    <section
+      class="
+        mb-4"
+    >
       <div class="project-info">
         <h2>Recent Projects</h2>
         <font-awesome-icon
@@ -134,6 +144,7 @@ export default {
   data() {
     return {
       edit: false,
+      questions: null,
     };
   },
   computed: {

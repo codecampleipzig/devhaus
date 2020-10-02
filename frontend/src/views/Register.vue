@@ -77,18 +77,22 @@ export default {
             technical: {},
           },
         ],
-        about: [
+        questions: [
           {
-            first: {
+            id: 1,
+            qA: {
               question: 'Why do you love coding?',
-              answer: '',
+              answer: 'Because it\'s fun!',
             },
+
           },
           {
-            second: {
+            id: 2,
+            qA: {
               question: 'Why are you here?',
-              answer: '',
+              answer: 'I don\'t quite know!',
             },
+
           },
         ],
         projects: [
@@ -118,7 +122,7 @@ export default {
         location: this.userInfo.location,
         role: this.userInfo.role,
         languages: this.userInfo.languages,
-        about: this.userInfo.about,
+        questions: this.userInfo.questions,
         hobbies: this.userInfo.hobbies,
         projects: this.userInfo.projects,
         jobTitle: this.userInfo.jobTitle,
