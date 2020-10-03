@@ -9,6 +9,7 @@ import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import Calender from '../views/Calender.vue';
 import store from '../store';
+import NotFound from '../views/404.vue';
 import { firebaseAuthConnected, boundProfiles } from '../main';
 
 Vue.use(VueRouter);
@@ -26,6 +27,7 @@ const routes = [
     component: Register,
     meta: { requiresAuth: true, requiresProfile: false },
   },
+  { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: false } },
   {
     path: '/',
     component: HomeLayout,
@@ -36,6 +38,8 @@ const routes = [
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true },
       },
+      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
+
       {
         path: '/members',
         name: 'Members',
