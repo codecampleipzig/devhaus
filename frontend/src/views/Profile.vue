@@ -128,7 +128,7 @@
         </h2>
         <p>Technical:</p>
         <div
-          v-for="language in profileInfoFromDB.languages.technical"
+          v-for="language in profileInfoFromDB.languages"
           :key="language.name"
         >
           <p
@@ -142,7 +142,7 @@
           @submit.prevent="commitToDB(profileLanguages)"
         >
           <div
-            v-for="language in profileInfo.languages.technical"
+            v-for="language in profileInfo.languages"
             :key="language.name"
           >
             <input
@@ -176,7 +176,10 @@
           v-for="hobby in profileInfoFromDB.hobbies"
           :key="hobby.name"
         />
-        <form v-if="editHobbies == true">
+        <form
+          v-if="editHobbies == true"
+          @submit.prevent="commitToDB(profileHobbies)"
+        >
           <div
             v-for="hobby in hobbies"
             :key="hobby.name"
@@ -184,8 +187,8 @@
             <input
               v-model="hobby.value"
               type="checkbox"
-              true-value="true"
-              false-vale="false"
+              :true-value="true"
+              :false-vale="false"
             >
             <label
               :for="hobby.name"
@@ -724,8 +727,74 @@ export default {
       }
     },
     editHobby() {
-      if (this.editHobbies == false) { this.editHobbies = true; } else {
-        this.editHobbies = false;
+      if (this.editHobbies == false) {
+        this.profileHobbies = {
+          hobbies: [
+            {
+              name: 'Hiking',
+              value: false,
+            },
+            {
+              name: 'Reading',
+              value: false,
+            },
+            {
+              name: 'Swimming',
+              value: false,
+            },
+            {
+              name: 'Rowing',
+              value: false,
+            },
+            {
+              name: 'Gaming',
+              value: false,
+            },
+            {
+              name: 'Music',
+              value: false,
+            },
+            {
+              name: 'Cooking',
+              value: false,
+            },
+            {
+              name: 'Knitting',
+              value: false,
+            },
+            {
+              name: 'Painting',
+              value: false,
+            },
+            {
+              name: 'Travelling',
+              value: false,
+            },
+            {
+              name: 'Movies',
+              value: false,
+            },
+            {
+              name: 'Writing',
+              value: false,
+            },
+            {
+              name: 'Bouldering',
+              value: false,
+            },
+            {
+              name: 'Complaining',
+              value: false,
+            },
+            {
+              name: 'Coding',
+              value: false,
+            },
+            {
+              name: 'Sports',
+              value: false,
+            }],
+        };
       }
     },
     editProject() {

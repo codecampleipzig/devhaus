@@ -45,13 +45,8 @@
         placeholder="Location (optional)"
       >
       <input type="submit">
-<<<<<<< HEAD
-      <button @click="enter">
-        Enter
-=======
       <button @click="$store.dispatch('signOut')">
         Logout
->>>>>>> 4945e0464f0c58960ad645f42ceacd67f195b371
       </button>
     </form>
   </div>
@@ -64,85 +59,102 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-<<<<<<< HEAD
-      userInfo: {
-        userName: null,
-        githubUsername: null,
-        firstName: null,
-        lastName: null,
-        class: null,
-        role: null,
-        gender: null,
-        birthday: null,
-        location: null,
-        jobTitle: null,
-        company: null,
-        hobbies: [
-          {
-            name: 'Hiking',
-            value: false,
-          },
-          {
-            name: 'Reading',
-            value: false,
-          },
-          {
-            name: 'Swimming',
-            value: false,
-          },
-          {
-            name: 'Rowing',
-            value: false,
-          },
-          {
-            name: 'Gaming',
-            value: false,
-          },
-          {
-            name: 'Music',
-            value: false,
-          },
-          {
-            name: 'Cooking',
-            value: false,
-          },
-          {
-            name: 'Knitting',
-            value: false,
-          },
-          {
-            name: 'Painting',
-            value: false,
-          },
-          {
-            name: 'Travelling',
-            value: false,
-          },
-          {
-            name: 'Movies',
-            value: false,
-          },
-          {
-            name: 'Writing',
-            value: false,
-          },
-          {
-            name: 'Bouldering',
-            value: false,
-          },
-          {
-            name: 'Complaining',
-            value: false,
-          },
-          {
-            name: 'Coding',
-            value: false,
-          },
-          {
-            name: 'Sports',
-            value: false,
-          }],
-        languages:
+      userInfo: this.createEmptyUserInfo(),
+    };
+  },
+  computed: {
+    ...mapState(['user', 'profile']),
+  },
+  methods: {
+    async submit() {
+      await db.collection('profiles').add({
+        ...this.userInfo,
+        userId: this.user.uid,
+        ...this.userInfo,
+      });
+      this.userInfo = this.createEmptyUserInfo();
+      await this.$router.push({ name: 'Home' });
+    },
+    createEmptyUserInfo() {
+      return {
+        userInfo: {
+          userName: null,
+          githubUsername: null,
+          firstName: null,
+          lastName: null,
+          class: null,
+          role: null,
+          gender: null,
+          birthday: null,
+          location: null,
+          jobTitle: null,
+          company: null,
+          hobbies: [
+            {
+              name: 'Hiking',
+              value: false,
+            },
+            {
+              name: 'Reading',
+              value: false,
+            },
+            {
+              name: 'Swimming',
+              value: false,
+            },
+            {
+              name: 'Rowing',
+              value: false,
+            },
+            {
+              name: 'Gaming',
+              value: false,
+            },
+            {
+              name: 'Music',
+              value: false,
+            },
+            {
+              name: 'Cooking',
+              value: false,
+            },
+            {
+              name: 'Knitting',
+              value: false,
+            },
+            {
+              name: 'Painting',
+              value: false,
+            },
+            {
+              name: 'Travelling',
+              value: false,
+            },
+            {
+              name: 'Movies',
+              value: false,
+            },
+            {
+              name: 'Writing',
+              value: false,
+            },
+            {
+              name: 'Bouldering',
+              value: false,
+            },
+            {
+              name: 'Complaining',
+              value: false,
+            },
+            {
+              name: 'Coding',
+              value: false,
+            },
+            {
+              name: 'Sports',
+              value: false,
+            }],
+          languages:
         {
           natural: [
             {
@@ -266,55 +278,31 @@ export default {
              },
            ],
         },
-        questions: [
-          {
-            id: 1,
-            qA: {
-              question: 'Why do you love coding?',
-              answer: 'Because it\'s fun!',
-            },
+          questions: [
+            {
+              id: 1,
+              qA: {
+                question: 'Why do you love coding?',
+                answer: 'Because it\'s fun!',
+              },
 
-          },
-          {
-            id: 2,
-            qA: {
-              question: 'Why are you here?',
-              answer: 'I don\'t quite know!',
             },
+            {
+              id: 2,
+              qA: {
+                question: 'Why are you here?',
+                answer: 'I don\'t quite know!',
+              },
 
-          },
-        ],
-        projects: [
-          {
-            title: 'My Project',
-            URL: '',
-          },
-        ],
-      },
-=======
-      userInfo: this.createEmptyUserInfo(),
->>>>>>> 4945e0464f0c58960ad645f42ceacd67f195b371
-    };
-  },
-  computed: {
-    ...mapState(['user', 'profile']),
-  },
-  methods: {
-    async submit() {
-      await db.collection('profiles').add({
-        ...this.userInfo,
-        userId: this.user.uid,
-        ...this.userInfo,
-      });
-      this.userInfo = this.createEmptyUserInfo();
-      await this.$router.push({ name: 'Home' });
-    },
-    createEmptyUserInfo() {
-      return {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        classNumber: '',
+            },
+          ],
+          projects: [
+            {
+              title: 'My Project',
+              URL: '',
+            },
+          ],
+        },
       };
     },
   },
