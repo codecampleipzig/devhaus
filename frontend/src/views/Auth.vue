@@ -19,12 +19,10 @@
         >
           <label class="form__label">Email</label>
           <input
-            v-model="email"
             v-model.trim="$v.email.$model"
-            class="form_input"
+            class="form-input"
             type="text"
             placeholder="Email"
-            required
           >
         </div>
         <div
@@ -41,15 +39,13 @@
           class="form-group"
           :class="{ 'form-group--error': $v.password.$error }"
         >
-          <label class="form__label">Password</label>
+          <label class="form-label">Password</label>
           <input
-            v-model="password"
+
             v-model.trim="$v.password.$model"
-            class="form__input"
+            class="form-input"
             type="password"
             placeholder="Password"
-            required
-          >
           >
         </div>
         <div
@@ -64,21 +60,16 @@
         >
           password must have at least {{ $v.password.$params.minLength.min }} charachters.
         </div>
-        <p
-          v-if="submitStatus === 'OK'"
-          class="typo__p"
-        >
-          Thanks for your submission!
-        </p>
+
         <p
           v-if="submitStatus === 'ERROR'"
-          class="typo__p"
+          class="typo-p"
         >
           Please fill the form correctly.
         </p>
         <p
           v-if="submitStatus === 'PENDING'"
-          class="typo__p"
+          class="typo-p"
         >
           Sending...
         </p>
@@ -113,9 +104,7 @@ export default {
     return {
       error: null,
 
-      email: null,
-      password: null,
-
+      submitStatus: '',
     };
   },
   validations: {
@@ -140,25 +129,24 @@ export default {
   methods: {
     ...mapActions(['bindProfiles']),
     submit() {
-      console.log('submit!');
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR';
-      } else if (this.mode == 'signin') {
-        this.submitStatus = 'PENDING';
-        setTimeout(() => {
-          this.submitStatus = 'OK';
-        }, 500);
-        return this.signIn();
+        return;
       }
-      return this.signUp();
+      this.submitStatus = 'PENDING';
+
+      if (this.mode == 'signin') {
+        this.signIn();
+      }
+      this.signUp();
     },
     async signIn() {
       try {
-        await auth.signInWithEmailAndPassword(this.email, this.password);
+        await auth.signInWithEmailAndPassword(this.$v.email.$model, this.$v.password.$model);
         await this.bindProfiles();
-        this.email = '';
-        this.password = '';
+        this.$v.email.$model = '';
+        this.$v.password.$model = '';
         this.$router.push({ name: 'Home' });
       } catch (error) {
         this.error = 'Invalid email or password.';
@@ -166,10 +154,10 @@ export default {
     },
     async signUp() {
       try {
-        await auth.createUserWithEmailAndPassword(this.email, this.password);
+        await auth.createUserWithEmailAndPassword(this.$v.email.$model, this.$v.password.$model);
         await this.bindProfiles();
-        this.email = '';
-        this.password = '';
+        this.$v.email.$model = '';
+        this.$v.password.$model = '';
         this.$router.push({ name: 'Register' });
       } catch (error) {
         this.error = 'User already exists!';
@@ -179,7 +167,7 @@ export default {
       const provider = new firebase.auth.GithubAuthProvider();
       try {
         await firebase.auth().signInWithPopup(provider).then((result) => {
-          this.email = result.credential.email;
+          this.$v.email.$model = result.credential.email;
           this.$router.push({ name: 'Home' });
         });
       } catch (error) {
