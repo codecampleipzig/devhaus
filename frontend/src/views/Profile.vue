@@ -102,19 +102,19 @@
           @submit.prevent="commitToDB(profileSocial)"
         >
           <input
+            v-model="profileSocial.facebook"
             type="text"
             placeholder="Facebook"
-            :v-model="profileSocial.facebook"
           >
           <input
+            v-model="profileSocial.linkedin"
             type="text"
             placeholder="LinkedIn"
-            :v-model="profileSocial.linkedin"
           >
           <input
+            v-model="profileSocial.instagram"
             type="text"
             placeholder="Instagram"
-            :v-model="profileSocial.instagram"
           >
           <input
             type="submit"
@@ -134,7 +134,7 @@
           <p
             v-if="language.value == true"
           >
-            {{ language.name }}
+            {{ language.name }},
           </p>
         </div>
         <form
@@ -142,7 +142,7 @@
           @submit.prevent="commitToDB(profileLanguages)"
         >
           <div
-            v-for="language in profileInfo.languages.technical"
+            v-for="language in profileLanguages.languages.technical"
             :key="language.name"
           >
             <input
