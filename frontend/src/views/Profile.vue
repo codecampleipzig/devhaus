@@ -75,17 +75,17 @@
         <h2 class="mt-2">
           Social Links
         </h2><font-awesome-icon
-          v-if="profileInfoFromDB.facebook != null"
+          v-if="profileInfoFromDB.facebook != ''"
           class="m-3"
           :icon="['fab',
                   'facebook-f']"
         /><font-awesome-icon
-          v-if="profileInfoFromDB.linkedin != null"
+          v-if="profileInfoFromDB.linkedin != ''"
           class="m-3"
           :icon="['fab',
                   'linkedin']"
         /><font-awesome-icon
-          v-if="profileInfoFromDB.instagram != null"
+          v-if="profileInfoFromDB.instagram != ''"
           class="m-3"
           :icon="['fab',
                   'instagram']"
@@ -134,12 +134,15 @@
           <p
             v-if="language.value == true"
           >
-            {{ language.name }},
+            {{ language }},
           </p>
         </div>
         <form
           v-if="editLanguages == true"
-          @submit.prevent="commitToDB(profileLanguages)"
+          @submit.prevent="commitToDB({languages: {natural:
+            profileLanguages.languages.natural
+              .filter((language)=> language.value)
+              .map((language) => language.name)}})"
         >
           <div
             v-for="language in profileLanguages.languages.technical"
@@ -160,6 +163,39 @@
           >
         </form>
         <p>Natural:</p>
+        <div
+          v-for="language in profileInfoFromDB.languages.natural"
+          :key="language"
+        >
+          <p>
+            {{ language }},
+          </p>
+        </div>
+        <form
+          v-if="editLanguages == true"
+          @submit.prevent="commitToDB({languages: {natural:
+            profileLanguages.languages.natural
+              .filter((language)=> language.value)
+              .map((language) => language.name)}})"
+        >
+          <div
+            v-for="language in profileLanguages.languages.natural"
+            :key="language.name"
+          >
+            <input
+              v-model="language.value"
+              type="checkbox"
+              :true-value="true"
+              :false-value="false"
+            >
+            <label
+              :for="language.name"
+            > {{ language.name }}</label>
+          </div>
+          <input
+            type="submit"
+          >
+        </form>
         <font-awesome-icon
           v-if="myProfile == true"
           id="icon"
@@ -202,23 +238,7 @@
         />
       </div>
     </section>
-    <section class="middle mb-4 mt-3">
-      <h2>About</h2>
-      <font-awesome-icon
-        v-if="myProfile == true"
-        id="icon"
-        icon="edit"
-        title="Edit section"
-        @click="editQuestions"
-      />
-      <div
-        v-for="question in profileInfoFromDB.questions"
-        :key="question.id"
-      >
-        <h2>{{ question.qA.question }}</h2>
-        <p>{{ question.qA.answer }}</p>
-      </div>
-    </section>
+
     <section
       class="
         mb-4"
@@ -276,6 +296,7 @@
 import { mapState } from 'vuex';
 import { db } from '@/firebase';
 
+const natLanguages = ['English', 'German', 'Spanish'];
 export default {
   name: 'Profile',
 
@@ -308,9 +329,9 @@ export default {
         location: null,
         jobTitle: null,
         company: null,
-        instagram: null,
-        facebook: null,
-        linkedin: null,
+        instagram: '',
+        facebook: '',
+        linkedin: '',
         hobbies: [
           {
             name: 'Hiking',
@@ -559,10 +580,10 @@ export default {
           firstName: this.profileInfoFromDB.firstName,
           lastName: this.profileInfoFromDB.lastName,
           class: this.profileInfoFromDB.class,
-          mentor: false,
+          mentor: this.profileInfoFromDB.mentor,
           role: this.profileInfoFromDB.role,
           gender: this.profileInfoFromDB.role,
-          birthday: null,
+          birthday: this.profileInfoFromDB.birthday,
           location: this.profileInfoFromDB.location,
           jobTitle: this.profileInfoFromDB.jobTitle,
           company: this.profileInfoFromDB.company,
@@ -579,127 +600,10 @@ export default {
         this.profileLanguages = {
           languages:
         {
-          natural: [
-            {
-              name: 'English',
-              value: false,
-            },
-            {
-              name: 'German',
-              value: false,
-            },
-            {
-              name: 'Spanish',
-              value: false,
-            },
-            {
-              name: 'Mandarin',
-              value: false,
-            },
-            {
-              name: 'Italian',
-              value: false,
-            },
-            {
-              name: 'French',
-              value: false,
-            },
-            {
-              name: 'Croatian',
-              value: false,
-            },
-            {
-              name: 'Polish',
-              value: false,
-            },
-            {
-              name: 'Russian',
-              value: false,
-            },
-            {
-              name: 'Portuguese',
-              value: false,
-            },
-            {
-              name: 'Hebrew',
-              value: false,
-            },
-            {
-              name: 'Japanese',
-              value: false,
-            },
-            {
-              name: 'Arabic',
-              value: false,
-            },
-          ],
-          technical:
-           [
-             {
-               name: 'HTML',
-               value: false,
-             },
-             {
-               name: 'CSS',
-               value: false,
-             },
-             {
-               name: 'JavaScript',
-               value: false,
-             },
-             {
-               name: 'SQL',
-               value: false,
-             },
-             {
-               name: 'JSON',
-               value: false,
-             },
-             {
-               name: 'Markdown',
-               value: false,
-             },
-             {
-               name: 'Vue',
-               value: false,
-             },
-             {
-               name: 'Java',
-               value: false,
-             },
-             {
-               name: 'C',
-               value: false,
-             },
-             {
-               name: 'C++',
-               value: false,
-             },
-             {
-               name: 'TypeScript',
-               value: false,
-             },
-             {
-               name: 'Python',
-               value: false,
-             },
-             {
-               name: 'Rust',
-               value: false,
-             },
-             {
-               name: 'REST',
-               value: false,
-             },
-             {
-               name: 'Cypress',
-               value: false,
-             },
-             {
-               name: 'Express',
-               value: false,
-             },
-           ],
+          natural: natLanguages.map((language) => ({
+            name: language,
+            value: this.profileInfoFromDB.languages.natural.includes(language),
+          })),
         },
         };
         this.editLanguages = true;
