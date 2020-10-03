@@ -68,7 +68,6 @@ export default {
   methods: {
     async submit() {
       await db.collection('profiles').add({
-        ...this.userInfo,
         userId: this.user.uid,
         ...this.userInfo,
       });

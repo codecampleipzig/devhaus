@@ -102,19 +102,19 @@
           @submit.prevent="commitToDB(profileSocial)"
         >
           <input
+            v-model="profileSocial.facebook"
             type="text"
             placeholder="Facebook"
-            :v-model="profileSocial.facebook"
           >
           <input
+            v-model="profileSocial.linkedin"
             type="text"
             placeholder="LinkedIn"
-            :v-model="profileSocial.linkedin"
           >
           <input
+            v-model="profileSocial.instagram"
             type="text"
             placeholder="Instagram"
-            :v-model="profileSocial.instagram"
           >
           <input
             type="submit"
@@ -134,7 +134,7 @@
           <p
             v-if="language.value == true"
           >
-            {{ language.name }}
+            {{ language.name }},
           </p>
         </div>
         <form
@@ -142,7 +142,7 @@
           @submit.prevent="commitToDB(profileLanguages)"
         >
           <div
-            v-for="language in profileInfo.languages"
+            v-for="language in profileLanguages.languages.technical"
             :key="language.name"
           >
             <input
@@ -313,7 +313,7 @@ export default {
         company: null,
         instagram: null,
         facebook: null,
-        linked: null,
+        linkedin: null,
         hobbies: [
           {
             name: 'Hiking',
@@ -561,14 +561,14 @@ export default {
           githubUsername: null,
           firstName: this.profileInfoFromDB.firstName,
           lastName: this.profileInfoFromDB.lastName,
-          class: null,
+          class: this.profileInfoFromDB.class,
           mentor: false,
-          role: null,
-          gender: null,
+          role: this.profileInfoFromDB.role,
+          gender: this.profileInfoFromDB.role,
           birthday: null,
-          location: null,
-          jobTitle: null,
-          company: null,
+          location: this.profileInfoFromDB.location,
+          jobTitle: this.profileInfoFromDB.jobTitle,
+          company: this.profileInfoFromDB.company,
         };
 
         this.editInfo = true;
@@ -712,7 +712,9 @@ export default {
       }
     },
     editQuestions() {
-      if (this.editAbout == false) { this.editAbout = true; } else {
+      if (this.editAbout == false) {
+        this.editAbout = true;
+      } else {
         this.editAbout = false;
       }
     },
@@ -722,7 +724,14 @@ export default {
       }
     },
     editSocialLinks() {
-      if (this.editSocial == false) { this.editSocial = true; } else {
+      if (this.editSocial == false) {
+        this.profileSocial = {
+          facebook: this.profileInfoFromDB.facebook,
+          linkedin: this.profileInfoFromDB.linkedin,
+          instagram: this.profileInfoFromDB.instagram,
+        };
+        this.editSocial = true;
+      } else {
         this.editSocial = false;
       }
     },
