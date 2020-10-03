@@ -18,5 +18,8 @@
     "test": "yarn test:unit && yarn test:e2e"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "vue-select": "^3.10.8",
+    "vuejs-datepicker": "^1.6.2"
+  }
 }

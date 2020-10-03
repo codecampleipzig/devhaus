@@ -15,7 +15,7 @@
     <section>
       <div
         class="bg-blue-900 py-10 w-screen
-      max-w-sm px-6 my-10 text-white shadow-md rounded"
+      max-w-sm px-6 my-10 shadow-md rounded"
       >
         <div class="flex justify-center space-x-8 text-2xl mb-6 font-bold ">
           <router-link

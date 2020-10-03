@@ -39,7 +39,6 @@ const routes = [
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true },
       },
-      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
 
       {
         path: '/members',
@@ -71,6 +70,7 @@ const routes = [
         component: EditProfile,
         meta: { requiresAuth: true, requiresProfile: true },
       },
+      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
     ],
   },
   {
