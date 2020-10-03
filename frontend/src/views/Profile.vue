@@ -172,16 +172,22 @@
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <p
+        <div
           v-for="hobby in profileInfoFromDB.hobbies"
           :key="hobby.name"
-        />
+        >
+          <p
+            v-if="hobby.value == true"
+          >
+            {{ hobby.name }},
+          </p>
+        </div>
         <form
           v-if="editHobbies == true"
           @submit.prevent="commitToDB(profileHobbies)"
         >
           <div
-            v-for="hobby in hobbies"
+            v-for="hobby in profileHobbies"
             :key="hobby.name"
           >
             <input
@@ -804,6 +810,10 @@ export default {
               value: false,
             }],
         };
+        this.editHobbies = true;
+      } else {
+        this.editHobbies = false;
+        this.profileHobbies = null;
       }
     },
     editProject() {
