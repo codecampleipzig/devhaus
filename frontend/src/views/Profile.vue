@@ -21,10 +21,40 @@
         <div v-else>
           <form @submit.prevent="commitToDB(profileInfos)">
             <input
-              id=""
               v-model="profileInfos.firstName"
               type="text"
-              name=""
+              name="first name"
+              placeholder="First Name"
+            >
+            <input
+              v-model="profileInfos.lastName"
+              type="text"
+              name="last name"
+              placeholder="Last Name"
+            >
+            <input
+              v-model="profileInfos.location"
+              type="text"
+              name="location"
+              placeholder="Location"
+            >
+            <input
+              v-model="profileInfos.gender"
+              type="text"
+              name="gender"
+              placeholder="Gender"
+            >
+            <input
+              v-model="profileInfos.role"
+              type="text"
+              name="role"
+              placeholder="Role"
+            >
+            <label for="mentor">Mentor</label>
+            <input
+              v-model="profileInfos.mentor"
+              type="checkbox"
+              name="mentor"
             >
             <input
               type="submit"
@@ -91,8 +121,8 @@
             <input
               v-model="language.value"
               type="checkbox"
-              true-value="true"
-              false-value="false"
+              :true-value="true"
+              :false-value="false"
             >
             <label
               :for="language.name"
@@ -515,8 +545,79 @@ export default {
       }
     },
     editLang() {
-      if (this.editLanguages == false) { this.editLanguages = true; } else {
+      if (this.editLanguages == false) {
+        this.profileHobbies = {
+          hobbies: [
+            {
+              name: 'Hiking',
+              value: false,
+            },
+            {
+              name: 'Reading',
+              value: false,
+            },
+            {
+              name: 'Swimming',
+              value: false,
+            },
+            {
+              name: 'Rowing',
+              value: false,
+            },
+            {
+              name: 'Gaming',
+              value: false,
+            },
+            {
+              name: 'Music',
+              value: false,
+            },
+            {
+              name: 'Cooking',
+              value: false,
+            },
+            {
+              name: 'Knitting',
+              value: false,
+            },
+            {
+              name: 'Painting',
+              value: false,
+            },
+            {
+              name: 'Travelling',
+              value: false,
+            },
+            {
+              name: 'Movies',
+              value: false,
+            },
+            {
+              name: 'Writing',
+              value: false,
+            },
+            {
+              name: 'Bouldering',
+              value: false,
+            },
+            {
+              name: 'Complaining',
+              value: false,
+            },
+            {
+              name: 'Coding',
+              value: false,
+            },
+            {
+              name: 'Sports',
+              value: false,
+            }],
+
+        };
+        this.editLanguages = true;
+      } else {
         this.editLanguages = false;
+        this.profileLanguages = null;
       }
     },
     editQuestions() {
