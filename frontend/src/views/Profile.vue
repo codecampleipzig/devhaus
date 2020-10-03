@@ -75,14 +75,17 @@
         <h2 class="mt-2">
           Social Links
         </h2><font-awesome-icon
+          v-if="profileInfoFromDB.facebook != null"
           class="m-3"
           :icon="['fab',
                   'facebook-f']"
         /><font-awesome-icon
+          v-if="profileInfoFromDB.linkedin != null"
           class="m-3"
           :icon="['fab',
                   'linkedin']"
         /><font-awesome-icon
+          v-if="profileInfoFromDB.instagram != null"
           class="m-3"
           :icon="['fab',
                   'instagram']"
@@ -94,6 +97,30 @@
           title="Edit section"
           @click="editSocialLinks"
         />
+        <form
+          v-if="editSocial == true"
+          @submit.prevent="commitToDB(profileSocial)"
+        >
+          <input
+            type="text"
+            placeholder="Facebook"
+            :v-model="profileSocial.facebook"
+          >
+          <input
+            type="text"
+            placeholder="LinkedIn"
+            :v-model="profileSocial.linkedin"
+          >
+          <input
+            type="text"
+            placeholder="Instagram"
+            :v-model="profileSocial.instagram"
+          >
+          <input
+            type="submit"
+          >
+          <form />
+        </form>
       </div>
       <div id="languages">
         <h2 class="mt-2">
@@ -112,7 +139,7 @@
         </div>
         <form
           v-if="editLanguages == true"
-          @submit.prevent="commitToDB"
+          @submit.prevent="commitToDB(profileLanguages)"
         >
           <div
             v-for="language in profileInfo.languages.technical"
@@ -281,6 +308,9 @@ export default {
         location: null,
         jobTitle: null,
         company: null,
+        instagram: null,
+        facebook: null,
+        linked: null,
         hobbies: [
           {
             name: 'Hiking',
@@ -546,73 +576,131 @@ export default {
     },
     editLang() {
       if (this.editLanguages == false) {
-        this.profileHobbies = {
-          hobbies: [
+        this.profileLanguages = {
+          languages:
+        {
+          natural: [
             {
-              name: 'Hiking',
+              name: 'English',
               value: false,
             },
             {
-              name: 'Reading',
+              name: 'German',
               value: false,
             },
             {
-              name: 'Swimming',
+              name: 'Spanish',
               value: false,
             },
             {
-              name: 'Rowing',
+              name: 'Mandarin',
               value: false,
             },
             {
-              name: 'Gaming',
+              name: 'Italian',
               value: false,
             },
             {
-              name: 'Music',
+              name: 'French',
               value: false,
             },
             {
-              name: 'Cooking',
+              name: 'Croatian',
               value: false,
             },
             {
-              name: 'Knitting',
+              name: 'Polish',
               value: false,
             },
             {
-              name: 'Painting',
+              name: 'Russian',
               value: false,
             },
             {
-              name: 'Travelling',
+              name: 'Portuguese',
               value: false,
             },
             {
-              name: 'Movies',
+              name: 'Hebrew',
               value: false,
             },
             {
-              name: 'Writing',
+              name: 'Japanese',
               value: false,
             },
             {
-              name: 'Bouldering',
+              name: 'Arabic',
               value: false,
             },
-            {
-              name: 'Complaining',
-              value: false,
-            },
-            {
-              name: 'Coding',
-              value: false,
-            },
-            {
-              name: 'Sports',
-              value: false,
-            }],
-
+          ],
+          technical:
+           [
+             {
+               name: 'HTML',
+               value: false,
+             },
+             {
+               name: 'CSS',
+               value: false,
+             },
+             {
+               name: 'JavaScript',
+               value: false,
+             },
+             {
+               name: 'SQL',
+               value: false,
+             },
+             {
+               name: 'JSON',
+               value: false,
+             },
+             {
+               name: 'Markdown',
+               value: false,
+             },
+             {
+               name: 'Vue',
+               value: false,
+             },
+             {
+               name: 'Java',
+               value: false,
+             },
+             {
+               name: 'C',
+               value: false,
+             },
+             {
+               name: 'C++',
+               value: false,
+             },
+             {
+               name: 'TypeScript',
+               value: false,
+             },
+             {
+               name: 'Python',
+               value: false,
+             },
+             {
+               name: 'Rust',
+               value: false,
+             },
+             {
+               name: 'REST',
+               value: false,
+             },
+             {
+               name: 'Cypress',
+               value: false,
+             },
+             {
+               name: 'Express',
+               value: false,
+             },
+           ],
+        },
         };
         this.editLanguages = true;
       } else {
