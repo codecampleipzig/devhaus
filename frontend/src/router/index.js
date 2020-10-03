@@ -73,12 +73,12 @@ const routes = [
       { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
     ],
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    meta: { requiresAuth: true },
-  },
+  // {
+  //   path: '/register',
+  //   name: 'Register',
+  //   component: Register,
+  //   meta: { requiresAuth: true },
+  // },
 
 ];
 
