@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-40 text-3xl">
-      <h1>Community</h1>
+      <h1>Members</h1>
       <input
         v-model="search"
         type="text"
@@ -18,12 +18,10 @@
             :src="profile.photo"
           >
           <div class="infoContainer">
-            <h3>{{ profile.profileName }}</h3>
+            <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
+
             <div class="role">
-              {{ profile.role }}
-            </div>
-            <div class="role">
-              {{ profile.userClass }}
+              {{ profile.class }}
             </div>
           </div><!--Closing info Container -->
         </div><!-- Closing profile -->
@@ -33,19 +31,21 @@
 </template>
 
 <script>
-import exampleProfiles from '@/example-profiles';
+
 import Fuse from 'fuse.js';
+import { mapState } from 'vuex';
 
 export default {
-  name: 'Community',
+  name: 'Members',
   data() {
     return {
       fuse: null,
-      profiles: exampleProfiles,
+
       search: '',
     };
   },
   computed: {
+    ...mapState(['profiles']),
     results() {
       if (!this.fuse || this.search == '') {
         return this.profiles;

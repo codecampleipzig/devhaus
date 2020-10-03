@@ -1,94 +1,126 @@
 <template>
-  <div>
-    <div class="m-40 text-3xl">
-      <router-link :to="{name: 'Auth', params: {mode: 'signin'}}">
-        Sign In
-      </router-link>
-      <router-link :to="{name: 'Auth', params: {mode: 'signup'}}">
-        Sign Up
-      </router-link>
-      <button @click="$store.dispatch('signOut')">
-        Logout
-      </button>
-      <h1>{{ modeTitle }}</h1>
+  <div class="flex items-center justify-center space-x-24 min-h-screen">
+    <section>
+      <div>
+        <img
+          src="https://codecampleipzig.de/images/code-camp-leipzig-logo.svg"
+          alt="logo"
+        >
+        <h1 class="text-6xl font-bold">
+          DEVHAUS
+        </h1>
+      </div>
+    </section>
 
-      <form @submit.prevent="submit">
-        <div
-          class="form-group"
-          :class="{ 'form-group--error': $v.email.$error }"
-        >
-          <label class="form__label">Email</label>
-          <input
-            v-model.trim="$v.email.$model"
-            class="form-input"
-            type="text"
-            placeholder="Email"
-          >
-        </div>
-        <div
-          v-if="!$v.email.required"
-          class="error"
-        >
-          Email is required
-        </div>
-        <input
-          type="submit"
-          :value="modeTitle"
-        >
-        <div
-          class="form-group"
-          :class="{ 'form-group--error': $v.password.$error }"
-        >
-          <label class="form-label">Password</label>
-          <input
-
-            v-model.trim="$v.password.$model"
-            class="form-input"
-            type="password"
-            placeholder="Password"
-          >
-        </div>
-        <div
-          v-if="!$v.password.required"
-          class="error"
-        >
-          Password is required
-        </div>
-        <div
-          v-if="!$v.password.minLength"
-          class="error"
-        >
-          password must have at least {{ $v.password.$params.minLength.min }} charachters.
-        </div>
-
-        <p
-          v-if="submitStatus === 'ERROR'"
-          class="typo-p"
-        >
-          Please fill the form correctly.
-        </p>
-        <p
-          v-if="submitStatus === 'PENDING'"
-          class="typo-p"
-        >
-          Sending...
-        </p>
-      </form>
-      <h4 v-if="error">
-        {{ error }}
-      </h4>
-      <button>Sign Up with GitHub</button>
-
-      <button
-        @click="gitLogin"
+    <section>
+      <div
+        class="bg-blue-900 py-10 w-screen
+      max-w-sm px-6 my-10 shadow-md rounded"
       >
-        Sign In with GitHub
-      </button>
+        <div class="flex justify-center space-x-8 text-2xl mb-6 font-bold ">
+          <router-link
+            class="opacity-25"
+            :to="{name: 'Auth', params: {mode: 'signin'}}"
+          >
+            Sign In
+          </router-link>
 
-      <p v-if="$store.state.user">
-        {{ $store.state.user.email }}
-      </p>
-    </div>
+          <router-link
+            class="opacity-25"
+            :to="{name: 'Auth', params: {mode: 'signup'}}"
+          >
+            Sign Up
+          </router-link>
+        </div>
+
+        <!-- Do we need the mode here? <h1>{{ modeTitle }}</h1> -->
+
+        <form
+          class="flex flex-col"
+          @submit.prevent="submit"
+        >
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.email.$error }"
+          >
+            <input
+              v-model.trim="email"
+              class="form-input"
+              type="text"
+              placeholder="Email"
+              @blur="$v.email.$touch()"
+            >
+          </div>
+          <div
+            v-if="!$v.email.required && $v.email.$dirty"
+            class="error"
+          >
+            Email is required
+          </div>
+          <div
+            v-if="!$v.email.email && $v.email.$dirty"
+            class="error"
+          >
+            Email is invalid
+          </div>
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.password.$error }"
+          >
+            <input
+
+              v-model.trim="password"
+              class="form-input"
+              type="password"
+              placeholder="Password"
+              @blur="$v.password.$touch()"
+            >
+          </div>
+          <div
+            v-if="!$v.password.required && $v.password.$dirty"
+            class="error"
+          >
+            Password is required
+          </div>
+          <div
+            v-if="!$v.password.minLength && $v.password.$dirty"
+            class="error"
+          >
+            password must have at least {{ $v.password.$params.minLength.min }} charachters.
+          </div>
+
+          <p
+            v-if="submitStatus === 'ERROR'"
+            class="typo-p"
+          >
+            Please fill the form correctly.
+          </p>
+          <p
+            v-if="submitStatus === 'PENDING'"
+            class="typo-p"
+          >
+            Sending...
+          </p>
+
+          <input
+            class="mt-2 py-2 bg-blue-600 cursor-pointer hover:bg-blue-500"
+            type="submit"
+            :value="modeTitle"
+          >
+        </form>
+
+        <h4 v-if="error">
+          {{ error }}
+        </h4>
+
+        <button
+          class="mt-4 py-2 bg-red-800 hover:bg-red-700 cursor-pointer block w-full"
+          @click="gitLogin"
+        >
+          Sign In with GitHub
+        </button>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -96,14 +128,15 @@
 import { required, minLength, email } from 'vuelidate/lib/validators';
 import firebase from 'firebase';
 import { auth } from '@/firebase';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Auth',
   data() {
     return {
       error: null,
-
+      email: '',
+      password: '',
       submitStatus: '',
     };
   },
@@ -127,7 +160,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['bindProfiles']),
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -143,10 +175,10 @@ export default {
     },
     async signIn() {
       try {
-        await auth.signInWithEmailAndPassword(this.$v.email.$model, this.$v.password.$model);
+        await auth.signInWithEmailAndPassword(this.email, this.password);
         await this.bindProfiles();
-        this.$v.email.$model = '';
-        this.$v.password.$model = '';
+        this.email = '';
+        this.password = '';
         this.$router.push({ name: 'Home' });
       } catch (error) {
         this.error = 'Invalid email or password.';
@@ -154,10 +186,10 @@ export default {
     },
     async signUp() {
       try {
-        await auth.createUserWithEmailAndPassword(this.$v.email.$model, this.$v.password.$model);
+        await auth.createUserWithEmailAndPassword(this.email, this.password);
         await this.bindProfiles();
-        this.$v.email.$model = '';
-        this.$v.password.$model = '';
+        this.email = '';
+        this.password = '';
         this.$router.push({ name: 'Register' });
       } catch (error) {
         this.error = 'User already exists!';
@@ -167,7 +199,7 @@ export default {
       const provider = new firebase.auth.GithubAuthProvider();
       try {
         await firebase.auth().signInWithPopup(provider).then((result) => {
-          this.$v.email.$model = result.credential.email;
+          this.email = result.credential.email;
           this.$router.push({ name: 'Home' });
         });
       } catch (error) {
@@ -180,8 +212,9 @@ export default {
 </script>
 
 <style scoped>
-.hidden {
-  display: none;
+
+.router-link-active {
+  @apply opacity-100;
 }
 
 </style>
