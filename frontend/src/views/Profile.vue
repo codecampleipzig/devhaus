@@ -809,4 +809,5 @@ input {
 .button {
   @apply border border-black py-2 px-6 text-center font-bold cursor-pointer;
 }
+
 </style>

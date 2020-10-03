@@ -6,22 +6,17 @@
     >
       <router-link :to="{ name: 'Home'}">
         Home
-      </router-link><router-link :to="{ name: 'Community'}">
-        Community
+      </router-link>
+      <router-link :to="{ name: 'Calender'}">
+        Calender
+      </router-link>
+      <router-link :to="{ name: 'Members'}">
+        Members
       </router-link>
       <router-link :to="{ name: 'Profile', params: {userId: $store.state.user.uid}}">
         Profile
       </router-link>
-      <input
-        type="text"
-        placeholder="...Search"
-      >
-      <router-link :to="{ name: 'EditProfile'}">
-        Edit Profile
-      </router-link>
-      <router-link :to="{ name: 'Community'}">
-        Community
-      </router-link>
+
       <button @click="$store.dispatch('signOut')">
         Logout
       </button>

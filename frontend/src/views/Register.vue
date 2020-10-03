@@ -45,8 +45,13 @@
         placeholder="Location (optional)"
       >
       <input type="submit">
+<<<<<<< HEAD
       <button @click="enter">
         Enter
+=======
+      <button @click="$store.dispatch('signOut')">
+        Logout
+>>>>>>> 4945e0464f0c58960ad645f42ceacd67f195b371
       </button>
     </form>
   </div>
@@ -59,6 +64,7 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
+<<<<<<< HEAD
       userInfo: {
         userName: null,
         githubUsername: null,
@@ -285,6 +291,9 @@ export default {
           },
         ],
       },
+=======
+      userInfo: this.createEmptyUserInfo(),
+>>>>>>> 4945e0464f0c58960ad645f42ceacd67f195b371
     };
   },
   computed: {
@@ -293,18 +302,20 @@ export default {
   methods: {
     async submit() {
       await db.collection('profiles').add({
+        ...this.userInfo,
         userId: this.user.uid,
         ...this.userInfo,
       });
-      this.$router.push({ name: 'Home' });
-      this.userInfo.userName = '';
-      this.userInfo.githubUsername = '';
-      this.userInfo.firstName = '';
-      this.userInfo.lastName = '';
-      this.userInfo.class = '';
-      this.userInfo.gender = '';
-      this.userInfo.birthday = '';
-      this.userInfo.location = '';
+      this.userInfo = this.createEmptyUserInfo();
+      await this.$router.push({ name: 'Home' });
+    },
+    createEmptyUserInfo() {
+      return {
+        userName: '',
+        firstName: '',
+        lastName: '',
+        classNumber: '',
+      };
     },
   },
 };
