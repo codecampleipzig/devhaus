@@ -6,7 +6,11 @@
     >
       <router-link :to="{ name: 'Home'}">
         Home
-      </router-link><router-link :to="{ name: 'Members'}">
+      </router-link>
+      <router-link :to="{ name: 'Calender'}">
+        Calender
+      </router-link>
+      <router-link :to="{ name: 'Members'}">
         Members
       </router-link>
       <router-link :to="{ name: 'Profile', params: {userId: $store.state.user.uid}}">
