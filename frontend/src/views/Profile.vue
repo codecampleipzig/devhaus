@@ -3,26 +3,41 @@
     <section class="flex space-x-4 mb-4">
       <div class="profile-picture" />
       <div class="info">
-        <h1>{{ profileInfo.firstName }} {{ profileInfo.lastName }}</h1>
-        <p>{{ $store.state.user.email }}</p>
-        <p class="role">
-          Class #{{ profileInfo.classNumber }}
-        </p>
-        <p>{{ profileInfo.githubUsername }}</p>
-        <p>{{ profileInfo.gender }}</p>
-        <p>{{ profileInfo.birthday }}</p>
-        <p>{{ profileInfo.location }}</p>
-        <p>{{ profileInfo.role }}</p>
-        <p v-if="profileInfo.mentor == true">
-          Mentor
-        </p>
+        <div v-if="editInfo == false">
+          <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
+          <p>{{ $store.state.user.email }}</p>
+          <p class="role">
+            Class #{{ profileInfo.class }}
+          </p>
+          <p>{{ profileInfoFromDB.githubUsername }}</p>
+          <p>{{ profileInfoFromDB.gender }}</p>
+          <p>{{ profileInfoFromDB.birthday }}</p>
+          <p>{{ profileInfoFromDB.location }}</p>
+          <p>{{ profileInfoFromDB.role }}</p>
+          <p v-if="profileInfoFromDB.mentor == true">
+            Mentor
+          </p>
+        </div>
+        <div v-else>
+          <form @submit.prevent="commitToDB(profileInfos)">
+            <input
+              id=""
+              v-model="profileInfos.firstName"
+              type="text"
+              name=""
+            >
+            <input
+              type="submit"
+            >
+          </form>
+        </div>
       </div>
       <font-awesome-icon
         v-if="myProfile == true"
         id="icon"
         icon="edit"
         title="Edit profile"
-        @click="editBasic"
+        @click="editInformation"
       />
     </section>
     <section>
@@ -54,15 +69,23 @@
         <h2 class="mt-2">
           Languages
         </h2>
-        <p>Technical:</p><p
-          v-for="technical in profileInfo.languages.technical"
-          :key="technical.name"
+        <p>Technical:</p>
+        <div
+          v-for="language in profileInfoFromDB.languages.technical"
+          :key="language.name"
         >
-          {{ technical }}
-        </p>
-        <form v-if="editLanguages == true">
+          <p
+            v-if="language.value == true"
+          >
+            {{ language.name }}
+          </p>
+        </div>
+        <form
+          v-if="editLanguages == true"
+          @submit.prevent="commitToDB"
+        >
           <div
-            v-for="language in languages.technical"
+            v-for="language in profileInfo.languages.technical"
             :key="language.name"
           >
             <input
@@ -73,9 +96,11 @@
             >
             <label
               :for="language.name"
-            > {{ language.name }} </label>
+            > {{ language.name }}</label>
           </div>
-          <input type="submit">
+          <input
+            type="submit"
+          >
         </form>
         <p>Natural:</p>
         <font-awesome-icon
@@ -90,10 +115,10 @@
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <!-- <p
-          v-for="hobby in myHobbies"
+        <p
+          v-for="hobby in profileInfoFromDB.hobbies"
           :key="hobby.name"
-        /> -->
+        />
         <form v-if="editHobbies == true">
           <div
             v-for="hobby in hobbies"
@@ -130,7 +155,7 @@
         @click="editQuestions"
       />
       <div
-        v-for="question in profileInfo.questions"
+        v-for="question in profileInfoFromDB.questions"
         :key="question.id"
       >
         <h2>{{ question.qA.question }}</h2>
@@ -192,95 +217,106 @@
 
 <script>
 import { mapState } from 'vuex';
+import { db } from '@/firebase';
 
 export default {
   name: 'Profile',
 
   data() {
     return {
+      profileInfos: null,
+      profileLanguages: null,
+      profileAbout: null,
+      profileProjects: null,
+      profileSocial: null,
+      profileHobbies: null,
+
       editInfo: false,
       editLanguages: false,
       editAbout: false,
       editProjects: false,
       editSocial: false,
       editHobbies: false,
-      userName: null,
-      githubUsername: null,
-      firstName: null,
-      lastName: null,
-      class: null,
-      role: null,
-      gender: null,
-      birthday: null,
-      location: null,
-      jobTitle: null,
-      company: null,
-      hobbies: [
-        {
-          name: 'Hiking',
-          value: false,
-        },
-        {
-          name: 'Reading',
-          value: false,
-        },
-        {
-          name: 'Swimming',
-          value: false,
-        },
-        {
-          name: 'Rowing',
-          value: false,
-        },
-        {
-          name: 'Gaming',
-          value: false,
-        },
-        {
-          name: 'Music',
-          value: false,
-        },
-        {
-          name: 'Cooking',
-          value: false,
-        },
-        {
-          name: 'Knitting',
-          value: false,
-        },
-        {
-          name: 'Painting',
-          value: false,
-        },
-        {
-          name: 'Travelling',
-          value: false,
-        },
-        {
-          name: 'Movies',
-          value: false,
-        },
-        {
-          name: 'Writing',
-          value: false,
-        },
-        {
-          name: 'Bouldering',
-          value: false,
-        },
-        {
-          name: 'Complaining',
-          value: false,
-        },
-        {
-          name: 'Coding',
-          value: false,
-        },
-        {
-          name: 'Sports',
-          value: false,
-        }],
-      languages: [
+      profileInfo: {
+        id: null,
+        userName: null,
+        githubUsername: null,
+        firstName: null,
+        lastName: null,
+        class: null,
+        mentor: false,
+        role: null,
+        gender: null,
+        birthday: null,
+        location: null,
+        jobTitle: null,
+        company: null,
+        hobbies: [
+          {
+            name: 'Hiking',
+            value: false,
+          },
+          {
+            name: 'Reading',
+            value: false,
+          },
+          {
+            name: 'Swimming',
+            value: false,
+          },
+          {
+            name: 'Rowing',
+            value: false,
+          },
+          {
+            name: 'Gaming',
+            value: false,
+          },
+          {
+            name: 'Music',
+            value: false,
+          },
+          {
+            name: 'Cooking',
+            value: false,
+          },
+          {
+            name: 'Knitting',
+            value: false,
+          },
+          {
+            name: 'Painting',
+            value: false,
+          },
+          {
+            name: 'Travelling',
+            value: false,
+          },
+          {
+            name: 'Movies',
+            value: false,
+          },
+          {
+            name: 'Writing',
+            value: false,
+          },
+          {
+            name: 'Bouldering',
+            value: false,
+          },
+          {
+            name: 'Complaining',
+            value: false,
+          },
+          {
+            name: 'Coding',
+            value: false,
+          },
+          {
+            name: 'Sports',
+            value: false,
+          }],
+        languages:
         {
           natural: [
             {
@@ -336,8 +372,6 @@ export default {
               value: false,
             },
           ],
-        },
-        {
           technical:
            [
              {
@@ -404,35 +438,33 @@ export default {
                name: 'Express',
                value: false,
              },
-           ]
-          ,
+           ],
         },
-      ],
-      questions: [
-        {
-          id: 1,
-          qA: {
-            question: 'Why do you love coding?',
-            answer: 'Because it\'s fun!',
+        questions: [
+          {
+            id: 1,
+            qA: {
+              question: 'Why do you love coding?',
+              answer: 'Because it\'s fun!',
+            },
+
           },
+          {
+            id: 2,
+            qA: {
+              question: 'Why are you here?',
+              answer: 'I don\'t quite know!',
+            },
 
-        },
-        {
-          id: 2,
-          qA: {
-            question: 'Why are you here?',
-            answer: 'I don\'t quite know!',
           },
-
-        },
-      ],
-      projects: [
-        {
-          title: 'My Project',
-          URL: '',
-        },
-      ],
-
+        ],
+        projects: [
+          {
+            title: 'My Project',
+            URL: '',
+          },
+        ],
+      },
     };
   },
 
@@ -441,21 +473,47 @@ export default {
     userId() {
       return this.$route.params.userId;
     },
-    profileInfo() {
+    profileInfoFromDB() {
       const profileUID = this.userId;
       return this.profiles.find((profile) => profile.userId == profileUID);
     },
     myProfile() {
       return this.$route.params.userId == this.$store.state.user.uid;
     },
-    // myHobbies() {
-    //   return this.profileInfo.hobbies.find((hobby) => hobby.name == true);
-    // },
+    myHobbies() {
+      return this.profileInfoFromDB.hobbies
+        .find((hobby) => hobby.value == true);
+    },
     myNatLanguages() {
-      return this.profileInfo.languages.natural.find((language) => language.natural.name == true);
+      return this.profileInfoFromDB.languages.natural
+        .find((language) => language.natural.value == true);
     },
   },
+
   methods: {
+    editInformation() {
+      if (this.editInfo == false) {
+        this.profileInfos = {
+          userName: this.profileInfoFromDB.userName,
+          githubUsername: null,
+          firstName: this.profileInfoFromDB.firstName,
+          lastName: this.profileInfoFromDB.lastName,
+          class: null,
+          mentor: false,
+          role: null,
+          gender: null,
+          birthday: null,
+          location: null,
+          jobTitle: null,
+          company: null,
+        };
+
+        this.editInfo = true;
+      } else {
+        this.editInfo = false;
+        this.profileInfos = null;
+      }
+    },
     editLang() {
       if (this.editLanguages == false) { this.editLanguages = true; } else {
         this.editLanguages = false;
@@ -486,15 +544,22 @@ export default {
         this.editProjects = false;
       }
     },
+    async commitToDB(updatedProperties) {
+      console.log(this.profileInfoFromDB.id);
+      await db.collection('profiles').doc(this.profileInfoFromDB.id).update(updatedProperties);
+      this.editLanguages = false;
+      this.editAbout = false;
+      this.editInfo = false;
+      this.editSocial = false;
+      this.editHobbies = false;
+      this.editProjects = false;
+    },
   },
 };
 </script>
 
 <style scoped>
 
-.icon {
-
-}
 h1 {
   font-style: normal;
   font-weight: bold;
