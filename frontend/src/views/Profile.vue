@@ -310,7 +310,7 @@ export default {
         company: null,
         instagram: null,
         facebook: null,
-        linked: null,
+        linkedin: null,
         hobbies: [
           {
             name: 'Hiking',
@@ -558,14 +558,14 @@ export default {
           githubUsername: null,
           firstName: this.profileInfoFromDB.firstName,
           lastName: this.profileInfoFromDB.lastName,
-          class: null,
+          class: this.profileInfoFromDB.class,
           mentor: false,
-          role: null,
-          gender: null,
+          role: this.profileInfoFromDB.role,
+          gender: this.profileInfoFromDB.role,
           birthday: null,
-          location: null,
-          jobTitle: null,
-          company: null,
+          location: this.profileInfoFromDB.location,
+          jobTitle: this.profileInfoFromDB.jobTitle,
+          company: this.profileInfoFromDB.company,
         };
 
         this.editInfo = true;
@@ -709,7 +709,9 @@ export default {
       }
     },
     editQuestions() {
-      if (this.editAbout == false) { this.editAbout = true; } else {
+      if (this.editAbout == false) {
+        this.editAbout = true;
+      } else {
         this.editAbout = false;
       }
     },
@@ -719,7 +721,14 @@ export default {
       }
     },
     editSocialLinks() {
-      if (this.editSocial == false) { this.editSocial = true; } else {
+      if (this.editSocial == false) {
+        this.profileSocial = {
+          facebook: this.profileInfoFromDB.facebook,
+          linkedin: this.profileInfoFromDB.linkedin,
+          instagram: this.profileInfoFromDB.instagram,
+        };
+        this.editSocial = true;
+      } else {
         this.editSocial = false;
       }
     },
