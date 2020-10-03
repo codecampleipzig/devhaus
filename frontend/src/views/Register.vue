@@ -136,65 +136,63 @@ export default {
             name: 'Sports',
             value: false,
           }],
-        languages: [
-          {
-            natural: [
-              {
-                name: 'English',
-                value: false,
-              },
-              {
-                name: 'German',
-                value: false,
-              },
-              {
-                name: 'Spanish',
-                value: false,
-              },
-              {
-                name: 'Mandarin',
-                value: false,
-              },
-              {
-                name: 'Italian',
-                value: false,
-              },
-              {
-                name: 'French',
-                value: false,
-              },
-              {
-                name: 'Croatian',
-                value: false,
-              },
-              {
-                name: 'Polish',
-                value: false,
-              },
-              {
-                name: 'Russian',
-                value: false,
-              },
-              {
-                name: 'Portuguese',
-                value: false,
-              },
-              {
-                name: 'Hebrew',
-                value: false,
-              },
-              {
-                name: 'Japanese',
-                value: false,
-              },
-              {
-                name: 'Arabic',
-                value: false,
-              },
-            ],
-          },
-          {
-            technical:
+        languages:
+        {
+          natural: [
+            {
+              name: 'English',
+              value: false,
+            },
+            {
+              name: 'German',
+              value: false,
+            },
+            {
+              name: 'Spanish',
+              value: false,
+            },
+            {
+              name: 'Mandarin',
+              value: false,
+            },
+            {
+              name: 'Italian',
+              value: false,
+            },
+            {
+              name: 'French',
+              value: false,
+            },
+            {
+              name: 'Croatian',
+              value: false,
+            },
+            {
+              name: 'Polish',
+              value: false,
+            },
+            {
+              name: 'Russian',
+              value: false,
+            },
+            {
+              name: 'Portuguese',
+              value: false,
+            },
+            {
+              name: 'Hebrew',
+              value: false,
+            },
+            {
+              name: 'Japanese',
+              value: false,
+            },
+            {
+              name: 'Arabic',
+              value: false,
+            },
+          ],
+          technical:
            [
              {
                name: 'HTML',
@@ -260,10 +258,8 @@ export default {
                name: 'Express',
                value: false,
              },
-           ]
-            ,
-          },
-        ],
+           ],
+        },
         questions: [
           {
             id: 1,
