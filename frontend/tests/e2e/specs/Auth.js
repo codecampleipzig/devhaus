@@ -28,3 +28,22 @@ describe('Signin', () => {
     cy.contains('logged in as cypress2@test.com');
   });
 });
+
+// Logout
+describe('Logout', () => {
+  it('Signs user in and logs out again', () => {
+    // Signing in
+    cy.visit('/auth/signin');
+    cy.location('pathname').should('eq', '/auth/signin');
+    cy.get('form').within(() => {
+      cy.get('input[placeholder=Email]')
+        .type('cypress@test.com');
+      cy.get('input[placeholder=Password]').type('Lotte123');
+      cy.get('input[type=submit]').click();
+    });
+    // Logging out
+    cy.get('nav').contains('Logout').click();
+    cy.location('pathname').should('eq', '/auth/signin');
+    cy.get('h1').contains('DEVHAUS');
+  });
+});
