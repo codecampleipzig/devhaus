@@ -1,17 +1,17 @@
 <template>
   <div class="flex items-center justify-center space-x-24 min-h-screen bg-gray-100">
     <section>
-      <div class="bg-red-300 h-64 w-64 opacity-75">
+      <div class="bg-teal-150 h-64 w-64 opacity-50">
         <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
           DEV HAUS LEIPZIG
         </h1>
       </div>
-      <div class="bg-gray-300 h-64 w-64 opacity-75">
+      <div class="bg-teal-150 h-64 w-64 opacity-75">
         <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
           DEV HAUS LEIPZIG
         </h1>
       </div>
-      <div class="bg-yellow-300 h-64 w-64 opacity-75">
+      <div class="bg-teal-150 h-64 w-64">
         <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
           DEV HAUS LEIPZIG
         </h1>
