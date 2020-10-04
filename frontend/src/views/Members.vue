@@ -3,29 +3,31 @@
     <div class="m-40 text-3xl">
       <h1>Members</h1>
       <input
-        v-model="search"
+        v-model.trim="search"
         type="text"
         class="bg-gray-600"
       >
       <div
-        v-for="profile in results"
-        :key="profile.id"
+        v-for="(profile, i) in results"
+        :key="i"
         class="profiles"
       >
         <div class="profile">
           <img
             class="image"
-            :src="profile.photo"
+            :src="profile.item.photo"
           >
-          <div class="infoContainer">
-            <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
+          <div
+            class="infoContainer"
+          >
+            <h3>{{ profile.item.firstName }} {{ profile.item.lastName }}</h3>
 
             <div class="role">
-              {{ profile.class }}
+              {{ profile.item.class }}
             </div>
-          </div><!--Closing info Container -->
-        </div><!-- Closing profile -->
-      </div><!-- Closing profiles -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +42,6 @@ export default {
   data() {
     return {
       fuse: null,
-
       search: '',
     };
   },
@@ -48,17 +49,29 @@ export default {
     ...mapState(['profiles']),
     results() {
       if (!this.fuse || this.search == '') {
-        return this.profiles;
+        return this.profiles.map((profile) => ({ item: profile }));
       }
-      return this.fuse.search(this.search.trim()).map((result) => result.item);
+      const collection = this.getSearchCollection();
+      this.fuse.setCollection(collection);
+      return this.fuse.search(this.search);
     },
   },
   created() {
     const options = {
       includeScore: true,
-      keys: ['profileName', 'firstName', 'lastName', 'email', 'role', 'userlanguages', 'currentProjects.name'],
+      includeMatches: true,
+      threshold: 0.5,
+      keys: ['name', 'firstName', 'lastName'],
     };
     this.fuse = new Fuse(this.profiles, options);
+  },
+  methods: {
+    getSearchCollection() {
+      return this.profiles.map((profile) => ({
+        ...profile,
+        name: `${profile.firstName} ${profile.lastName}`,
+      }));
+    },
   },
 };
 </script>
