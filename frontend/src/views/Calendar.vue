@@ -29,14 +29,11 @@
     <h2 class="font-bold text-lg">
       {{ selection.format("MMMM YYYY, D dddd") }}
     </h2>
-    <router-link :to="{name: 'CreateEvent'}">
+    <router-link :to="{ name: 'CreateEvent' }">
       Create Event
     </router-link>
     <div class="flex space-x-8 w-screen overflow-x-scroll">
-      <div
-        v-for="week in weeksInMonth"
-        :key="`weeks-${week[0].format()}`"
-      >
+      <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
         <div class="flex space-x-2">
           <div
             v-for="day in week"
@@ -46,7 +43,6 @@
               'font-bold': day.date() == selection.date(),
               'bg-blue-100': eventsForDay(day).length
             }"
-
             @click="setMoment(day)"
           >
             {{ day.date() }}
@@ -54,14 +50,11 @@
         </div>
       </div>
     </div>
-    <div
-      class="calendar-view"
-    >
+    <div class="calendar-view">
       <div
         v-for="day in selectedDays"
         :key="day.format()"
         class="cursor-pointer"
-
         @click="setMoment(day)"
       >
         <h3
@@ -89,11 +82,10 @@
           <router-link
             v-for="event in eventsForDay(day)"
             :key="event.id"
-            :to="{name: 'Event', params: {id: event.id}}"
+            :to="{ name: 'Event', params: { id: event.id } }"
           >
             <div
-              class="absolute bg-blue-100 border border-blue-200 border-opacity-50
-          w-full bg-opacity-50 flex justify-center items-center"
+              class="absolute bg-blue-100 border border-blue-200 border-opacity-50 w-full bg-opacity-50 flex justify-center items-center"
               :style="styleForEvent(event, day)"
             >
               <h3 class="mb-4">
@@ -105,7 +97,7 @@
             v-for="hour in range(0, 24)"
             :key="hour"
             class="flex items-start border-b border-gray-200"
-            :style="{height: `${pixelPerHour}px`}"
+            :style="{ height: `${pixelPerHour}px` }"
             :data-hour="hour"
           >
             {{ hour }}:00
@@ -117,8 +109,8 @@
 </template>
 
 <script>
-import moment from 'moment';
-import { mapState } from 'vuex';
+import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -126,17 +118,17 @@ export default {
       viewportWidth: window.innerWidth,
       selection: moment(),
       months: this.range(0, 11),
-      pixelPerHour: 100,
+      pixelPerHour: 100
     };
   },
   computed: {
-    ...mapState(['events']),
+    ...mapState(["events"]),
     sanitizedEvents() {
-      return this.events.map((event) => ({
+      return this.events.map(event => ({
         ...event,
         start: moment.unix(event.start.seconds),
         end: moment.unix(event.end.seconds),
-        id: event.id,
+        id: event.id
       }));
     },
     years() {
@@ -165,29 +157,33 @@ export default {
       if (this.viewportWidth > 700) {
         const week = [];
         for (let day = 1; day <= 7; day += 1) {
-          week.push(moment(this.selection).isoWeekday(day).startOf('day'));
+          week.push(
+            moment(this.selection)
+              .isoWeekday(day)
+              .startOf("day")
+          );
         }
         return week;
       }
 
-      return [moment(this.selection).startOf('day')];
-    },
+      return [moment(this.selection).startOf("day")];
+    }
   },
   created() {
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener("resize", this.resize);
   },
   mounted() {
-    this.$store.dispatch('bindEvents');
+    this.$store.dispatch("bindEvents");
     this.scrollIntoView(12);
   },
   methods: {
     styleForEvent(event, day) {
       return {
         top: `${this.pixelForMs(event.start.diff(day))}px`,
-        height: `${this.pixelForMs(event.end.diff(event.start))}px`,
+        height: `${this.pixelForMs(event.end.diff(event.start))}px`
       };
     },
     range(first, last) {
@@ -210,31 +206,32 @@ export default {
       this.selection = moment(m);
     },
     formatMonth(month) {
-      return moment().month(month).format('MMM');
+      return moment()
+        .month(month)
+        .format("MMM");
     },
     scrollIntoView(hour) {
       document.querySelector(`div[data-hour="${hour}"]`).scrollIntoView();
     },
     eventsForDay(day) {
-      const start = moment(day).startOf('day');
-      const end = moment(day).endOf('day');
+      const start = moment(day).startOf("day");
+      const end = moment(day).endOf("day");
 
-      return this.sanitizedEvents.filter((event) => end.diff(event.start) > 0
-        && start.diff(event.end) < 0);
+      return this.sanitizedEvents.filter(
+        event => end.diff(event.start) > 0 && start.diff(event.end) < 0
+      );
     },
     pixelForMs(ms) {
       return moment.duration(ms).asMinutes() * (this.pixelPerHour / 60);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
-
 .calendar-view {
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
 }
-
 </style>

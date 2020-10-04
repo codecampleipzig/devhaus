@@ -1,9 +1,9 @@
-import { auth, db } from '@/firebase';
-import Vue from 'vue';
-import Vuex from 'vuex';
-import CreatePersistedState from 'vuex-persistedstate';
-import { vuexfireMutations, firestoreAction } from 'vuexfire';
-import router from '@/router';
+import { auth, db } from "@/firebase";
+import Vue from "vue";
+import Vuex from "vuex";
+import CreatePersistedState from "vuex-persistedstate";
+import { vuexfireMutations, firestoreAction } from "vuexfire";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -14,11 +14,13 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
-    events: [],
+    events: []
   },
-  plugins: [CreatePersistedState({
-    paths: ['user', 'profiles', 'events'],
-  })],
+  plugins: [
+    CreatePersistedState({
+      paths: ["user", "profiles", "events"]
+    })
+  ],
   mutations: {
     ...vuexfireMutations,
     PUSH_NOTIFICATION(state, notification) {
@@ -26,7 +28,7 @@ export default new Vuex.Store({
     },
     REMOVE_NOTIFICATION(state, notificationToRemove) {
       state.notifications = state.notifications.filter(
-        (notification) => notification.id != notificationToRemove.id,
+        notification => notification.id != notificationToRemove.id
       );
     },
     SET_USER(state, user) {
@@ -35,7 +37,7 @@ export default new Vuex.Store({
         state.profiles = [];
         state.events = [];
       }
-    },
+    }
   },
   actions: {
     notify({ commit }, { type, text }) {
@@ -44,28 +46,29 @@ export default new Vuex.Store({
       const notification = {
         id,
         type,
-        text,
+        text
       };
-      commit('PUSH_NOTIFICATION', notification);
+      commit("PUSH_NOTIFICATION", notification);
 
       setTimeout(() => {
-        commit('REMOVE_NOTIFICATION', notification);
+        commit("REMOVE_NOTIFICATION", notification);
       }, 5000);
     },
     async signOut() {
       await router.push({
-        name: 'Auth',
+        name: "Auth",
         params: {
-          mode: 'signin',
-        },
+          mode: "signin"
+        }
       });
       await auth.signOut();
     },
-    bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles',
-      db.collection('profiles'),
-      { wait: true })),
-    bindEvents: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('events',
-      db.collection('events'))),
+    bindProfiles: firestoreAction(({ bindFirestoreRef }) =>
+      bindFirestoreRef("profiles", db.collection("profiles"), { wait: true })
+    ),
+    bindEvents: firestoreAction(({ bindFirestoreRef }) =>
+      bindFirestoreRef("events", db.collection("events"))
+    )
   },
-  modules: {},
+  modules: {}
 });
