@@ -14,8 +14,8 @@ describe('Nav', () => {
     });
     // Navbar
     // Calendar
-    cy.get('nav').contains('Calender').click();
-    cy.location('pathname').should('eq', '/calender');
+    cy.get('nav').contains('Calendar').click();
+    cy.location('pathname').should('eq', '/calendar');
     // Members
     cy.get('nav').contains('Members').click();
     cy.location('pathname').should('eq', '/members');
