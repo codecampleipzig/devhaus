@@ -7,8 +7,8 @@
       <router-link :to="{ name: 'Home'}">
         Home
       </router-link>
-      <router-link :to="{ name: 'Calender'}">
-        Calender
+      <router-link :to="{ name: 'Calendar'}">
+        Calendar
       </router-link>
       <router-link :to="{ name: 'Members'}">
         Members

@@ -7,7 +7,7 @@ import EditProfile from '../views/EditProfile.vue';
 import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
-import Calender from '../views/Calender.vue';
+import Calendar from '../views/Calendar.vue';
 import store from '../store';
 import NotFound from '../views/404.vue';
 import { firebaseAuthConnected, boundProfiles } from '../main';
@@ -47,9 +47,9 @@ const routes = [
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
-        path: '/calender',
-        name: 'Calender',
-        component: Calender,
+        path: '/calendar',
+        name: 'Calendar',
+        component: Calendar,
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
