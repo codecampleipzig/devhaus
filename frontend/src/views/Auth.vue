@@ -1,49 +1,52 @@
 <template>
-  <div class="flex items-center justify-center space-x-24 min-h-screen">
+  <div
+    class="flex items-center flex-col md:flex-row
+  justify-center md:space-x-24 min-h-screen"
+  >
     <section>
-      <div>
-        <img src="https://codecampleipzig.de/images/code-camp-leipzig-logo.svg" alt="logo" />
-        <h1 class="text-6xl font-bold">
-          DEVHAUS
+      <div
+        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
+      p-2 md:flex hidden"
+      >
+        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
+          <h2>Dev<br />haus</h2>
+          <h2>Leipzig</h2>
         </h1>
       </div>
     </section>
 
     <section>
       <div
-        class="bg-blue-900 py-10 w-screen
-      max-w-sm px-6 my-10 shadow-md rounded"
+        class="w-screen
+      max-w-sm px-4"
       >
-        <div class="flex justify-center space-x-8 text-2xl mb-6 font-bold ">
-          <router-link class="opacity-25" :to="{ name: 'Auth', params: { mode: 'signin' } }">
+        <h1 class="md:hidden font-bold mb-6 text-4xl">
+          Devhaus Leipzig
+        </h1>
+        <div
+          class="flex space-x-8 text-2xl text-black mb-6 font-bold
+        items-center"
+        >
+          <router-link
+            class="pb-2 border-b-4 border-transparent"
+            :to="{ name: 'Auth', params: { mode: 'signin' } }"
+          >
             Sign In
           </router-link>
-
-          <router-link class="opacity-25" :to="{ name: 'Auth', params: { mode: 'signup' } }">
+          <router-link
+            class="pb-2 border-b-4 border-transparent"
+            :to="{ name: 'Auth', params: { mode: 'signup' } }"
+          >
             Sign Up
           </router-link>
         </div>
 
-        <!-- Do we need the mode here? <h1>{{ modeTitle }}</h1> -->
-
         <form class="flex flex-col" @submit.prevent="submit">
-          <input
-            v-model="email"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
-            type="text"
-            placeholder="Email"
-            required
-          />
-          <input
-            v-model="password"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
-            type="password"
-            placeholder="Password"
-            required
-          />
+          <input v-model="email" class="mb-4 " type="text" placeholder="Email" required />
+          <input v-model="password" class="mb-4" type="password" placeholder="Password" required />
 
           <input
-            class="mt-2 py-2 bg-blue-600 cursor-pointer hover:bg-blue-500"
+            class="button mt-4 bg-teal-800 hover:bg-teal-700 text-white"
             type="submit"
             :value="modeTitle"
           />
@@ -54,10 +57,10 @@
         </h4>
 
         <button
-          class="mt-4 py-2 bg-red-800 hover:bg-red-700 cursor-pointer block w-full"
+          class="button mt-4 bg-blue-800 text-white hover:bg-blue-700 w-full"
           @click="gitLogin"
         >
-          Sign In with GitHub
+          Sign In with Github
         </button>
       </div>
     </section>
@@ -135,6 +138,6 @@ export default {
 
 <style scoped>
 .router-link-active {
-  @apply opacity-100;
+  @apply border-teal-700;
 }
 </style>

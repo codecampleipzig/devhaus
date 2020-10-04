@@ -1,23 +1,38 @@
 <template>
   <div>
-    <div class="m-40 text-3xl">
-      <h1>Members</h1>
-      <input v-model.trim="search" type="text" class="bg-gray-600" />
-      <div v-for="(profile, i) in results" :key="i" class="profiles">
-        <div class="profile">
-          <router-link :to="{ name: 'Profile', params: { userId: profile.item.userId } }">
-            <img class="image" :src="profile.item.photo" />
+    <div class="px-4">
+      <header class="flex flex-col mb-2 sticky top-0 w-full bg-white py-4">
+        <input
+          v-model.trim="search"
+          type="text"
+          name="search"
+          class="max-w-lg text-lg"
+          placeholder="Search"
+        />
+      </header>
+      <main class="profile-grid">
+        <div v-for="(profile, i) in results" :key="i" class="py-4">
+          <router-link
+            class="w-full"
+            :to="{ name: 'Profile', params: { userId: profile.item.userId } }"
+          >
+            <img
+              class="w-full bg-gray-100 flex-shrink-0"
+              style="padding-top: 100%"
+              :src="profile.item.photo"
+            />
           </router-link>
-          <div class="infoContainer">
-            <div class="flex">
+          <div class="m-2">
+            <h2 class="font-bold text-xl mt-2 pb-1 border-b-4 border-teal-800 mb-2">
               <span
+                class="inline-block m-0"
                 v-for="(segment, index) in getHighlights(
                   profile.item.name,
                   profile.matches && profile.matches.find(match => match.key == 'name')
                 )"
                 :key="segment.text + index + profile.item.userId"
                 :class="{
-                  'text-blue-500': segment.match
+                  'text-teal-500': segment.match
                 }"
               >
                 {{
@@ -27,10 +42,14 @@
                     .join("")
                 }}
               </span>
+            </h2>
+            <div class="flex space-x-2 mt-4">
+              <font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon>
+              <font-awesome-icon :icon="['fa', 'envelope']"></font-awesome-icon>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   </div>
 </template>
@@ -121,43 +140,9 @@ export default {
 </script>
 
 <style scoped>
-.profiles {
-  display: flex;
-  flex-flow: row;
-  text-align: center;
-  margin: 0 auto;
-  padding: 1rem;
-  justify-content: center;
-}
-
-.profile {
-  width: 200px;
-  font-size: 1rem;
-  border-color: #159ed4;
-  border-style: solid;
-  border-width: 3px;
-  background-color: #fefeff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.image {
-  width: 100px;
-  height: 100px;
-  border-style: solid;
-  border-width: 0.1rem;
-  border-color: black;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.infoContainer {
-  max-width: 400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  justify-content: space-around;
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
 }
 </style>
