@@ -91,8 +91,7 @@
             :key="event.id"
             class="absolute bg-blue-100 border border-blue-200 border-opacity-50
           w-full bg-opacity-50 flex justify-center items-center"
-            :style="`top: ${pixelForMs(event.start.diff(day))}px;
-            height: ${pixelForMs(event.end.diff(event.start))}px;`"
+            :style="styleForEvent(event, day)"
           >
             <h3 class="mb-4">
               {{ event.title }}
@@ -104,7 +103,9 @@
             class="flex items-start border-b border-gray-200"
             :style="{height: `${pixelPerHour}px`}"
             :data-hour="hour"
-          />
+          >
+            {{ hour }}:00
+          </div>
         </div>
       </div>
     </div>
@@ -113,6 +114,7 @@
 
 <script>
 import moment from 'moment';
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -121,35 +123,16 @@ export default {
       selection: moment(),
       months: this.range(0, 11),
       pixelPerHour: 100,
-      events: [
-        {
-          id: 'event-1',
-          start: moment('2020-10-04 12:00'),
-          end: moment('2020-10-04 14:00'),
-          title: 'Code Camp Class',
-        },
-        {
-          id: 'event-2',
-          start: moment('2020-10-03 12:00'),
-          end: moment('2020-10-03 14:00'),
-          title: 'Code Camp Class',
-        },
-        {
-          id: 'event-3',
-          start: moment('2020-10-02 12:00'),
-          end: moment('2020-10-02 14:00'),
-          title: 'Code Camp Class',
-        },
-      ],
     };
   },
   computed: {
-    visibleEvents() {
-      const start = moment(this.selectedDays[0]).startOf('day');
-      const end = this.selectedDays[this.selectedDays.length - 1].endOf('day');
-
-      return this.events.filter((event) => end.diff(event.start) < 0
-        && start.diff(event.end) > 0);
+    ...mapState(['events']),
+    sanitizedEvents() {
+      return this.events.map((event) => ({
+        ...event,
+        start: moment.unix(event.start.seconds),
+        end: moment.unix(event.end.seconds),
+      }));
     },
     years() {
       const currentYear = moment().year();
@@ -192,9 +175,17 @@ export default {
     window.removeEventListener('resize', this.resize);
   },
   mounted() {
+    this.$store.dispatch('bindEvents');
     this.scrollIntoView(12);
   },
   methods: {
+    styleForEvent(event, day) {
+      console.log(this.pixelForMs(event.end.diff(event.start)));
+      return {
+        top: `${this.pixelForMs(event.start.diff(day))}px`,
+        height: `${this.pixelForMs(event.end.diff(event.start))}px`,
+      };
+    },
     range(first, last) {
       const res = [];
       for (let i = first; i <= last; i += 1) {
@@ -224,7 +215,7 @@ export default {
       const start = moment(day).startOf('day');
       const end = moment(day).endOf('day');
 
-      return this.events.filter((event) => end.diff(event.start) > 0
+      return this.sanitizedEvents.filter((event) => end.diff(event.start) > 0
         && start.diff(event.end) < 0);
     },
     pixelForMs(ms) {
