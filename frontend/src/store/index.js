@@ -14,10 +14,10 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
-
+    events: [],
   },
   plugins: [CreatePersistedState({
-    paths: ['user', 'profiles'],
+    paths: ['user', 'profiles', 'events'],
   })],
   mutations: {
     ...vuexfireMutations,
@@ -31,6 +31,10 @@ export default new Vuex.Store({
     },
     SET_USER(state, user) {
       state.user = user;
+      if (!user) {
+        state.profiles = [];
+        state.events = [];
+      }
     },
   },
   actions: {
@@ -60,7 +64,8 @@ export default new Vuex.Store({
     bindProfiles: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('profiles',
       db.collection('profiles'),
       { wait: true })),
-
+    bindEvents: firestoreAction(({ bindFirestoreRef }) => bindFirestoreRef('events',
+      db.collection('events'))),
   },
   modules: {},
 });

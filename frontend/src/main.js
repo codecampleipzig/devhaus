@@ -2,17 +2,20 @@ import { auth } from '@/firebase';
 import { firestorePlugin } from 'vuefire';
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faCoffee, faSpinner, faEdit, faCircle, faCheck,
   faPlus, faEquals, faArrowRight, faPencilAlt, faComment,
 } from '@fortawesome/free-solid-svg-icons';
 
+import vSelect from 'vue-select';
 import router from './router';
 import store from './store';
-import './assets/tailwind.css';
+
 import App from './App.vue';
+
+import 'vue-select/dist/vue-select.css';
+import './assets/tailwind.css';
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
@@ -47,6 +50,7 @@ library.add(
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('v-select', vSelect);
 
 Vue.use(firestorePlugin);
 Vue.config.productionTip = false;

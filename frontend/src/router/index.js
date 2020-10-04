@@ -7,7 +7,9 @@ import EditProfile from '../views/EditProfile.vue';
 import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
-import Calender from '../views/Calender.vue';
+import Calendar from '../views/Calendar.vue';
+import Event from '../views/Event.vue';
+import CreateEvent from '../views/CreateEvent.vue';
 import store from '../store';
 import NotFound from '../views/404.vue';
 import { firebaseAuthConnected, boundProfiles } from '../main';
@@ -27,7 +29,6 @@ const routes = [
     component: Register,
     meta: { requiresAuth: true, requiresProfile: false },
   },
-  { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: false } },
   {
     path: '/',
     component: HomeLayout,
@@ -38,8 +39,6 @@ const routes = [
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true },
       },
-      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
-
       {
         path: '/members',
         name: 'Members',
@@ -47,9 +46,21 @@ const routes = [
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
-        path: '/calender',
-        name: 'Calender',
-        component: Calender,
+        path: '/calendar',
+        name: 'Calendar',
+        component: Calendar,
+        meta: { requiresAuth: true, requiresProfile: true },
+      },
+      {
+        path: '/event/:id',
+        name: 'Event',
+        component: Event,
+        meta: { requiresAuth: true, requiresProfile: true },
+      },
+      {
+        path: '/create-event',
+        name: 'CreateEvent',
+        component: CreateEvent,
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
@@ -64,15 +75,9 @@ const routes = [
         component: EditProfile,
         meta: { requiresAuth: true, requiresProfile: true },
       },
+      { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
     ],
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    meta: { requiresAuth: true },
-  },
-
 ];
 
 const router = new VueRouter({
