@@ -1,63 +1,75 @@
 <template>
-  <div class="justify-center m-16 text-1xl font-bold text-center">
-    <h1>Create Event</h1>
-    <form @submit.prevent="submit">
-      <input
-        v-model="event.title"
-        type="text"
-        placeholder="add event title"
-        required
-      >
-      <input
-        v-model="event.description"
-        type="text"
-        placeholder="add event description"
-      >
-      <datepicker
-        v-model="event.startDate"
-
-        name="uniquename"
-      />
-      <input
-        id="checkbox"
-        v-model="checked"
-        type="checkbox"
-        value="Multiple Days"
-      >
-      <label>Mulitple Days{{ checked }}</label>
-      <datepicker
-        v-if="
-          multipleDays"
-
-        name="uniquename"
-      />
-      <v-select
-        :options="times"
-      />
-      <v-select
-        :options="location"
-        :value="event.location"
-        @input="location => updateLocation(location)"
-      />
-      <div>{{ event.location }}</div>
-      <div v-if="event.location == 'online'|| event.location == 'hybrid'">
-        <h2>Link to your meeting</h2>
+  <div class="flex items-stretch">
+    <div class="justify-center m-16 text-1xl font-bold text-center w-2/3">
+      <h1>Create Event</h1>
+      <form @submit.prevent="submit">
         <input
-          v-model="event.link"
+          v-model="event.title"
           type="text"
-          placeholder="add event link e.g. Zoom"
+          placeholder="add event title"
+          required
         >
-      </div>
-      <div v-if="event.location == 'local'|| event.location == 'hybrid'">
-        <h2>event address</h2>
         <input
-          v-model="event.address"
+          v-model="event.description"
           type="text"
-          placeholder="add place and street of the event"
+          placeholder="add event description"
         >
-      </div>
-      <input type="submit">
-    </form>
+        <datepicker
+          v-model="event.startDate"
+
+          name="uniquename"
+        />
+        <span>Multiple Days: {{ checked }} </span>
+        <input
+          id="checkbox"
+          v-model="multipleDays"
+          type="checkbox"
+          value="Multiple Days"
+        >
+
+        <datepicker
+          v-if="multipleDays"
+          v-model="event.endDate"
+          name="uniquename"
+        />
+        <v-select
+          v-model="event.startTime"
+          :options="times"
+          placeholder="enter start time"
+        />
+        <v-select
+          v-model="event.endTime"
+          :options="times"
+          placeholder="enter closing time"
+        />
+        <v-select
+          v-model="event.location"
+          :options="location"
+          :value="event.location"
+          placeholder="enter location type"
+          @input="location => updateLocation(location)"
+        />
+        <div>{{ event.location }}</div>
+        <div v-if="event.location == 'online'|| event.location == 'hybrid'">
+          <h2>Link to your meeting</h2>
+          <input
+            v-model="event.link"
+            type="text"
+            placeholder="add event link e.g. Zoom"
+          >
+        </div>
+        <div v-if="event.location == 'local'|| event.location == 'hybrid'">
+          <h2>event address</h2>
+          <input
+            v-model="event.address"
+            type="text"
+            placeholder="add place and street of the event"
+          >
+        </div>
+        <input type="submit">
+      </form>
+      <div>{{ successMsg }}</div>
+    </div>
   </div>
 </template>
 
@@ -86,19 +98,9 @@ export default {
 
       multipleDays: false,
 
-      event: {
-        creator: null,
-        title: 'Test Event Title',
-        description: 'Test Event Description',
-        startDate: new Date(),
-        startTime: '',
-        endDate: new Date(),
-        endTime: '',
-        location: '',
-        link: '',
-        address: '',
+      successMsg: '',
 
-      },
+      event: this.createEmptyEvent(),
 
     };
   },
@@ -132,8 +134,24 @@ export default {
         ...this.event,
         userId: this.$store.state.user.uid,
       });
-      // this.userInfo = this.createEmptyUserInfo();
-      await this.$router.push({ name: 'Home' });
+      this.event = this.createEmptyEvent();
+      // await this.$router.push({ name: 'Calender' });
+      this.successMsg = 'Your Event has been saved';
+    },
+    createEmptyEvent() {
+      return {
+        creator: null,
+        title: '',
+        description: '',
+        startDate: new Date(),
+        startTime: '',
+        endDate: new Date(),
+        endTime: '',
+        location: '',
+        link: '',
+        address: '',
+      };
+      // this.successMsg = "",
     },
   },
 
