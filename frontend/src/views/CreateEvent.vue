@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-center min-w-3/4">
-    <div class="flex-row justify-center m-8 text-1xl ">
+  <div class="flex justify-center w-screen max-w-screen-md mx-auto">
+    <div class="m-8 text-1xl ">
       <h1>Create Event</h1>
       <form
         @submit.prevent="submit"
@@ -8,19 +8,18 @@
         <input
           v-model="event.title"
           type="text"
-          placeholder="add event title"
+          placeholder="Event Title"
           required
           class="block"
         >
         <input
           v-model="event.description"
           type="text"
-          placeholder="add event description"
+          placeholder="Event Description"
           class="block"
         >
         <div
-          name="dateAndTimePicker"
-          class="flex justify-content items-center border-2 min-w-3/4"
+          class="flex justify-content items-center border-2"
         >
           <div
             name="start"
@@ -28,13 +27,10 @@
           >
             <h2>Start</h2>
             <div
-              name="startDateTime"
               class="flex-row"
             >
               <datepicker
                 v-model="event.startDate"
-
-                name="start Date"
               />
 
               <v-select
@@ -49,14 +45,9 @@
             class=""
           >
             <h2>End</h2>
-            <div
-              name="endDateTime"
-              class=""
-            >
+            <div>
               <datepicker
-
                 v-model="event.endDate"
-                name="uniquename"
               />
               <v-select
                 v-model="event.endTime"
@@ -108,15 +99,9 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import Datepicker from 'vuejs-datepicker';
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
-// Took over from select tutorial
 import { db } from '@/firebase';
-
-Vue.component('v-select', vSelect);
-// Transfer to Main.js ask Gabe?
+import moment from 'moment';
 
 export default {
   components: {
@@ -124,7 +109,6 @@ export default {
   },
   data() {
     return {
-      date: new Date(),
 
       times: this.createTimes(),
 
@@ -137,9 +121,6 @@ export default {
       event: this.createEmptyEvent(),
 
     };
-  },
-  mounted() {
-    this.event.creator = this.$store.state.user.uid;
   },
 
   methods: {
@@ -164,17 +145,33 @@ export default {
       this.event.location = location;
     },
     async submit() {
+      const {
+        title, description, startDate, startTime, endDate,
+        endTime, location, link, address,
+      } = this.event;
+
+      const [startHour, startMinutes] = startTime.split(':').map(Number);
+      const [endHour, endMinutes] = endTime.split(':').map(Number);
+
+      const start = moment(startDate).hour(startHour).minute(startMinutes).toDate();
+      const end = moment(endDate).hour(endHour).minute(endMinutes).toDate();
+
       await db.collection('events').add({
-        ...this.event,
-        userId: this.$store.state.user.uid,
+        title,
+        description,
+        start,
+        end,
+        location,
+        link,
+        address,
+        creatorId: this.$store.state.user.uid,
       });
       this.event = this.createEmptyEvent();
-      // await this.$router.push({ name: 'Calender' });
-      this.successMsg = 'Your Event has been saved';
+      this.$store.dispatch('notify', { type: 'info', text: 'Your event has been created' });
+      await this.$router.push({ name: 'Calendar' });
     },
     createEmptyEvent() {
       return {
-        creator: null,
         title: '',
         description: '',
         startDate: new Date(),

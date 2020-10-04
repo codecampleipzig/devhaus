@@ -29,6 +29,9 @@
     <h2 class="font-bold text-lg">
       {{ selection.format("MMMM YYYY, D dddd") }}
     </h2>
+    <router-link :to="{name: 'CreateEvent'}">
+      +
+    </router-link>
     <div class="flex space-x-8 w-screen overflow-x-scroll">
       <div
         v-for="week in weeksInMonth"
