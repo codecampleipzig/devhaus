@@ -13,10 +13,12 @@
         class="profiles"
       >
         <div class="profile">
-          <img
-            class="image"
-            :src="profile.item.photo"
-          >
+          <router-link :to="{ name: 'Profile', params: {userId: profile.item.userId}}">
+            <img
+              class="image"
+              :src="profile.item.photo"
+            >
+          </router-link>
           <div
             class="infoContainer"
           >

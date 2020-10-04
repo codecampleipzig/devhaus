@@ -66,12 +66,6 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    meta: { requiresAuth: true },
-  },
 
 ];
 
