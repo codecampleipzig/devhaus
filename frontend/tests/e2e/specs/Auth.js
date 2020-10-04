@@ -43,6 +43,6 @@ describe("Logout", () => {
       .contains("Logout")
       .click();
     cy.location("pathname").should("eq", "/auth/signin");
-    cy.get("h1").contains("DEVHAUS");
+    cy.contains("Sign In");
   });
 });
