@@ -1,27 +1,62 @@
 <template>
   <div class="flex items-stretch">
-    <div class="justify-center m-16 text-1xl font-bold text-center w-2/3">
+    <div class="flex-row justify-center m-16 text-1xl ">
       <h1>Create Event</h1>
-      <form @submit.prevent="submit">
+      <form
+        @submit.prevent="submit"
+      >
         <input
           v-model="event.title"
           type="text"
           placeholder="add event title"
           required
+          class="block"
         >
         <input
           v-model="event.description"
           type="text"
           placeholder="add event description"
+          class="block"
         >
+        <div
+          name="dateAndTimePicker"
+          class="flex justify-content itmes-center border-2"
+        >
+          <div
+            name="start"
+            class="border-2"
+          >
+            <h2>Start</h2>
+            <div
+              name="startDateTime"
+              class="border-2"
+            >
+              <div>start Date Picker</div>
+              <div>start Time Picker</div>
+            </div><!--Closing startDateTime-->
+          </div><!--Closing start-->
+          <div
+            name="end"
+            class="border-2"
+          >
+            <h2>End</h2>
+            <div
+              name="endDateTime"
+              class="border-2"
+            >
+              <div>end Date Picker</div>
+              <div>end Time Picker</div>
+            </div><!--Closing endDateTime-->
+          </div><!--Closing end-->
+        </div><!--Closing dateAndTimePicker-->
         <datepicker
           v-model="event.startDate"
 
-          name="uniquename"
+          name="start Date"
         />
         <span>Multiple Days: {{ checked }} </span>
         <input
-          id="checkbox"
+          id="checkbox1"
           v-model="multipleDays"
           type="checkbox"
           value="Multiple Days"
