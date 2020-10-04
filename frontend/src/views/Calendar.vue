@@ -30,7 +30,7 @@
       {{ selection.format("MMMM YYYY, D dddd") }}
     </h2>
     <router-link :to="{name: 'CreateEvent'}">
-      +
+      Create Event
     </router-link>
     <div class="flex space-x-8 w-screen overflow-x-scroll">
       <div
@@ -86,17 +86,21 @@
         @click="setMoment(day)"
       >
         <div class="relative">
-          <div
+          <router-link
             v-for="event in eventsForDay(day)"
             :key="event.id"
-            class="absolute bg-blue-100 border border-blue-200 border-opacity-50
-          w-full bg-opacity-50 flex justify-center items-center"
-            :style="styleForEvent(event, day)"
+            :to="{name: 'Event', params: {id: event.id}}"
           >
-            <h3 class="mb-4">
-              {{ event.title }}
-            </h3>
-          </div>
+            <div
+              class="absolute bg-blue-100 border border-blue-200 border-opacity-50
+          w-full bg-opacity-50 flex justify-center items-center"
+              :style="styleForEvent(event, day)"
+            >
+              <h3 class="mb-4">
+                {{ event.title }}
+              </h3>
+            </div>
+          </router-link>
           <div
             v-for="hour in range(0, 24)"
             :key="hour"
@@ -132,6 +136,7 @@ export default {
         ...event,
         start: moment.unix(event.start.seconds),
         end: moment.unix(event.end.seconds),
+        id: event.id,
       }));
     },
     years() {
@@ -180,7 +185,6 @@ export default {
   },
   methods: {
     styleForEvent(event, day) {
-      console.log(this.pixelForMs(event.end.diff(event.start)));
       return {
         top: `${this.pixelForMs(event.start.diff(day))}px`,
         height: `${this.pixelForMs(event.end.diff(event.start))}px`,

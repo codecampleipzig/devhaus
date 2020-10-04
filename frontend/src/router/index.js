@@ -8,6 +8,7 @@ import Members from '../views/Members.vue';
 import Profile from '../views/Profile.vue';
 import Register from '../views/Register.vue';
 import Calendar from '../views/Calendar.vue';
+import Event from '../views/Event.vue';
 import CreateEvent from '../views/CreateEvent.vue';
 import store from '../store';
 import NotFound from '../views/404.vue';
@@ -48,6 +49,12 @@ const routes = [
         path: '/calendar',
         name: 'Calendar',
         component: Calendar,
+        meta: { requiresAuth: true, requiresProfile: true },
+      },
+      {
+        path: '/event/:id',
+        name: 'Event',
+        component: Event,
         meta: { requiresAuth: true, requiresProfile: true },
       },
       {
