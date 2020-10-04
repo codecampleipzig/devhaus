@@ -1,10 +1,10 @@
 <template>
   <div class="home-layout max-h-screen">
     <nav
-      class="flex flex-col jusitfy-start pl-8 py-6 pb-2 pr-20
+      class="flex flex-col jusitfy-start pl-8 py-6 pr-20
       bg-teal-900 max-h-screen"
     >
-      <h1 class="text-white font-semibold mb-6 text-xl">
+      <h1 class="text-white font-semibold mb-6 text-2xl">
         Devhaus Leipzig
       </h1>
       <div class="nav flex flex-col items-start flex-1">
@@ -25,7 +25,10 @@
         </router-link>
       </div>
 
-      <button class="nav-link text-left focus:outline-none" @click="$store.dispatch('signOut')">
+      <button
+        class="uppercase font-medium tracking-widest text-teal-100 text-left focus:outline-none"
+        @click="$store.dispatch('signOut')"
+      >
         Logout
       </button>
     </nav>

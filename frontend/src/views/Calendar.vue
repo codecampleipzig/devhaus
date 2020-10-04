@@ -26,13 +26,15 @@
         {{ formatMonth(month) }}
       </div>
     </div>
-    <h2 class="font-bold text-lg">
-      {{ selection.format("MMMM YYYY, D dddd") }}
-    </h2>
-    <router-link :to="{ name: 'CreateEvent' }">
-      Create Event
-    </router-link>
-    <div class="flex space-x-8 w-screen overflow-x-scroll">
+    <header class="flex items-center justify-between mb-2">
+      <h2 class="font-bold text-xl">
+        {{ selection.format("MMMM YYYY, D dddd") }}
+      </h2>
+      <router-link class="button mt-0" :to="{ name: 'CreateEvent' }">
+        New Event
+      </router-link>
+    </header>
+    <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
       <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
         <div class="flex space-x-2">
           <div
@@ -84,23 +86,26 @@
             :key="event.id"
             :to="{ name: 'Event', params: { id: event.id } }"
           >
-            <div
-              class="absolute bg-blue-100 border border-blue-200 border-opacity-50 w-full bg-opacity-50 flex justify-center items-center"
-              :style="styleForEvent(event, day)"
-            >
-              <h3 class="mb-4">
-                {{ event.title }}
-              </h3>
+            <div class="absolute w-full pl-8" :style="styleForEvent(event, day)">
+              <div
+                class="bg-blue-100 border border-blue-200 border-opacity-50
+              bg-opacity-50 p-2 h-full"
+              >
+                <h3 class="font-semibold">
+                  {{ event.title }}
+                </h3>
+              </div>
             </div>
           </router-link>
           <div
             v-for="hour in range(0, 24)"
             :key="hour"
-            class="flex items-start border-b border-gray-200"
+            class="border-b border-gray-400 text-gray-400 text-xs"
             :style="{ height: `${pixelPerHour}px` }"
             :data-hour="hour"
           >
-            {{ hour }}:00
+            <div class="w-full border-gray-200 border-b" style="height: 50%;">{{ hour }}:00</div>
+            <div class="w-full" style="height: 50%;">{{ hour }}:30</div>
           </div>
         </div>
       </div>
@@ -233,5 +238,6 @@ export default {
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
+  gap: 0.5rem;
 }
 </style>

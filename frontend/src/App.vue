@@ -30,16 +30,14 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+.button:focus,
+textarea:focus {
   @apply outline-none;
 }
 
 .button {
   letter-spacing: 0.2em;
-  @apply px-8 mt-4 py-2 cursor-pointer block rounded-sm font-medium uppercase;
-}
-
-.button:focus {
-  outline: none;
+  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase bg-teal-900 text-white;
 }
 </style>

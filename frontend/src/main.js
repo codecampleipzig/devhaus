@@ -13,8 +13,11 @@ import {
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment
+  faComment,
+  faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
+
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 import vSelect from "vue-select";
 import router from "./router";
@@ -62,7 +65,9 @@ library.add(
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment
+  faComment,
+  faEnvelope,
+  faGithub
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

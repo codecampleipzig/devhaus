@@ -46,7 +46,7 @@
           <input v-model="password" class="mb-4" type="password" placeholder="Password" required />
 
           <input
-            class="button mt-2 bg-teal-800 hover:bg-teal-700 text-white"
+            class="button mt-4 bg-teal-800 hover:bg-teal-700 text-white"
             type="submit"
             :value="modeTitle"
           />
@@ -56,7 +56,10 @@
           {{ error }}
         </h4>
 
-        <button class="button bg-blue-800 text-white hover:bg-blue-700 w-full" @click="gitLogin">
+        <button
+          class="button mt-4 bg-blue-800 text-white hover:bg-blue-700 w-full"
+          @click="gitLogin"
+        >
           Sign In with Github
         </button>
       </div>
