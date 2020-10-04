@@ -12,7 +12,7 @@ import Event from '../views/Event.vue';
 import CreateEvent from '../views/CreateEvent.vue';
 import store from '../store';
 import NotFound from '../views/404.vue';
-import { firebaseAuthConnected, boundProfiles } from '../main';
+import { firebaseAuthConnected } from '../main';
 
 Vue.use(VueRouter);
 
@@ -92,7 +92,10 @@ router.beforeEach(async (to, from, next) => {
     // is the user logged in?
     if (store.state.user) {
       // is the user logged in and needs a profile to continue?
-      await boundProfiles;
+      // If we can't find the profile let's bind them now
+      if (!store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
+        await store.dispatch('bindProfiles');
+      }
       if (to.meta.requiresProfile) {
         // check that the logged-in user has a profile
         if (store.state.profiles.some((profile) => profile.userId == store.state.user.uid)) {
