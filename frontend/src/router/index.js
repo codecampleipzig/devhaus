@@ -27,7 +27,6 @@ const routes = [
     component: Register,
     meta: { requiresAuth: true, requiresProfile: false },
   },
-  { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: false } },
   {
     path: '/',
     component: HomeLayout,
@@ -66,13 +65,6 @@ const routes = [
       { path: '*', component: NotFound, meta: { requiresAuth: true, requiresProfile: true } },
     ],
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    meta: { requiresAuth: true },
-  },
-
 ];
 
 const router = new VueRouter({
