@@ -2,9 +2,6 @@
   <div>
     <div class="m-40 text-3xl">
       <h1>Members</h1>
-      <button @click="highlight">
-        Highlight
-      </button>
       <input
         v-model.trim="search"
         type="text"
@@ -23,25 +20,18 @@
           <div
             class="infoContainer"
           >
-            <div>
+            <div class="flex">
               <span
-                v-for="(segment, index) in getHighlights(profile.item.firstName
+                v-for="(segment, index) in getHighlights(profile.item.name
                                                          , profile.matches && profile.matches.find
-                                                           (match => match.key =='firstName'))"
+                                                           (match => match.key =='name'))"
                 :key="segment.text + index + profile.item.userId"
-                class="inline-block m-0"
                 :class="{
                   'text-blue-500': segment.match
                 }"
               >
-                {{ segment.text }}
+                {{ segment.text.split('').map(l => l == " " ? "\xa0" : l).join("") }}
               </span>
-            </div>
-            <div ref="firstName" />
-            <h3>{{ profile.item.lastName }}</h3>
-
-            <div class="role">
-              {{ profile.item.class }}
             </div>
           </div>
         </div>
@@ -65,11 +55,17 @@ export default {
   },
   computed: {
     ...mapState(['profiles']),
+    newProfiles() {
+      return this.profiles.map((profile) => ({
+        ...profile,
+        name: `${profile.firstName} ${profile.lastName}`,
+      }));
+    },
     results() {
       if (!this.fuse || this.search == '') {
-        return this.profiles.map((profile) => ({ item: profile }));
+        return this.newProfiles.map((profile) => ({ item: profile }));
       }
-      const collection = this.getSearchCollection();
+      const collection = this.newProfiles;
       this.fuse.setCollection(collection);
       return this.fuse.search(this.search);
     },
@@ -79,9 +75,9 @@ export default {
       includeScore: true,
       includeMatches: true,
       threshold: 0.5,
-      keys: ['firstName'],
+      keys: ['name'],
     };
-    this.fuse = new Fuse(this.profiles, options);
+    this.fuse = new Fuse(this.newProfiles, options);
   },
   methods: {
     getHighlights(string, match) {
@@ -123,31 +119,6 @@ export default {
       }
 
       return segments;
-    },
-    getSearchCollection() {
-      return this.profiles.map((profile) => ({
-        ...profile,
-        name: `${profile.firstName} ${profile.lastName}`,
-      }));
-    },
-    highlight() {
-      const searchResults = this.results;
-      const firstMatchedIndex = searchResults[0].matches[0].indices[0][0];
-      const lastMatchedInedex = searchResults[0].matches[0].indices[0][1];
-
-      // const splitFirstName = searchResults[0].item.firstName.split('');
-
-      // for (let i = 0; i < splitFirstName.length; i += 1) {
-      //   if (i >= firstMatchedIndex && i <= lastMatchedInedex) {
-      //     const span = document.createElement('span');
-      //     span.innerHTML = i;
-      //     this.$refs.firstName.appendChild(span);
-      //   }
-      // }
-
-      console.log(searchResults);
-      console.log(firstMatchedIndex);
-      console.log(lastMatchedInedex);
     },
   },
 };
