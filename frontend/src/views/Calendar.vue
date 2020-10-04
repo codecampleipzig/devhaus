@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4">
     <div class="flex space-x-2">
       <div
         v-for="year in years"

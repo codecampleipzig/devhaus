@@ -1,10 +1,13 @@
 <template>
   <div class="home-layout max-h-screen">
     <nav
-      class="flex flex-col jusitfy-start p-6 pr-12
+      class="flex flex-col jusitfy-start pl-8 py-6 pb-2 pr-20
       bg-teal-900 max-h-screen"
     >
-      <div class="nav flex flex-col flex-1">
+      <h1 class="text-white font-semibold mb-6 text-xl">
+        Devhaus Leipzig
+      </h1>
+      <div class="nav flex flex-col items-start flex-1">
         <router-link
           class="nav-link"
           :to="{ name: 'Home'}"
@@ -32,7 +35,7 @@
       </div>
 
       <button
-        class="nav-link text-left"
+        class="nav-link text-left focus:outline-none"
         @click="$store.dispatch('signOut')"
       >
         Logout
@@ -59,6 +62,11 @@ export default {
   max-height: 100vh;
 }
 .nav-link {
-  @apply mb-4 uppercase font-medium tracking-widest text-white
+  @apply mb-5 pb-1 uppercase font-medium tracking-widest text-teal-100
+  border-b-2 border-transparent
+}
+
+.router-link-exact-active {
+  @apply border-teal-100
 }
 </style>
