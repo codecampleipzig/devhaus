@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center min-w-3/4">
     <div class="flex-row justify-center m-8 text-1xl ">
       <h1>Create Event</h1>
       <form
@@ -20,24 +20,23 @@
         >
         <div
           name="dateAndTimePicker"
-          class="flex justify-content items-center border-2 w-100"
+          class="flex justify-content items-center border-2 min-w-3/4"
         >
           <div
             name="start"
-            class="border-2"
+            class=""
           >
             <h2>Start</h2>
             <div
               name="startDateTime"
-              class="border-2"
+              class="flex-row"
             >
-              <br>
               <datepicker
                 v-model="event.startDate"
 
                 name="start Date"
               />
-              <br>
+
               <v-select
                 v-model="event.startTime"
                 :options="times"
@@ -47,20 +46,18 @@
           </div><!--Closing start-->
           <div
             name="end"
-            class="border-2"
+            class=""
           >
             <h2>End</h2>
             <div
               name="endDateTime"
-              class="border-2"
+              class=""
             >
-              <br>
               <datepicker
-                v-if="multipleDays"
+
                 v-model="event.endDate"
                 name="uniquename"
               />
-              <br>
               <v-select
                 v-model="event.endTime"
                 :options="times"
@@ -70,13 +67,14 @@
             </div><!--Closing endDateTime-->
           </div><!--Closing end-->
         </div><!--Closing dateAndTimePicker-->
-        <span>Multiple Days: {{ checked }} </span>
+
+        <!-- <span>Multiple Days: {{ checked }} </span>
         <input
           id="checkbox1"
           v-model="multipleDays"
           type="checkbox"
           value="Multiple Days"
-        >
+        > -->
 
         <v-select
           v-model="event.location"
