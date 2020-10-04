@@ -2,37 +2,30 @@
   <div>
     <div class="m-40 text-3xl">
       <h1>Members</h1>
-      <input
-        v-model.trim="search"
-        type="text"
-        class="bg-gray-600"
-      >
-      <div
-        v-for="(profile, i) in results"
-        :key="i"
-        class="profiles"
-      >
+      <input v-model.trim="search" type="text" class="bg-gray-600" />
+      <div v-for="(profile, i) in results" :key="i" class="profiles">
         <div class="profile">
-          <router-link :to="{ name: 'Profile', params: {userId: profile.item.userId}}">
-            <img
-              class="image"
-              :src="profile.item.photo"
-            >
+          <router-link :to="{ name: 'Profile', params: { userId: profile.item.userId } }">
+            <img class="image" :src="profile.item.photo" />
           </router-link>
-          <div
-            class="infoContainer"
-          >
+          <div class="infoContainer">
             <div class="flex">
               <span
-                v-for="(segment, index) in getHighlights(profile.item.name
-                                                         , profile.matches && profile.matches.find
-                                                           (match => match.key =='name'))"
+                v-for="(segment, index) in getHighlights(
+                  profile.item.name,
+                  profile.matches && profile.matches.find(match => match.key == 'name')
+                )"
                 :key="segment.text + index + profile.item.userId"
                 :class="{
                   'text-blue-500': segment.match
                 }"
               >
-                {{ segment.text.split('').map(l => l == " " ? "\xa0" : l).join("") }}
+                {{
+                  segment.text
+                    .split("")
+                    .map(l => (l == " " ? "\xa0" : l))
+                    .join("")
+                }}
               </span>
             </div>
           </div>
@@ -43,51 +36,52 @@
 </template>
 
 <script>
-
-import Fuse from 'fuse.js';
-import { mapState } from 'vuex';
+import Fuse from "fuse.js";
+import { mapState } from "vuex";
 
 export default {
-  name: 'Members',
+  name: "Members",
   data() {
     return {
       fuse: null,
-      search: '',
+      search: ""
     };
   },
   computed: {
-    ...mapState(['profiles']),
+    ...mapState(["profiles"]),
     newProfiles() {
-      return this.profiles.map((profile) => ({
+      return this.profiles.map(profile => ({
         ...profile,
-        name: `${profile.firstName} ${profile.lastName}`,
+        name: `${profile.firstName} ${profile.lastName}`
       }));
     },
     results() {
-      if (!this.fuse || this.search == '') {
-        return this.newProfiles.map((profile) => ({ item: profile }));
+      if (!this.fuse || this.search == "") {
+        return this.newProfiles.map(profile => ({ item: profile }));
       }
       const collection = this.newProfiles;
       this.fuse.setCollection(collection);
       return this.fuse.search(this.search);
-    },
+    }
   },
   created() {
     const options = {
       includeScore: true,
       includeMatches: true,
       threshold: 0.5,
-      keys: ['name'],
+      keys: ["name"]
     };
     this.fuse = new Fuse(this.newProfiles, options);
   },
   methods: {
     getHighlights(string, match) {
       if (!match) {
-        return [{
-          text: string,
-          match: false,
-        }];
+        return [
+          {
+            text: string,
+            match: false
+          }
+        ];
       }
       const segments = [];
       let index = 0;
@@ -98,7 +92,7 @@ export default {
         if (!nextMatch) {
           segments.push({
             text: string.slice(index),
-            match: false,
+            match: false
           });
           break;
         }
@@ -107,13 +101,13 @@ export default {
         if (nextMatch[0] > index) {
           segments.push({
             text: string.slice(index, matchStart),
-            match: false,
+            match: false
           });
           index = matchStart;
         } else {
           segments.push({
             text: string.slice(matchStart, matchEnd + 1),
-            match: true,
+            match: true
           });
           currentIndices += 1;
           index = matchEnd + 1;
@@ -121,8 +115,8 @@ export default {
       }
 
       return segments;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -146,7 +140,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  }
+}
 
 .image {
   width: 100px;
@@ -166,5 +160,4 @@ export default {
   padding: 1rem;
   justify-content: space-around;
 }
-
 </style>

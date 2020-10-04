@@ -6,28 +6,26 @@
 </template>
 
 <script>
-import Notifications from '@/components/Notifications.vue';
+import Notifications from "@/components/Notifications.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Notifications,
+    Notifications
   },
   data() {
     return {
-      notificationType: 'info',
+      notificationType: "info"
     };
-  },
-
+  }
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic');
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic");
 
 * {
-  font-family: 'Raleway', sans-serif;
-
+  font-family: "Raleway", sans-serif;
 }
 
 p {
@@ -35,6 +33,6 @@ p {
 }
 
 body {
-  color: #2E354F;
+  color: #2e354f;
 }
 </style>

@@ -1,10 +1,10 @@
-describe('example unit test', () => {
-  it('adds 1 + 1', () => {
+describe("example unit test", () => {
+  it("adds 1 + 1", () => {
     const result = 1 + 1;
     expect(result).toBe(2);
   });
-  it('process.env should be develop', () => {
+  it("process.env should be develop", () => {
     const result = process.env.NODE_ENV;
-    expect(result).toBe('test');
+    expect(result).toBe("test");
   });
 });
