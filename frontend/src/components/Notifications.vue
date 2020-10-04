@@ -1,13 +1,5 @@
 <template>
   <div>
-    <div class="fixed bottom-0 mb-1 z-50">
-      <button @click="notify({type: 'info', text:'You have been notified!!!'})">
-        Notify Me!!
-      </button>
-      <button @click="notify({type: 'error', text:'You have been errored!!!'})">
-        Error Me!!!
-      </button>
-    </div>
     <div class="fixed bottom-0 left-0 w-full z-40">
       <transition-group name="fade">
         <Notification
