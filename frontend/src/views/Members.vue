@@ -2,22 +2,35 @@
   <div>
     <div class="m-40 text-3xl">
       <h1>Members</h1>
-      <input v-model="search" type="text" class="bg-gray-600" />
-      <div v-for="profile in results" :key="profile.id" class="profiles">
+      <input v-model.trim="search" type="text" class="bg-gray-600" />
+      <div v-for="(profile, i) in results" :key="i" class="profiles">
         <div class="profile">
-          <img class="image" :src="profile.photo" />
+          <router-link :to="{ name: 'Profile', params: { userId: profile.item.userId } }">
+            <img class="image" :src="profile.item.photo" />
+          </router-link>
           <div class="infoContainer">
-            <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
-
-            <div class="role">
-              {{ profile.class }}
+            <div class="flex">
+              <span
+                v-for="(segment, index) in getHighlights(
+                  profile.item.name,
+                  profile.matches && profile.matches.find(match => match.key == 'name')
+                )"
+                :key="segment.text + index + profile.item.userId"
+                :class="{
+                  'text-blue-500': segment.match
+                }"
+              >
+                {{
+                  segment.text
+                    .split("")
+                    .map(l => (l == " " ? "\xa0" : l))
+                    .join("")
+                }}
+              </span>
             </div>
           </div>
-          <!--Closing info Container -->
         </div>
-        <!-- Closing profile -->
       </div>
-      <!-- Closing profiles -->
     </div>
   </div>
 </template>
@@ -31,33 +44,78 @@ export default {
   data() {
     return {
       fuse: null,
-
       search: ""
     };
   },
   computed: {
     ...mapState(["profiles"]),
+    newProfiles() {
+      return this.profiles.map(profile => ({
+        ...profile,
+        name: `${profile.firstName} ${profile.lastName}`
+      }));
+    },
     results() {
       if (!this.fuse || this.search == "") {
-        return this.profiles;
+        return this.newProfiles.map(profile => ({ item: profile }));
       }
-      return this.fuse.search(this.search.trim()).map(result => result.item);
+      const collection = this.newProfiles;
+      this.fuse.setCollection(collection);
+      return this.fuse.search(this.search);
     }
   },
   created() {
     const options = {
       includeScore: true,
-      keys: [
-        "profileName",
-        "firstName",
-        "lastName",
-        "email",
-        "role",
-        "userlanguages",
-        "currentProjects.name"
-      ]
+      includeMatches: true,
+      threshold: 0.5,
+      keys: ["name"]
     };
-    this.fuse = new Fuse(this.profiles, options);
+    this.fuse = new Fuse(this.newProfiles, options);
+  },
+  methods: {
+    getHighlights(string, match) {
+      if (!match) {
+        return [
+          {
+            text: string,
+            match: false
+          }
+        ];
+      }
+      const segments = [];
+      let index = 0;
+      let currentIndices = 0;
+      const { indices } = match;
+      while (index < string.length) {
+        const nextMatch = indices[currentIndices];
+        if (!nextMatch) {
+          segments.push({
+            text: string.slice(index),
+            match: false
+          });
+          break;
+        }
+        const [matchStart, matchEnd] = nextMatch;
+
+        if (nextMatch[0] > index) {
+          segments.push({
+            text: string.slice(index, matchStart),
+            match: false
+          });
+          index = matchStart;
+        } else {
+          segments.push({
+            text: string.slice(matchStart, matchEnd + 1),
+            match: true
+          });
+          currentIndices += 1;
+          index = matchEnd + 1;
+        }
+      }
+
+      return segments;
+    }
   }
 };
 </script>
