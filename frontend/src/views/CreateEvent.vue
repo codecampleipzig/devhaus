@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-stretch">
-    <div class="flex-row justify-center m-16 text-1xl ">
+  <div class="flex justify-center">
+    <div class="flex-row justify-center m-8 text-1xl ">
       <h1>Create Event</h1>
       <form
         @submit.prevent="submit"
@@ -20,7 +20,7 @@
         >
         <div
           name="dateAndTimePicker"
-          class="flex justify-content itmes-center border-2"
+          class="flex justify-content items-center border-2 w-100"
         >
           <div
             name="start"
@@ -31,8 +31,18 @@
               name="startDateTime"
               class="border-2"
             >
-              <div>start Date Picker</div>
-              <div>start Time Picker</div>
+              <br>
+              <datepicker
+                v-model="event.startDate"
+
+                name="start Date"
+              />
+              <br>
+              <v-select
+                v-model="event.startTime"
+                :options="times"
+                placeholder="enter start time"
+              />
             </div><!--Closing startDateTime-->
           </div><!--Closing start-->
           <div
@@ -44,16 +54,22 @@
               name="endDateTime"
               class="border-2"
             >
-              <div>end Date Picker</div>
-              <div>end Time Picker</div>
+              <br>
+              <datepicker
+                v-if="multipleDays"
+                v-model="event.endDate"
+                name="uniquename"
+              />
+              <br>
+              <v-select
+                v-model="event.endTime"
+                :options="times"
+                :autoscroll="true"
+                placeholder="enter closing time"
+              />
             </div><!--Closing endDateTime-->
           </div><!--Closing end-->
         </div><!--Closing dateAndTimePicker-->
-        <datepicker
-          v-model="event.startDate"
-
-          name="start Date"
-        />
         <span>Multiple Days: {{ checked }} </span>
         <input
           id="checkbox1"
@@ -62,21 +78,6 @@
           value="Multiple Days"
         >
 
-        <datepicker
-          v-if="multipleDays"
-          v-model="event.endDate"
-          name="uniquename"
-        />
-        <v-select
-          v-model="event.startTime"
-          :options="times"
-          placeholder="enter start time"
-        />
-        <v-select
-          v-model="event.endTime"
-          :options="times"
-          placeholder="enter closing time"
-        />
         <v-select
           v-model="event.location"
           :options="location"
