@@ -14,7 +14,6 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
-
   },
   plugins: [CreatePersistedState({
     paths: ['user', 'profiles'],
