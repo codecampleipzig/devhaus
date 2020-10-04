@@ -1,54 +1,63 @@
 <template>
-  <div>
+  <div class="justify-center m-16 text-1xl font-bold text-center">
     <h1>Create Event</h1>
-    <input
-      v-model="event.title"
-      type="text"
-      placeholder="add event title"
-      required
-    >
-    <input
-      v-model="event.description"
-      type="text"
-      placeholder="add event description"
-    >
-    <datepicker
-      v-model="event.startDate"
-
-      name="uniquename"
-    />
-    <datepicker
-      v-model="event.endDate"
-
-      name="uniquename"
-    />
-    <v-select
-      :options="times"
-    />
-    <v-select
-      :options="location"
-      :value="event.location"
-      @input="location => updateLocation(location)"
-    />
-    <div>{{ event.location }}</div>
-    <div v-if="event.location == 'online'|| event.location == 'hybrid'">
-      <h2>Link to your meeting</h2>
+    <form @submit.prevent="submit">
       <input
-        v-model="event.link"
+        v-model="event.title"
         type="text"
-        placeholder="add event link e.g. Zoom"
+        placeholder="add event title"
+        required
       >
-    </div>
-    <div v-if="event.location == 'local'|| event.location == 'hybrid'">
-      <h2>event address</h2>
       <input
-        v-model="event.address"
+        v-model="event.description"
         type="text"
-        placeholder="add place and street of the event"
+        placeholder="add event description"
       >
-    </div>
-    <div>{{ $store.state.user.uid }}</div>
-    <div>{{ event.creator }}</div>
+      <datepicker
+        v-model="event.startDate"
+
+        name="uniquename"
+      />
+      <input
+        id="checkbox"
+        v-model="checked"
+        type="checkbox"
+        value="Multiple Days"
+      >
+      <label>Mulitple Days{{ checked }}</label>
+      <datepicker
+        v-if="
+          multipleDays"
+
+        name="uniquename"
+      />
+      <v-select
+        :options="times"
+      />
+      <v-select
+        :options="location"
+        :value="event.location"
+        @input="location => updateLocation(location)"
+      />
+      <div>{{ event.location }}</div>
+      <div v-if="event.location == 'online'|| event.location == 'hybrid'">
+        <h2>Link to your meeting</h2>
+        <input
+          v-model="event.link"
+          type="text"
+          placeholder="add event link e.g. Zoom"
+        >
+      </div>
+      <div v-if="event.location == 'local'|| event.location == 'hybrid'">
+        <h2>event address</h2>
+        <input
+          v-model="event.address"
+          type="text"
+          placeholder="add place and street of the event"
+        >
+      </div>
+      <input type="submit">
+    </form>
   </div>
 </template>
 
@@ -58,6 +67,7 @@ import Datepicker from 'vuejs-datepicker';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 // Took over from select tutorial
+import { db } from '@/firebase';
 
 Vue.component('v-select', vSelect);
 // Transfer to Main.js ask Gabe?
@@ -73,6 +83,8 @@ export default {
       times: this.createTimes(),
 
       location: ['online', 'local', 'hybrid'],
+
+      multipleDays: false,
 
       event: {
         creator: null,
@@ -115,7 +127,14 @@ export default {
     updateLocation(location) {
       this.event.location = location;
     },
-
+    async submit() {
+      await db.collection('events').add({
+        ...this.event,
+        userId: this.$store.state.user.uid,
+      });
+      // this.userInfo = this.createEmptyUserInfo();
+      await this.$router.push({ name: 'Home' });
+    },
   },
 
 }; // Export
