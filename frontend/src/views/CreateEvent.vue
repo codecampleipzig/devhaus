@@ -2,62 +2,41 @@
   <div class="flex justify-center w-screen max-w-screen-md mx-auto">
     <div class="m-8 text-1xl ">
       <h1>Create Event</h1>
-      <form
-        @submit.prevent="submit"
-      >
-        <input
-          v-model="event.title"
-          type="text"
-          placeholder="Event Title"
-          required
-          class="block"
-        >
+      <form @submit.prevent="submit">
+        <input v-model="event.title" type="text" placeholder="Event Title" required class="block" />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
           class="block"
-        >
-        <div
-          class="flex justify-content items-center border-2"
-        >
-          <div
-            name="start"
-            class=""
-          >
+        />
+        <div class="flex justify-content items-center border-2">
+          <div name="start" class="">
             <h2>Start</h2>
-            <div
-              class="flex-row"
-            >
-              <datepicker
-                v-model="event.startDate"
-              />
+            <div class="flex-row">
+              <datepicker v-model="event.startDate" />
 
-              <v-select
-                v-model="event.startTime"
-                :options="times"
-                placeholder="enter start time"
-              />
-            </div><!--Closing startDateTime-->
-          </div><!--Closing start-->
-          <div
-            name="end"
-            class=""
-          >
+              <v-select v-model="event.startTime" :options="times" placeholder="enter start time" />
+            </div>
+            <!--Closing startDateTime-->
+          </div>
+          <!--Closing start-->
+          <div name="end" class="">
             <h2>End</h2>
             <div>
-              <datepicker
-                v-model="event.endDate"
-              />
+              <datepicker v-model="event.endDate" />
               <v-select
                 v-model="event.endTime"
                 :options="times"
                 :autoscroll="true"
                 placeholder="enter closing time"
               />
-            </div><!--Closing endDateTime-->
-          </div><!--Closing end-->
-        </div><!--Closing dateAndTimePicker-->
+            </div>
+            <!--Closing endDateTime-->
+          </div>
+          <!--Closing end-->
+        </div>
+        <!--Closing dateAndTimePicker-->
 
         <!-- <span>Multiple Days: {{ checked }} </span>
         <input
@@ -75,23 +54,19 @@
           @input="location => updateLocation(location)"
         />
         <div>{{ event.location }}</div>
-        <div v-if="event.location == 'online'|| event.location == 'hybrid'">
+        <div v-if="event.location == 'online' || event.location == 'hybrid'">
           <h2>Link to your meeting</h2>
-          <input
-            v-model="event.link"
-            type="text"
-            placeholder="add event link e.g. Zoom"
-          >
+          <input v-model="event.link" type="text" placeholder="add event link e.g. Zoom" />
         </div>
-        <div v-if="event.location == 'local'|| event.location == 'hybrid'">
+        <div v-if="event.location == 'local' || event.location == 'hybrid'">
           <h2>event address</h2>
           <input
             v-model="event.address"
             type="text"
             placeholder="add place and street of the event"
-          >
+          />
         </div>
-        <input type="submit">
+        <input type="submit" />
       </form>
       <div>{{ successMsg }}</div>
     </div>
@@ -99,27 +74,25 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker';
-import { db } from '@/firebase';
-import moment from 'moment';
+import Datepicker from "vuejs-datepicker";
+import { db } from "@/firebase";
+import moment from "moment";
 
 export default {
   components: {
-    Datepicker,
+    Datepicker
   },
   data() {
     return {
-
       times: this.createTimes(),
 
-      location: ['online', 'local', 'hybrid'],
+      location: ["online", "local", "hybrid"],
 
       multipleDays: false,
 
-      successMsg: '',
+      successMsg: "",
 
-      event: this.createEmptyEvent(),
-
+      event: this.createEmptyEvent()
     };
   },
 
@@ -134,7 +107,7 @@ export default {
         for (let i = 0; i < 46; i += 15) {
           let min = i;
           if (min == 0) {
-            min = '00';
+            min = "00";
           } // if statement
           res.push(`${hours}:${min}`);
         } // For Loop minutes
@@ -146,17 +119,30 @@ export default {
     },
     async submit() {
       const {
-        title, description, startDate, startTime, endDate,
-        endTime, location, link, address,
+        title,
+        description,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        location,
+        link,
+        address
       } = this.event;
 
-      const [startHour, startMinutes] = startTime.split(':').map(Number);
-      const [endHour, endMinutes] = endTime.split(':').map(Number);
+      const [startHour, startMinutes] = startTime.split(":").map(Number);
+      const [endHour, endMinutes] = endTime.split(":").map(Number);
 
-      const start = moment(startDate).hour(startHour).minute(startMinutes).toDate();
-      const end = moment(endDate).hour(endHour).minute(endMinutes).toDate();
+      const start = moment(startDate)
+        .hour(startHour)
+        .minute(startMinutes)
+        .toDate();
+      const end = moment(endDate)
+        .hour(endHour)
+        .minute(endMinutes)
+        .toDate();
 
-      await db.collection('events').add({
+      await db.collection("events").add({
         title,
         description,
         start,
@@ -164,32 +150,28 @@ export default {
         location,
         link,
         address,
-        creatorId: this.$store.state.user.uid,
+        creatorId: this.$store.state.user.uid
       });
       this.event = this.createEmptyEvent();
-      this.$store.dispatch('notify', { type: 'info', text: 'Your event has been created' });
-      await this.$router.push({ name: 'Calendar' });
+      this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
+      await this.$router.push({ name: "Calendar" });
     },
     createEmptyEvent() {
       return {
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         startDate: new Date(),
-        startTime: '',
+        startTime: "",
         endDate: new Date(),
-        endTime: '',
-        location: '',
-        link: '',
-        address: '',
+        endTime: "",
+        location: "",
+        link: "",
+        address: ""
       };
       // this.successMsg = "",
-    },
-  },
-
+    }
+  }
 }; // Export
-
 </script>
 
-<style>
-
-</style>
+<style></style>

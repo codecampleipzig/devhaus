@@ -4,8 +4,8 @@
       <h1>{{ event.title }}</h1>
       <p>{{ event.description }}</p>
       <p>
-        From {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }}
-        to {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+        From {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} to
+        {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
       </p>
       <p>{{ event.location }}</p>
     </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   computed: {
@@ -21,17 +21,15 @@ export default {
       return this.$route.params.id;
     },
     event() {
-      return this.$store.state.events.find((event) => event.id == this.id);
-    },
+      return this.$store.state.events.find(event => event.id == this.id);
+    }
   },
   methods: {
     moment(date) {
       return moment(date);
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

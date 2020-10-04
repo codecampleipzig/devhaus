@@ -4,9 +4,7 @@ module.exports = {
     // Required for certain syntax usages
     ecmaVersion: 2017,
   },
-  extends: 'airbnb',
+  extends: 'prettier',
   rules: {
-    eqeqeq: 0,
-    'comma-dangle': ['error', 'always-multiline'],
   },
 };

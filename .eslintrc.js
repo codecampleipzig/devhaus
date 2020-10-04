@@ -5,7 +5,6 @@ module.exports = {
     ecmaVersion: 2017,
   },
   rules: {
-    eqeqeq: 0,
-    'comma-dangle': ['error', 'always-multiline'],
+   
   },
 };

@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="fixed bottom-0 mb-1 z-50">
-      <button @click="notify({type: 'info', text:'You have been notified!!!'})">
+      <button @click="notify({ type: 'info', text: 'You have been notified!!!' })">
         Notify Me!!
       </button>
-      <button @click="notify({type: 'error', text:'You have been errored!!!'})">
+      <button @click="notify({ type: 'error', text: 'You have been errored!!!' })">
         Error Me!!!
       </button>
     </div>
@@ -23,28 +23,27 @@
 </template>
 
 <script>
-import Notification from '@/components/Notification.vue';
-import { mapState, mapActions } from 'vuex';
+import Notification from "@/components/Notification.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    Notification,
+    Notification
   },
-  computed: mapState(['notifications']),
+  computed: mapState(["notifications"]),
   methods: {
-    ...mapActions(['notify']),
+    ...mapActions(["notify"]),
     postError() {
-      this.notify({ type: 'error', text: 'This is an error.' });
+      this.notify({ type: "error", text: "This is an error." });
     },
     removeNotification(notification) {
-      this.$store.commit('REMOVE_NOTIFICATION', notification);
-    },
-  },
+      this.$store.commit("REMOVE_NOTIFICATION", notification);
+    }
+  }
 };
 </script>
 
 <style scoped>
-
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s;

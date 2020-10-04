@@ -2,64 +2,63 @@
   <div>
     <div class="m-40 text-3xl">
       <h1>Members</h1>
-      <input
-        v-model="search"
-        type="text"
-        class="bg-gray-600"
-      >
-      <div
-        v-for="profile in results"
-        :key="profile.id"
-        class="profiles"
-      >
+      <input v-model="search" type="text" class="bg-gray-600" />
+      <div v-for="profile in results" :key="profile.id" class="profiles">
         <div class="profile">
-          <img
-            class="image"
-            :src="profile.photo"
-          >
+          <img class="image" :src="profile.photo" />
           <div class="infoContainer">
             <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
 
             <div class="role">
               {{ profile.class }}
             </div>
-          </div><!--Closing info Container -->
-        </div><!-- Closing profile -->
-      </div><!-- Closing profiles -->
+          </div>
+          <!--Closing info Container -->
+        </div>
+        <!-- Closing profile -->
+      </div>
+      <!-- Closing profiles -->
     </div>
   </div>
 </template>
 
 <script>
-
-import Fuse from 'fuse.js';
-import { mapState } from 'vuex';
+import Fuse from "fuse.js";
+import { mapState } from "vuex";
 
 export default {
-  name: 'Members',
+  name: "Members",
   data() {
     return {
       fuse: null,
 
-      search: '',
+      search: ""
     };
   },
   computed: {
-    ...mapState(['profiles']),
+    ...mapState(["profiles"]),
     results() {
-      if (!this.fuse || this.search == '') {
+      if (!this.fuse || this.search == "") {
         return this.profiles;
       }
-      return this.fuse.search(this.search.trim()).map((result) => result.item);
-    },
+      return this.fuse.search(this.search.trim()).map(result => result.item);
+    }
   },
   created() {
     const options = {
       includeScore: true,
-      keys: ['profileName', 'firstName', 'lastName', 'email', 'role', 'userlanguages', 'currentProjects.name'],
+      keys: [
+        "profileName",
+        "firstName",
+        "lastName",
+        "email",
+        "role",
+        "userlanguages",
+        "currentProjects.name"
+      ]
     };
     this.fuse = new Fuse(this.profiles, options);
-  },
+  }
 };
 </script>
 
@@ -83,7 +82,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  }
+}
 
 .image {
   width: 100px;
@@ -103,5 +102,4 @@ export default {
   padding: 1rem;
   justify-content: space-around;
 }
-
 </style>

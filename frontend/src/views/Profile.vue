@@ -4,13 +4,8 @@
       <div class="profile-picture" />
       <div class="info">
         <h1>{{ profileInfo.firstName }} {{ profileInfo.lastName }}</h1>
-        <p class="role">
-          Class #{{ profileInfo.classNumber }} Alumni
-        </p>
-        <a
-          href="github.com/mnapearson"
-          class="github"
-        >Fork me on GitHub</a>
+        <p class="role">Class #{{ profileInfo.classNumber }} Alumni</p>
+        <a href="github.com/mnapearson" class="github">Fork me on GitHub</a>
       </div>
     </section>
     <section class="middle mb-4">
@@ -28,14 +23,10 @@
           Project description
         </p>
         <div class="flex space-x-4 mt-4">
-          <a
-            class="button"
-            href="celestial-weather.netlify.app"
-          >Website</a>
-          <a
-            class="button"
-            href="https://github.com/mnapearson/celestial-weather"
-          >View on Github</a>
+          <a class="button" href="celestial-weather.netlify.app">Website</a>
+          <a class="button" href="https://github.com/mnapearson/celestial-weather"
+            >View on Github</a
+          >
         </div>
       </div>
     </section>
@@ -50,9 +41,7 @@
           rows="8"
           placeholder="Your message..."
         />
-        <button
-          class="button"
-        >
+        <button class="button">
           Send
         </button>
       </div>
@@ -61,20 +50,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   computed: {
-    ...mapState(['profiles', 'user']),
+    ...mapState(["profiles", "user"]),
     userId() {
       return this.$route.params.userId;
     },
     profileInfo() {
       const profileUID = this.userId;
-      return this.profiles.find((profile) => profile.userId == profileUID);
-    },
-  },
+      return this.profiles.find(profile => profile.userId == profileUID);
+    }
+  }
 };
 </script>
 
@@ -131,5 +120,4 @@ a {
 .button {
   @apply border border-black py-2 px-6 text-center font-bold cursor-pointer;
 }
-
 </style>
