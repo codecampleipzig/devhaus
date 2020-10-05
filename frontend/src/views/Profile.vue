@@ -96,6 +96,7 @@
         <h2 class="mt-2">
           Social Links
         </h2>
+        <!-- TODO: add vuelidate for these URLS -->
         <a :href="profileInfoFromDB.facebook">
           <font-awesome-icon
             v-if="profileInfoFromDB.facebook"
@@ -431,6 +432,7 @@ export default {
         .collection("profiles")
         .doc(this.profileInfoFromDB.id)
         .set(updatedProperties, { merge: true });
+      this.$store.dispatch("notify", { type: "info", text: "Your profile has been updated." });
       this.editNatLanguages = false;
       this.editTechLanguages = false;
       this.editAbout = false;
