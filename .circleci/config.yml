@@ -3,9 +3,9 @@ jobs:
   build:
     docker:
       - image: "dodoesk/firebase-cypress-test-ci:0.2"
-      auth:
-        username: $DOCKERHUB_USERNAME
-        password: $DOCKERHUB_PASSWORD
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: yarn install && yarn test:ci
