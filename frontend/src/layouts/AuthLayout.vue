@@ -29,8 +29,9 @@
         </h1>
       </div>
     </section>
-
-    <router-view />
+    <div class="overflow-y-auto max-h-screen">
+      <router-view />
+    </div>
   </div>
 </template>
 

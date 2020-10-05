@@ -19,16 +19,10 @@
     </div>
 
     <form class="flex flex-col" @submit.prevent="submit">
-      <input
-        v-model="email"
-        class="bg-white mb-4 focus:shadow-outline focus:outline-none "
-        type="text"
-        placeholder="Email"
-        required
-      />
+      <input v-model="email" class="bg-white mb-4 email" type="text" placeholder="Email" required />
       <input
         v-model="password"
-        class="bg-white mb-4 focus:shadow-outline focus:outline-none"
+        class="bg-white mb-4"
         type="password"
         placeholder="Password"
         required

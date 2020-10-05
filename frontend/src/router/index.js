@@ -19,7 +19,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/auth",
     component: AuthLayout,
     children: [
       {
