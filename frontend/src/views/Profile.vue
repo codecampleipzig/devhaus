@@ -80,6 +80,7 @@
         <h2 class="mt-2">
           Social Links
         </h2>
+        <!-- TODO: add vuelidate for these URLS -->
         <a :href="profileInfoFromDB.facebook">
           <font-awesome-icon
             v-if="profileInfoFromDB.facebook"
