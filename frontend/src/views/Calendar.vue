@@ -35,7 +35,7 @@
           New Event
         </router-link>
         <router-link class="button mt-0" :to="{ name: 'AllEvents' }">
-          View All Events
+          View All
         </router-link>
       </div>
     </header>
