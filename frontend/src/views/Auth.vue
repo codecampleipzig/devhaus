@@ -34,15 +34,14 @@
       <div
         class="
         bg-white
-        pb-16
+        pb-12
         pt-4
         w-screen
         max-w-sm
-        px-3
+        px-8
         my-10
         text-black
-        md:shadow
-        rounded
+        rounded-sm
         "
       >
         <div class="flex justify-center md:hidden">
@@ -66,41 +65,41 @@
           </h1>
         </div>
         <div
-          class="flex space-x-8 text-2xl text-black mb-6 font-bold
+          class="flex space-x-8 text-2xl text-black mb-8 font-bold
         justify-center mt-8"
         >
           <router-link
-            class="hover:opacity-25 underline"
+            class="border-b-4 pb-1 border-transparent"
             :to="{ name: 'Auth', params: { mode: 'signin' } }"
           >
             Sign In
           </router-link>
           <router-link
-            class="hover:opacity-25 underline"
+            class="border-b-4 pb-1 border-transparent"
             :to="{ name: 'Auth', params: { mode: 'signup' } }"
           >
             Sign Up
           </router-link>
         </div>
 
-        <form class="flex flex-col ml-4 mr-4" @submit.prevent="submit">
+        <form class="flex flex-col" @submit.prevent="submit">
           <input
             v-model="email"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none "
+            class="bg-white mb-4 focus:shadow-outline focus:outline-none "
             type="text"
             placeholder="Email"
             required
           />
           <input
             v-model="password"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
+            class="bg-white mb-4 focus:shadow-outline focus:outline-none"
             type="password"
             placeholder="Password"
             required
           />
 
           <input
-            class="mt-2 mb-2 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
+            class="button mt-2 mb-2 py-2 cursor-pointer text-white hover:bg-teal-800 bg-teal-900"
             type="submit"
             :value="modeTitle"
           />
@@ -110,16 +109,12 @@
           {{ error }}
         </h4>
         <div class="flex justify-center">
-          <p
-            class="bg-black border rounded-full
-            h-6 w-10  shadow text-center text-white font-bold mt-2
-        "
-          >
+          <p class="h-6 w-10 text-center text-black font-bold mt-2">
             OR
           </p>
         </div>
         <button
-          class="mt-3 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full w-full"
+          class="button mt-3 cursor-pointer text-white  hover:bg-teal-800 bg-teal-900 w-full"
           @click="gitLogin"
         >
           Sign In with Github

@@ -33,14 +33,13 @@
       <div
         class="
         bg-white
-        pb-16
+        pb-12
         pt-4
         w-screen
         max-w-sm
-        px-3
+        px-8
         text-black
-        md:shadow
-        rounded
+        rounded-sm
         "
       >
         <div class="flex justify-center md:hidden">
@@ -63,46 +62,48 @@
             <h2>Leipzig</h2>
           </h1>
         </div>
-        <h1
-          class="text-3xl text-black
-      font-bold flex justify-center mt-8 border-black"
-        >
-          REGISTRATION INFO
-        </h1>
-        <form class="flex flex-col ml-4 mr-4" @submit.prevent="submit">
+        <div class="flex justify-center mb-6">
+          <h1
+            class="text-3xl text-black
+        font-bold flex justify-center mt-8 pb-1 border-b-4 border-teal-700"
+          >
+            Create a profile
+          </h1>
+        </div>
+        <form class="flex flex-col" @submit.prevent="submit">
           <input
             v-model="userInfo.userName"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
+            class="mb-6 focus:shadow-outline"
             type="text"
             placeholder="User Name"
           />
           <input
             v-model="userInfo.firstName"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
+            class="mb-6 focus:shadow-outline"
             type="text"
             placeholder="First Name"
             required
           />
           <input
             v-model="userInfo.lastName"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
+            class="mb-6 focus:shadow-outline"
             type="text"
             placeholder="Last Name"
             required
           />
           <input
             v-model="userInfo.class"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none border"
+            class="mb-6 focus:shadow-outline"
             type="number"
             placeholder="Class #"
             required
           />
           <input
-            class="mt-2 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
+            class="button mb-4 text-white  hover:bg-teal-800 bg-teal-900 w-full"
             type="submit"
           />
           <button
-            class="mt-4 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
+            class="button text-white  hover:bg-teal-800 bg-teal-900 w-full"
             @click="$store.dispatch('signOut')"
           >
             Logout
