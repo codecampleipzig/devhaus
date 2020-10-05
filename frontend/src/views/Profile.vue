@@ -1,6 +1,6 @@
 <template>
   <div class="p-4">
-    <div class="profile-picture">
+    <div class="invisible">
       <input
         ref="imageInput"
         class="invisible"
@@ -11,19 +11,12 @@
       />
     </div>
     <section class="flex space-x-4 mb-4">
-      <div class="w-64" @click="$refs.imageInput.click()">
+      <div @click="$refs.imageInput.click()" class="w-48 h-48">
         <img
-          class="bg-gray-100 object-cover"
-          style="padding-top: 100%;"
+          class="bg-gray-100 object-cover h-full w-full"
           :src="profileInfoFromDB.avatar"
           alt=""
         />
-      </div>
-      <div>
-        <p class="role">Class #{{ profileInfoFromDB.classNumber }} Alumni</p>
-        <a href="https://github.com/mnapearson" class="github"
-          ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
-        ></a>
       </div>
       <div class="info">
         <div v-if="!editInfo">
@@ -449,11 +442,27 @@ export default {
     async uploadImage(event) {
       this.imageFile = event.target.files[0];
 
-      const imageName = `${this.profileInfo.userId}`;
+      const imageName = `${this.profileInfoFromDB.id}`;
       const storageRef = storage.ref();
 
       const profileImageRef = storageRef.child(`avatar/${imageName}`);
-      this.imageFile = profileImageRef.getDownloadURL();
+      try {
+        await profileImageRef.put(this.imageFile);
+        console.log("Successful upload");
+      } catch (error) {
+        console.log(error);
+      }
+      let imageURL = await profileImageRef.getDownloadURL();
+      console.log(imageURL);
+      try {
+        await db
+          .collection("profiles")
+          .doc(this.profileInfoFromDB.id)
+          .update({ avatar: imageURL });
+        console.log("Set image in profile");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };
