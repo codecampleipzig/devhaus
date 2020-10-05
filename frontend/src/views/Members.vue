@@ -16,11 +16,13 @@
             class="w-full"
             :to="{ name: 'Profile', params: { userId: profile.item.userId } }"
           >
-            <img
-              class="w-full bg-gray-100 flex-shrink-0"
-              style="padding-top: 100%"
-              :src="profile.item.photo"
-            />
+            <div class="w-48 h-48">
+              <img
+                class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
+                style=""
+                :src="profile.item.avatar"
+              />
+            </div>
           </router-link>
           <div class="m-2">
             <h2 class="font-bold text-xl mt-2 pb-1 border-b-4 border-teal-800 mb-2">
