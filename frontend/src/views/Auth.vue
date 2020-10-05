@@ -1,126 +1,60 @@
 <template>
-  <div class="flex items-center justify-center md:space-x-32 min-h-screen md:bg-gray-100">
-    <section>
-      <div
-        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
-      p-2 md:flex hidden opacity-50"
-      >
-        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
-          <h2>Dev<br />haus</h2>
-          <h2>Leipzig</h2>
-        </h1>
-      </div>
-      <div
-        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
-      p-2 md:flex hidden opacity-75"
-      >
-        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
-          <h2>Dev<br />haus</h2>
-          <h2>Leipzig</h2>
-        </h1>
-      </div>
-      <div
-        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
-      p-2 md:flex hidden"
-      >
-        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
-          <h2>Dev<br />haus</h2>
-          <h2>Leipzig</h2>
-        </h1>
-      </div>
-    </section>
-
-    <section>
-      <div
-        class="
-        bg-white
-        pb-12
-        pt-4
-        w-screen
-        max-w-sm
-        px-8
-        my-10
-        text-black
-        rounded-sm
-        "
-      >
-        <div class="flex justify-center md:hidden">
-          <h1
-            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col opacity-50"
-          >
-            <h2>Dev<br />haus</h2>
-            <h2>Leipzig</h2>
-          </h1>
-          <h1
-            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col opacity-75"
-          >
-            <h2>Dev<br />haus</h2>
-            <h2>Leipzig</h2>
-          </h1>
-          <h1
-            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col"
-          >
-            <h2>Dev<br />haus</h2>
-            <h2>Leipzig</h2>
-          </h1>
-        </div>
-        <div
-          class="flex space-x-8 text-2xl text-black mb-8 font-bold
+  <div>
+    <div
+      class="flex space-x-8 text-2xl text-black mb-8 font-bold
         justify-center mt-8"
-        >
-          <router-link
-            class="border-b-4 pb-1 border-transparent"
-            :to="{ name: 'Auth', params: { mode: 'signin' } }"
-          >
-            Sign In
-          </router-link>
-          <router-link
-            class="border-b-4 pb-1 border-transparent"
-            :to="{ name: 'Auth', params: { mode: 'signup' } }"
-          >
-            Sign Up
-          </router-link>
-        </div>
+    >
+      <router-link
+        class="border-b-4 pb-1 border-transparent"
+        :to="{ name: 'Auth', params: { mode: 'signin' } }"
+      >
+        Sign In
+      </router-link>
+      <router-link
+        class="border-b-4 pb-1 border-transparent"
+        :to="{ name: 'Auth', params: { mode: 'signup' } }"
+      >
+        Sign Up
+      </router-link>
+    </div>
 
-        <form class="flex flex-col" @submit.prevent="submit">
-          <input
-            v-model="email"
-            class="bg-white mb-4 focus:shadow-outline focus:outline-none "
-            type="text"
-            placeholder="Email"
-            required
-          />
-          <input
-            v-model="password"
-            class="bg-white mb-4 focus:shadow-outline focus:outline-none"
-            type="password"
-            placeholder="Password"
-            required
-          />
+    <form class="flex flex-col" @submit.prevent="submit">
+      <input
+        v-model="email"
+        class="bg-white mb-4 focus:shadow-outline focus:outline-none "
+        type="text"
+        placeholder="Email"
+        required
+      />
+      <input
+        v-model="password"
+        class="bg-white mb-4 focus:shadow-outline focus:outline-none"
+        type="password"
+        placeholder="Password"
+        required
+      />
 
-          <input
-            class="button mt-2 mb-2 py-2 cursor-pointer text-white hover:bg-teal-800 bg-teal-900"
-            type="submit"
-            :value="modeTitle"
-          />
-        </form>
+      <input
+        class="button mt-2 mb-2 py-2 cursor-pointer text-white hover:bg-teal-800 bg-teal-900"
+        type="submit"
+        :value="modeTitle"
+      />
+    </form>
 
-        <h4 v-if="error">
-          {{ error }}
-        </h4>
-        <div class="flex justify-center">
-          <p class="h-6 w-10 text-center text-black font-bold mt-2">
-            OR
-          </p>
-        </div>
-        <button
-          class="button mt-3 cursor-pointer text-white  hover:bg-teal-800 bg-teal-900 w-full"
-          @click="gitLogin"
-        >
-          Sign In with Github
-        </button>
-      </div>
-    </section>
+    <h4 v-if="error">
+      {{ error }}
+    </h4>
+    <div class="flex justify-center">
+      <p class="h-6 w-10 text-center text-black font-bold mt-2">
+        OR
+      </p>
+    </div>
+    <button
+      class="button mt-3 cursor-pointer text-white  hover:bg-teal-800 bg-teal-900 w-full"
+      @click="gitLogin"
+    >
+      Sign In with Github
+    </button>
   </div>
 </template>
 
