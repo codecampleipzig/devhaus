@@ -237,12 +237,14 @@
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <p
+        <div
           v-for="hobby in profileInfoFromDB.hobbies"
           :key="hobby"
         >
-          {{ hobby }}
-        </p>
+          <p>
+            {{ hobby }}
+          </p>
+        </div>
         <form
           v-if="editHobbies"
           @submit.prevent="commitToDB({ hobbies:
