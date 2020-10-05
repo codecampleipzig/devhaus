@@ -37,16 +37,16 @@
         </h1>
         <div
           class="flex space-x-8 text-2xl text-black mb-6 font-bold
-        items-center"
+        justify-center"
         >
           <router-link
-            class="opacity-25 underline"
+            class="hover:opacity-25 underline"
             :to="{ name: 'Auth', params: { mode: 'signin' } }"
           >
             Sign In
           </router-link>
           <router-link
-            class="opacity-25 underline"
+            class="hover:opacity-25 underline"
             :to="{ name: 'Auth', params: { mode: 'signup' } }"
           >
             Sign Up
@@ -54,12 +54,9 @@
         </div>
 
         <form class="flex flex-col" @submit.prevent="submit">
-          <input v-model="email" class="mb-4 " type="text" placeholder="Email" required />
-          <input v-model="password" class="mb-4" type="password" placeholder="Password" required />
-
           <input
             v-model="email"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
+            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="Email"
             required
@@ -73,7 +70,7 @@
           />
 
           <input
-            class="mt-2 py-2 cursor-pointer hover:underline bg-white"
+            class="mt-2 mb-2 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
             type="submit"
             :value="modeTitle"
           />
@@ -91,7 +88,10 @@
             OR
           </p>
         </div>
-        <button class="mt-2 py-2  hover:underline cursor-pointer block w-full" @click="gitLogin">
+        <button
+          class="mt-3 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full w-full"
+          @click="gitLogin"
+        >
           Sign In with Github
         </button>
       </div>

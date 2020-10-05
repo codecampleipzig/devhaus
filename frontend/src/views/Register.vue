@@ -48,7 +48,7 @@
           />
           <input
             v-model="userInfo.class"
-            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
+            class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none border"
             type="number"
             placeholder="Class #"
             required
