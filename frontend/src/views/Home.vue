@@ -16,7 +16,6 @@
           :icon="['fab', 'instagram']"
         />
       </div>
-      ======= >>>>>>> 2cb8c3ba5cc8fe9a1b45b36938aa4395fd7a14bb
       <p>logged in as: {{ $store.state.user.email }}</p>
     </div>
   </div>

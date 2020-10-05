@@ -55,7 +55,7 @@
     <section>
       <h2>About Me</h2>
       <div v-if="!editAbout">
-        <p>{{ profileInfoFromDB.profileAbout }}</p>
+        <p>{{ profileInfoFromDB.about }}</p>
       </div>
       <form v-if="editAbout" @submit.prevent="commitToDB({ about: profileAbout })">
         <textarea
@@ -80,19 +80,27 @@
         <h2 class="mt-2">
           Social Links
         </h2>
-        <font-awesome-icon
-          v-if="profileInfoFromDB.facebook != ''"
-          class="m-3"
-          :icon="['fab', 'facebook-f']"
-        /><font-awesome-icon
-          v-if="profileInfoFromDB.linkedin != ''"
-          class="m-3"
-          :icon="['fab', 'linkedin']"
-        /><font-awesome-icon
-          v-if="profileInfoFromDB.instagram != ''"
-          class="m-3"
-          :icon="['fab', 'instagram']"
-        />
+        <a :href="profileInfoFromDB.facebook">
+          <font-awesome-icon
+            v-if="profileInfoFromDB.facebook"
+            class="m-3"
+            :icon="['fab', 'facebook-f']"
+          />
+        </a>
+        <a :href="profileInfoFromDB.linkedin">
+          <font-awesome-icon
+            v-if="profileInfoFromDB.linkedin"
+            class="m-3"
+            :icon="['fab', 'linkedin']"
+          />
+        </a>
+        <a :href="profileInfoFromDB.instagram">
+          <font-awesome-icon
+            v-if="profileInfoFromDB.instagram"
+            class="m-3"
+            :icon="['fab', 'instagram']"
+          />
+        </a>
         <font-awesome-icon
           v-if="myProfile"
           id="icon"
@@ -101,9 +109,15 @@
           @click="editSocialLinks"
         />
         <form v-if="editSocial" @submit.prevent="commitToDB(profileSocial)">
-          <input v-model="profileSocial.facebook" type="text" placeholder="Facebook" />
-          <input v-model="profileSocial.linkedin" type="text" placeholder="LinkedIn" />
-          <input v-model="profileSocial.instagram" type="text" placeholder="Instagram" />
+          <input v-model="profileSocial.facebook" 
+          type="text" 
+          placeholder="Facebook" />
+          <input v-model="profileSocial.linkedin" 
+          type="text" 
+          placeholder="LinkedIn" />
+          <input v-model="profileSocial.instagram" 
+          type="text" 
+          placeholder="Instagram" />
           <input type="submit" />
           <form />
         </form>
@@ -287,8 +301,12 @@ export default {
       profileTechLanguages: null,
       profileNatLanguages: null,
       profileAbout: null,
-      profileSocial: null,
       profileHobbies: null,
+      profileSocial: {
+      facebook: '',
+      instagram: '',
+      linkedin: '',
+      },
 
       editInfo: false,
       editNatLanguages: false,
