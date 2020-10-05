@@ -10,7 +10,6 @@
         accept="image/*"
       />
     </div>
-    <!-- <button @click="uploadImage">Upload!</button> -->
     <section class="flex space-x-4 mb-4">
       <div class="w-64" @click="$refs.imageInput.click()">
         <img
@@ -21,10 +20,7 @@
         />
       </div>
       <div>
-        <h1 class="font-bold text-2xl mb-2 mt-4">
-          {{ profileInfo.firstName }} {{ profileInfo.lastName }}
-        </h1>
-        <p class="role">Class #{{ profileInfo.classNumber }} Alumni</p>
+        <p class="role">Class #{{ profileInfoFromDB.classNumber }} Alumni</p>
         <a href="https://github.com/mnapearson" class="github"
           ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
         ></a>
