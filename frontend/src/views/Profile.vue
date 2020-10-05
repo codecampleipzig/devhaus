@@ -1,8 +1,17 @@
 <template>
   <div class="p-4">
+    <input
+      ref="imageInput"
+      class="invisible"
+      @change="uploadImage($event)"
+      type="file"
+      name="profilePicture"
+      accept="image/*"
+    />
+    <!-- <button @click="uploadImage">Upload!</button> -->
     <section class="flex space-x-4 mb-4">
-      <div class="w-64">
-        <img class="bg-gray-100" style="padding-top: 100%;" src="" alt="" />
+      <div class="w-64" @click="$refs.imageInput.click()">
+        <img class="bg-gray-100 object-cover" style="padding-top: 100%;" :src="avatar" alt="" />
       </div>
       <div>
         <h1 class="font-bold text-2xl mb-2 mt-4">
@@ -57,17 +66,37 @@
 
 <script>
 import { mapState } from "vuex";
+import { db, storage } from "@/firebase";
 
 export default {
   name: "Profile",
+  data() {
+    return {
+      imageFile: null
+    };
+  },
   computed: {
     ...mapState(["profiles", "user"]),
+    avatar() {
+      return this.profileImagesRef.getDownloadURL();
+    },
     userId() {
       return this.$route.params.userId;
     },
     profileInfo() {
       const profileUID = this.userId;
       return this.profiles.find(profile => profile.userId == profileUID);
+    }
+  },
+  methods: {
+    async uploadImage(event) {
+      this.imageFile = event.target.files[0];
+
+      const imageName = `${this.profileInfo.userId}`;
+      const storageRef = storage.ref();
+
+      const profileImagesRef = storageRef.child(`avatar/${imageName}`);
+      this.avatar = await profileImagesRef.getDownloadURL();
     }
   }
 };
