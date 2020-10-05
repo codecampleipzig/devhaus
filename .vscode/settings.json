@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": { "source.fixAll": true }
@@ -9,5 +8,10 @@
     "editor.codeActionsOnSave": { "source.fixAll": true }
   },
   "eslint.format.enable": true,
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.enable": true
 }

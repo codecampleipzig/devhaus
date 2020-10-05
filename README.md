@@ -1,6 +1,6 @@
 # Devhaus
 
-Devhaus is an online tool that enables collaboration between affiliates of CodeCampLeipzig eg ( students - instructors - alumni). It provides the possibility to enter a profile, including information about interest, skills and projects. The user can search profiles e.g. for common interest and skills. It also has a calender feature to facilitate events.
+Devhaus is an online tool that enables collaboration between affiliates of CodeCampLeipzig eg ( students - instructors - alumni). It provides the possibility to enter a profile, including information about interest, skills and projects. The user can search profiles e.g. for common interest and skills. It also has a calendar feature to facilitate events.
 
 ## Installation
 

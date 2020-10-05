@@ -6,36 +6,38 @@
 </template>
 
 <script>
-import Notifications from '@/components/Notifications.vue';
+import Notifications from "@/components/Notifications.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Notifications,
+    Notifications
   },
   data() {
     return {
-      notificationType: 'info',
+      notificationType: "info"
     };
-  },
-
+  }
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic');
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic");
 
-* {
-  font-family: 'Raleway', sans-serif;
-
+input[type="text"],
+input[type="password"] {
+  @apply border border-black py-2 px-4 font-medium;
 }
 
-p {
-  font-weight: 200;
-  letter-spacing: 20%;
+input[type="text"]:focus,
+input[type="password"]:focus,
+.button:focus,
+textarea:focus {
+  @apply outline-none;
 }
 
-body {
-  color: #2E354F;
+.button {
+  letter-spacing: 0.2em;
+  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase bg-teal-900 text-white;
 }
 </style>

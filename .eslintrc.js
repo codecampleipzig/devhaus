@@ -4,7 +4,7 @@ module.exports = {
     // Required for certain syntax usages
     ecmaVersion: 2017,
   },
-  extends: 'prettier',
   rules: {
+   
   },
 };

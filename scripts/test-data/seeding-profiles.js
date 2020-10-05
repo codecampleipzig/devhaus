@@ -1,4 +1,4 @@
-export default [{
+module.exports = [{
   id: 0,
   profileName: 'I-ssah',
   firstName: 'Issah',
@@ -15,7 +15,6 @@ export default [{
     description: '',
     links: [],
   }],
-  // Last login, implement now or for next sprint??
 },
 {
   id: 1,
@@ -86,7 +85,7 @@ export default [{
   mentoring: false,
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
-    name: 'celstial weather',
+    name: 'celestial weather',
     description: 'a very nice site including weather, your horoscope and events',
     links: [],
   }],
@@ -104,8 +103,8 @@ export default [{
   mentoring: false,
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
-    name: 'friendsWithPlants',
-    description: 'a platform where people can swap plants',
+    name: '',
+    description: '',
     links: [],
   }],
 },
@@ -141,8 +140,7 @@ export default [{
   userLanguages: ['JavaScript', 'HTML', 'CSS'],
   currentProjects: [{
     name: 'CodeCampArcade',
-    description: 'an pixel arcade adventure for you to find out if you want to be a code camper',
+    description: 'a pixel arcade adventure for you to find out if you want to be a code camper',
     links: [],
   }],
-},
-];
+}];

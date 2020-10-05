@@ -25,41 +25,38 @@
         >
           REGISTRATION INFO
         </h1>
-        <form
-          class="flex flex-col"
-          @submit.prevent="submit"
-        >
+        <form class="flex flex-col" @submit.prevent="submit">
           <input
             v-model="userInfo.userName"
             class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="User Name"
-          >
+          />
           <input
             v-model="userInfo.firstName"
             class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="First Name"
             required
-          >
+          />
           <input
             v-model="userInfo.lastName"
             class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="text"
             placeholder="Last Name"
             required
-          >
+          />
           <input
             v-model="userInfo.class"
             class="bg-white rounded py-2 px-4 mt-6 mb-4 focus:shadow-outline focus:outline-none"
             type="number"
             placeholder="Class #"
             required
-          >
+          />
           <input
             class="mt-2 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
             type="submit"
-          >
+          />
           <button
             class="mt-4 py-2 cursor-pointer hover:bg-gray-400 bg-gray-200 rounded-full"
             @click="$store.dispatch('signOut')"
@@ -73,38 +70,37 @@
 </template>
 
 <script>
-import { db } from '@/firebase';
-import { mapState } from 'vuex';
+import { db } from "@/firebase";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      userInfo: this.createEmptyUserInfo(),
+      userInfo: this.createEmptyUserInfo()
     };
   },
   computed: {
-    ...mapState(['user', 'profile']),
+    ...mapState(["user", "profile"])
   },
   methods: {
     async submit() {
-      await db.collection('profiles').add({
+      await db.collection("profiles").add({
         ...this.userInfo,
-        userId: this.user.uid,
+        userId: this.user.uid
       });
       this.userInfo = this.createEmptyUserInfo();
-      await this.$router.push({ name: 'Home' });
+      await this.$router.push({ name: "Home" });
     },
     createEmptyUserInfo() {
       return {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        classNumber: '',
+        userName: "",
+        firstName: "",
+        lastName: "",
+        classNumber: ""
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

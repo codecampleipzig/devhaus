@@ -8,10 +8,8 @@
 
 <script>
 export default {
-  name: 'EditProfile',
+  name: "EditProfile"
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

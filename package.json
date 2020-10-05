@@ -14,9 +14,14 @@
     "lint": "yarn lint:functions && yarn lint:frontend",
     "test:e2e": "cd frontend && yarn test:e2e",
     "test:unit": "cd frontend && yarn test:unit",
-    "test:ci": "yarn test:unit && yarn test:e2e --headless",
-    "test": "yarn test:unit && yarn test:e2e"
+    "test:ci": "yarn start:emulators & while ! nc -z localhost 8088; do sleep 0.5; done && yarn seeding && yarn test:unit && yarn test:e2e --headless",
+    "test": "yarn seeding && yarn test:unit && yarn test:e2e",
+    "seeding": "node scripts/test-data/seeding.js"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.20.0",
+    "firebase-admin": "^9.2.0",
+    "firebase-tools": "^8.11.2"
+  }
 }
