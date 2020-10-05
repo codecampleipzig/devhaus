@@ -4,6 +4,7 @@ import Vue from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
+  faCompass,
   faCoffee,
   faSpinner,
   faEdit,
@@ -56,6 +57,7 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
+  faCompass,
   faCoffee,
   faSpinner,
   faEdit,
