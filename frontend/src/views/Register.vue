@@ -67,8 +67,7 @@ export default {
   },
   methods: {
     async submit() {
-      await db.collection('profiles').add({
-        userId: this.user.uid,
+      await db.collection('profiles').doc(this.user.uid).set({
         ...this.userInfo,
       });
       this.userInfo = this.createEmptyUserInfo();
@@ -76,232 +75,21 @@ export default {
     },
     createEmptyUserInfo() {
       return {
-        userInfo: {
-          userName: null,
-          githubUsername: null,
-          firstName: null,
-          lastName: null,
-          class: null,
-          role: null,
-          gender: null,
-          birthday: null,
-          location: null,
-          jobTitle: null,
-          company: null,
-          hobbies: [
-            {
-              name: 'Hiking',
-              value: false,
-            },
-            {
-              name: 'Reading',
-              value: false,
-            },
-            {
-              name: 'Swimming',
-              value: false,
-            },
-            {
-              name: 'Rowing',
-              value: false,
-            },
-            {
-              name: 'Gaming',
-              value: false,
-            },
-            {
-              name: 'Music',
-              value: false,
-            },
-            {
-              name: 'Cooking',
-              value: false,
-            },
-            {
-              name: 'Knitting',
-              value: false,
-            },
-            {
-              name: 'Painting',
-              value: false,
-            },
-            {
-              name: 'Travelling',
-              value: false,
-            },
-            {
-              name: 'Movies',
-              value: false,
-            },
-            {
-              name: 'Writing',
-              value: false,
-            },
-            {
-              name: 'Bouldering',
-              value: false,
-            },
-            {
-              name: 'Complaining',
-              value: false,
-            },
-            {
-              name: 'Coding',
-              value: false,
-            },
-            {
-              name: 'Sports',
-              value: false,
-            }],
-          languages:
-        {
-          natural: [
-            {
-              name: 'English',
-              value: false,
-            },
-            {
-              name: 'German',
-              value: false,
-            },
-            {
-              name: 'Spanish',
-              value: false,
-            },
-            {
-              name: 'Mandarin',
-              value: false,
-            },
-            {
-              name: 'Italian',
-              value: false,
-            },
-            {
-              name: 'French',
-              value: false,
-            },
-            {
-              name: 'Croatian',
-              value: false,
-            },
-            {
-              name: 'Polish',
-              value: false,
-            },
-            {
-              name: 'Russian',
-              value: false,
-            },
-            {
-              name: 'Portuguese',
-              value: false,
-            },
-            {
-              name: 'Hebrew',
-              value: false,
-            },
-            {
-              name: 'Japanese',
-              value: false,
-            },
-            {
-              name: 'Arabic',
-              value: false,
-            },
-          ],
-          technical:
-           [
-             {
-               name: 'HTML',
-               value: false,
-             },
-             {
-               name: 'CSS',
-               value: false,
-             },
-             {
-               name: 'JavaScript',
-               value: false,
-             },
-             {
-               name: 'SQL',
-               value: false,
-             },
-             {
-               name: 'JSON',
-               value: false,
-             },
-             {
-               name: 'Markdown',
-               value: false,
-             },
-             {
-               name: 'Vue',
-               value: false,
-             },
-             {
-               name: 'Java',
-               value: false,
-             },
-             {
-               name: 'C',
-               value: false,
-             },
-             {
-               name: 'C++',
-               value: false,
-             },
-             {
-               name: 'TypeScript',
-               value: false,
-             },
-             {
-               name: 'Python',
-               value: false,
-             },
-             {
-               name: 'Rust',
-               value: false,
-             },
-             {
-               name: 'REST',
-               value: false,
-             },
-             {
-               name: 'Cypress',
-               value: false,
-             },
-             {
-               name: 'Express',
-               value: false,
-             },
-           ],
-        },
-          questions: [
-            {
-              id: 1,
-              qA: {
-                question: 'Why do you love coding?',
-                answer: 'Because it\'s fun!',
-              },
-
-            },
-            {
-              id: 2,
-              qA: {
-                question: 'Why are you here?',
-                answer: 'I don\'t quite know!',
-              },
-
-            },
-          ],
-          projects: [
-            {
-              title: 'My Project',
-              URL: '',
-            },
-          ],
-        },
+        userName: null,
+        githubUsername: null,
+        firstName: null,
+        lastName: null,
+        class: null,
+        role: null,
+        gender: null,
+        birthday: null,
+        location: null,
+        jobTitle: null,
+        company: null,
+        hobbies: [],
+        techLanguages: [],
+        natLanguages: [],
+        questions: {},
       };
     },
   },

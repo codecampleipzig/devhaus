@@ -3,18 +3,18 @@
     <section class="flex space-x-4 mb-4">
       <div class="profile-picture" />
       <div class="info">
-        <div v-if="editInfo == false">
+        <div v-if="!editInfo">
           <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
           <p>{{ $store.state.user.email }}</p>
           <p class="role">
-            Class #{{ profileInfo.class }}
+            Class #{{ profileInfoFromDB.class }}
           </p>
           <p>{{ profileInfoFromDB.githubUsername }}</p>
           <p>{{ profileInfoFromDB.gender }}</p>
           <p>{{ profileInfoFromDB.birthday }}</p>
           <p>{{ profileInfoFromDB.location }}</p>
           <p>{{ profileInfoFromDB.role }}</p>
-          <p v-if="profileInfoFromDB.mentor == true">
+          <p v-if="profileInfoFromDB.mentor ">
             Mentor
           </p>
         </div>
@@ -63,11 +63,37 @@
         </div>
       </div>
       <font-awesome-icon
-        v-if="myProfile == true"
+        v-if="myProfile"
         id="icon"
         icon="edit"
         title="Edit profile"
         @click="editInformation"
+      />
+    </section>
+    <section>
+      <h2>About Me</h2>
+      <div v-if="!editAbout">
+        <p>{{ profileInfoFromDB.profileAbout }}</p>
+      </div>
+      <form
+        v-if="editAbout"
+        @submit.prevent="commitToDB({about: profileAbout })"
+      >
+        <textarea
+          id="about"
+          v-model="profileAbout"
+          rows="4"
+          columns="20"
+          :placeholder="profileInfoFromDB.about"
+        />
+        <input type="submit">
+      </form>
+      <font-awesome-icon
+        v-if="myProfile"
+        id="icon"
+        icon="edit"
+        title="Edit section"
+        @click="editAboutMe"
       />
     </section>
     <section>
@@ -91,14 +117,14 @@
                   'instagram']"
         />
         <font-awesome-icon
-          v-if="myProfile == true"
+          v-if="myProfile"
           id="icon"
           icon="edit"
           title="Edit section"
           @click="editSocialLinks"
         />
         <form
-          v-if="editSocial == true"
+          v-if="editSocial"
           @submit.prevent="commitToDB(profileSocial)"
         >
           <input
@@ -128,24 +154,28 @@
         </h2>
         <p>Technical:</p>
         <div
-          v-for="language in profileInfoFromDB.languages.technical"
-          :key="language.name"
+          v-for="language in profileInfoFromDB.techLanguages"
+          :key="language"
         >
-          <p
-            v-if="language.value == true"
-          >
+          <p>
             {{ language }},
           </p>
         </div>
+        <font-awesome-icon
+          v-if="myProfile"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+          @click="editTechLang"
+        />
         <form
-          v-if="editLanguages == true"
-          @submit.prevent="commitToDB({languages: {natural:
-            profileLanguages.languages.natural
-              .filter((language)=> language.value)
-              .map((language) => language.name)}})"
+          v-if="editTechLanguages"
+          @submit.prevent="commitToDB({techLanguages:
+            profileTechLanguages.filter((language)=> language.value)
+              .map((language) => language.name)})"
         >
           <div
-            v-for="language in profileLanguages.languages.technical"
+            v-for="language in profileTechLanguages"
             :key="language.name"
           >
             <input
@@ -164,7 +194,7 @@
         </form>
         <p>Natural:</p>
         <div
-          v-for="language in profileInfoFromDB.languages.natural"
+          v-for="language in profileInfoFromDB.natLanguages"
           :key="language"
         >
           <p>
@@ -172,14 +202,13 @@
           </p>
         </div>
         <form
-          v-if="editLanguages == true"
-          @submit.prevent="commitToDB({languages: {natural:
-            profileLanguages.languages.natural
-              .filter((language)=> language.value)
-              .map((language) => language.name)}})"
+          v-if="editNatLanguages"
+          @submit.prevent="commitToDB({natLanguages:
+            profileNatLanguages.filter((language) => language.value)
+              .map((language) => language.name)})"
         >
           <div
-            v-for="language in profileLanguages.languages.natural"
+            v-for="language in profileNatLanguages"
             :key="language.name"
           >
             <input
@@ -197,11 +226,11 @@
           >
         </form>
         <font-awesome-icon
-          v-if="myProfile == true"
+          v-if="myProfile"
           id="icon"
           icon="edit"
           title="Edit section"
-          @click="editLang"
+          @click="editNatLang"
         />
       </div>
       <div id="hobbies">
@@ -210,18 +239,25 @@
         </h2>
         <p
           v-for="hobby in profileInfoFromDB.hobbies"
-          :key="hobby.name"
-        />
-        <form v-if="editHobbies == true">
+          :key="hobby"
+        >
+          {{ hobby }}
+        </p>
+        <form
+          v-if="editHobbies"
+          @submit.prevent="commitToDB({ hobbies:
+            profileHobbies.filter((hobby) => hobby.value)
+              .map((hobby) => hobby.name)})"
+        >
           <div
-            v-for="hobby in hobbies"
+            v-for="hobby in profileHobbies"
             :key="hobby.name"
           >
             <input
               v-model="hobby.value"
               type="checkbox"
-              true-value="true"
-              false-vale="false"
+              :true-value="true"
+              :false-vale="false"
             >
             <label
               :for="hobby.name"
@@ -230,42 +266,12 @@
           <input type="submit">
         </form>
         <font-awesome-icon
-          v-if="myProfile == true"
+          v-if="myProfile "
           id="icon"
           icon="edit"
           title="Edit section"
           @click="editHobby"
         />
-      </div>
-    </section>
-
-    <section
-      class="
-        mb-4"
-    >
-      <div class="project-info">
-        <h2>Recent Projects</h2>
-        <font-awesome-icon
-          v-if="myProfile == true"
-          id="icon"
-          icon="edit"
-          title="Edit section"
-        />
-        <h3>Project Title</h3>
-        <p>
-          Project description
-        </p>
-        <p>Tools used: </p>
-        <div class="flex space-x-4 mt-4">
-          <a
-            class="button"
-            href="celestial-weather.netlify.app"
-          >Website</a>
-          <a
-            class="button"
-            href="https://github.com/mnapearson/celestial-weather"
-          >View on Github</a>
-        </div>
       </div>
     </section>
     <section
@@ -296,256 +302,27 @@
 import { mapState } from 'vuex';
 import { db } from '@/firebase';
 
-const natLanguages = ['English', 'German', 'Spanish'];
+const natLanguages = ['English', 'German', 'Spanish', 'Mandarin', 'Italian', 'French', 'Croatian', 'Polish', 'Arabic', 'Portuguese', 'Hebrew', 'Japanese'];
+const techLanguages = ['HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Angular', 'Cypress', 'Express', 'SQL', 'JSON', 'Markdown', 'Java', 'C', 'C++', 'Rust', 'TypeScript', 'Python', 'REST'];
+const hobbies = ['Hiking', 'Running', 'Swimming', 'Writing', 'Yoga', 'Reading', 'Coding', 'Music', 'Knitting', 'Sleeping'];
 export default {
   name: 'Profile',
 
   data() {
     return {
       profileInfos: null,
-      profileLanguages: null,
+      profileTechLanguages: null,
+      profileNatLanguages: null,
       profileAbout: null,
-      profileProjects: null,
       profileSocial: null,
       profileHobbies: null,
 
       editInfo: false,
-      editLanguages: false,
+      editNatLanguages: false,
+      editTechLanguages: false,
       editAbout: false,
-      editProjects: false,
       editSocial: false,
       editHobbies: false,
-      profileInfo: {
-        id: null,
-        userName: null,
-        githubUsername: null,
-        firstName: null,
-        lastName: null,
-        class: null,
-        mentor: false,
-        role: null,
-        gender: null,
-        birthday: null,
-        location: null,
-        jobTitle: null,
-        company: null,
-        instagram: '',
-        facebook: '',
-        linkedin: '',
-        hobbies: [
-          {
-            name: 'Hiking',
-            value: false,
-          },
-          {
-            name: 'Reading',
-            value: false,
-          },
-          {
-            name: 'Swimming',
-            value: false,
-          },
-          {
-            name: 'Rowing',
-            value: false,
-          },
-          {
-            name: 'Gaming',
-            value: false,
-          },
-          {
-            name: 'Music',
-            value: false,
-          },
-          {
-            name: 'Cooking',
-            value: false,
-          },
-          {
-            name: 'Knitting',
-            value: false,
-          },
-          {
-            name: 'Painting',
-            value: false,
-          },
-          {
-            name: 'Travelling',
-            value: false,
-          },
-          {
-            name: 'Movies',
-            value: false,
-          },
-          {
-            name: 'Writing',
-            value: false,
-          },
-          {
-            name: 'Bouldering',
-            value: false,
-          },
-          {
-            name: 'Complaining',
-            value: false,
-          },
-          {
-            name: 'Coding',
-            value: false,
-          },
-          {
-            name: 'Sports',
-            value: false,
-          }],
-        languages:
-        {
-          natural: [
-            {
-              name: 'English',
-              value: false,
-            },
-            {
-              name: 'German',
-              value: false,
-            },
-            {
-              name: 'Spanish',
-              value: false,
-            },
-            {
-              name: 'Mandarin',
-              value: false,
-            },
-            {
-              name: 'Italian',
-              value: false,
-            },
-            {
-              name: 'French',
-              value: false,
-            },
-            {
-              name: 'Croatian',
-              value: false,
-            },
-            {
-              name: 'Polish',
-              value: false,
-            },
-            {
-              name: 'Russian',
-              value: false,
-            },
-            {
-              name: 'Portuguese',
-              value: false,
-            },
-            {
-              name: 'Hebrew',
-              value: false,
-            },
-            {
-              name: 'Japanese',
-              value: false,
-            },
-            {
-              name: 'Arabic',
-              value: false,
-            },
-          ],
-          technical:
-           [
-             {
-               name: 'HTML',
-               value: false,
-             },
-             {
-               name: 'CSS',
-               value: false,
-             },
-             {
-               name: 'JavaScript',
-               value: false,
-             },
-             {
-               name: 'SQL',
-               value: false,
-             },
-             {
-               name: 'JSON',
-               value: false,
-             },
-             {
-               name: 'Markdown',
-               value: false,
-             },
-             {
-               name: 'Vue',
-               value: false,
-             },
-             {
-               name: 'Java',
-               value: false,
-             },
-             {
-               name: 'C',
-               value: false,
-             },
-             {
-               name: 'C++',
-               value: false,
-             },
-             {
-               name: 'TypeScript',
-               value: false,
-             },
-             {
-               name: 'Python',
-               value: false,
-             },
-             {
-               name: 'Rust',
-               value: false,
-             },
-             {
-               name: 'REST',
-               value: false,
-             },
-             {
-               name: 'Cypress',
-               value: false,
-             },
-             {
-               name: 'Express',
-               value: false,
-             },
-           ],
-        },
-        questions: [
-          {
-            id: 1,
-            qA: {
-              question: 'Why do you love coding?',
-              answer: 'Because it\'s fun!',
-            },
-
-          },
-          {
-            id: 2,
-            qA: {
-              question: 'Why are you here?',
-              answer: 'I don\'t quite know!',
-            },
-
-          },
-        ],
-        projects: [
-          {
-            title: 'My Project',
-            URL: '',
-          },
-        ],
-      },
     };
   },
 
@@ -556,18 +333,10 @@ export default {
     },
     profileInfoFromDB() {
       const profileUID = this.userId;
-      return this.profiles.find((profile) => profile.userId == profileUID);
+      return this.profiles.find((profile) => profile.id == profileUID);
     },
     myProfile() {
       return this.$route.params.userId == this.$store.state.user.uid;
-    },
-    myHobbies() {
-      return this.profileInfoFromDB.hobbies
-        .find((hobby) => hobby.value == true);
-    },
-    myNatLanguages() {
-      return this.profileInfoFromDB.languages.natural
-        .find((language) => language.natural.value == true);
     },
   },
 
@@ -595,33 +364,28 @@ export default {
         this.profileInfos = null;
       }
     },
-    editLang() {
-      if (this.editLanguages == false) {
-        this.profileLanguages = {
-          languages:
-        {
-          natural: natLanguages.map((language) => ({
-            name: language,
-            value: this.profileInfoFromDB.languages.natural.includes(language),
-          })),
-        },
-        };
-        this.editLanguages = true;
+    editNatLang() {
+      if (this.editNatLanguages == false) {
+        this.profileNatLanguages = natLanguages.map((language) => ({
+          name: language,
+          value: this.profileInfoFromDB.natLanguages.includes(language),
+        }));
+        this.editNatLanguages = true;
       } else {
-        this.editLanguages = false;
-        this.profileLanguages = null;
+        this.editNatLanguages = false;
+        this.profileNatLanguages = null;
       }
     },
-    editQuestions() {
-      if (this.editAbout == false) {
-        this.editAbout = true;
+    editTechLang() {
+      if (this.editTechLanguages == false) {
+        this.profileTechLanguages = techLanguages.map((language) => ({
+          name: language,
+          value: this.profileInfoFromDB.techLanguages.includes(language),
+        }));
+        this.editTechLanguages = true;
       } else {
-        this.editAbout = false;
-      }
-    },
-    editBasic() {
-      if (this.editInfo == false) { this.ediInfo = true; } else {
-        this.editInfo = false;
+        this.editTechLanguages = false;
+        this.profileTechLanguages = null;
       }
     },
     editSocialLinks() {
@@ -637,19 +401,30 @@ export default {
       }
     },
     editHobby() {
-      if (this.editHobbies == false) { this.editHobbies = true; } else {
+      if (this.editHobbies == false) {
+        this.profileHobbies = hobbies.map((hobby) => ({
+          name: hobby,
+          value: this.profileInfoFromDB.hobbies.includes(hobby),
+        }));
+        this.editHobbies = true;
+      } else {
         this.editHobbies = false;
+        this.profileHobbies = null;
       }
     },
-    editProject() {
-      if (this.editProjects == false) { this.editProjects = true; } else {
-        this.editProjects = false;
+    editAboutMe() {
+      if (this.editAbout == false) {
+        this.profileAbout = this.profileInfoFromDB.about;
+        this.editAbout = true;
+      } else {
+        this.editAbout = false;
+        this.profileAbout = null;
       }
     },
     async commitToDB(updatedProperties) {
-      console.log(this.profileInfoFromDB.id);
-      await db.collection('profiles').doc(this.profileInfoFromDB.id).update(updatedProperties);
-      this.editLanguages = false;
+      await db.collection('profiles').doc(this.profileInfoFromDB.id).set(updatedProperties, { merge: true });
+      this.editNatLanguages = false;
+      this.editTechLanguages = false;
       this.editAbout = false;
       this.editInfo = false;
       this.editSocial = false;
