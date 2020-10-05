@@ -11,7 +11,6 @@ describe("Signin", () => {
       cy.get("input[type=submit]").click();
     });
     cy.location("pathname").should("eq", "/");
-    cy.contains("logged in as: cypress@test.com");
   });
 
   it("signs in with user but no profile and lands on /register", () => {
@@ -23,7 +22,6 @@ describe("Signin", () => {
       cy.get("input[type=submit]").click();
     });
     cy.location("pathname").should("eq", "/register");
-    cy.contains("logged in as cypress2@test.com");
   });
 });
 
