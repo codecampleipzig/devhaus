@@ -30,6 +30,9 @@ import router from "@/router";
 import App from "@/App.vue";
 import vSelect from "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
+import Vuelidate from "vuelidate";
+
+Vue.use(Vuelidate);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;

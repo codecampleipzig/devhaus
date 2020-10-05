@@ -42,8 +42,39 @@
         </div>
 
         <form class="flex flex-col" @submit.prevent="submit">
-          <input v-model="email" class="mb-4 " type="text" placeholder="Email" required />
-          <input v-model="password" class="mb-4" type="password" placeholder="Password" required />
+          <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
+            <input
+              v-model.trim="email"
+              class="mb-4 "
+              type="text"
+              placeholder="Email"
+              @blur="$v.email.$touch()"
+            />
+          </div>
+          <div v-if="!$v.email.required && $v.email.$dirty" class="error">
+            Email is required
+          </div>
+          <div v-if="!$v.email.email && $v.email.$dirty" class="error">
+            Email is invalid
+          </div>
+          <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
+            <input
+              v-model.trim="password"
+              class="mb-4"
+              type="password"
+              placeholder="Password"
+              @blur="$v.password.$touch()"
+            />
+          </div>
+          <div v-if="!$v.password.required && $v.password.$dirty" class="error">
+            Password is required
+          </div>
+          <div v-if="!$v.password.minLength && $v.password.$dirty" class="error">
+            password must have at least {{ $v.password.$params.minLength.min }} charachters.
+          </div>
+          <p v-if="submitStatus === 'ERROR'" class="typo-p">
+            Please fill the form correctly.
+          </p>
 
           <input
             class="button mt-4 bg-teal-800 hover:bg-teal-700 text-white"
@@ -72,15 +103,28 @@ import firebase from "firebase";
 import { auth } from "@/firebase";
 import { mapState } from "vuex";
 
+import { required, minLength, email } from "vuelidate/lib/validators";
+
 export default {
   name: "Auth",
   data() {
     return {
       error: null,
 
-      email: null,
-      password: null
+      email: "",
+      password: "",
+      submitStatus: ""
     };
+  },
+  validations: {
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    email: {
+      email,
+      required
+    }
   },
   computed: {
     ...mapState(["user"]),
@@ -92,15 +136,18 @@ export default {
     }
   },
   methods: {
-    async submit() {
-      try {
-        if (this.mode == "signin") {
-          await this.signIn();
-        } else {
-          await this.signUp();
-        }
-      } catch (error) {
-        console.error(error);
+    submit() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+        return;
+      }
+      this.submitStatus = "PENDING";
+
+      if (this.mode == "signin") {
+        this.signIn();
+      } else {
+        this.signUp();
       }
     },
     async signIn() {
