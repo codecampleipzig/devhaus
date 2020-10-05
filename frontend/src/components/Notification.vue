@@ -1,7 +1,6 @@
 <template>
   <div class="p-4 text-center" :class="`notification-${type}`" @click="$emit('remove')">
-    <h1>This is a Notification</h1>
-    <p>{{ text }}</p>
+    <h1>{{ text }}</h1>
   </div>
 </template>
 

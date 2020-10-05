@@ -417,6 +417,7 @@ export default {
         .collection("profiles")
         .doc(this.profileInfoFromDB.id)
         .set(updatedProperties, { merge: true });
+      this.$store.dispatch("notify", { type: "info", text: "Your profile has been updated." });
       this.editNatLanguages = false;
       this.editTechLanguages = false;
       this.editAbout = false;
