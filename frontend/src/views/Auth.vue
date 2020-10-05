@@ -1,19 +1,31 @@
 <template>
-  <div class="flex items-center justify-center space-x-24 min-h-screen bg-gray-100">
+  <div class="flex items-center justify-center md:space-x-32 min-h-screen md:bg-gray-100">
     <section>
-      <div class="bg-teal-150 h-64 w-64 opacity-50">
-        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
-          DEV HAUS LEIPZIG
+      <div
+        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
+      p-2 md:flex hidden opacity-50"
+      >
+        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
+          <h2>Dev<br />haus</h2>
+          <h2>Leipzig</h2>
         </h1>
       </div>
-      <div class="bg-teal-150 h-64 w-64 opacity-75">
-        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
-          DEV HAUS LEIPZIG
+      <div
+        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
+      p-2 md:flex hidden opacity-75"
+      >
+        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
+          <h2>Dev<br />haus</h2>
+          <h2>Leipzig</h2>
         </h1>
       </div>
-      <div class="bg-teal-150 h-64 w-64">
-        <h1 class="p-4 text-5xl text-end font-bold max-w-sm">
-          DEV HAUS LEIPZIG
+      <div
+        class="md:bg-teal-900 md:h-64 md:w-64 md:text-white items-end
+      p-2 md:flex hidden"
+      >
+        <h1 class="text-5xl font-semibold leading-none md:uppercase flex md:flex-col">
+          <h2>Dev<br />haus</h2>
+          <h2>Leipzig</h2>
         </h1>
       </div>
     </section>
@@ -22,22 +34,40 @@
       <div
         class="
         bg-white
-        py-16
+        pb-16
+        pt-4
         w-screen
         max-w-sm
-        px-6
+        px-3
         my-10
         text-black
-        shadow-md
+        md:shadow
         rounded
         "
       >
-        <h1 class="md:hidden font-bold mb-6 text-4xl">
-          Devhaus Leipzig
-        </h1>
+        <div class="flex justify-center md:hidden">
+          <h1
+            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col opacity-50"
+          >
+            <h2>Dev<br />haus</h2>
+            <h2>Leipzig</h2>
+          </h1>
+          <h1
+            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col opacity-75"
+          >
+            <h2>Dev<br />haus</h2>
+            <h2>Leipzig</h2>
+          </h1>
+          <h1
+            class="text-white bg-teal-900 flex justify-center mb-4 pt-10 px-1 h-32 w-32 text-2xl font-semibold leading-none uppercase flex-col"
+          >
+            <h2>Dev<br />haus</h2>
+            <h2>Leipzig</h2>
+          </h1>
+        </div>
         <div
           class="flex space-x-8 text-2xl text-black mb-6 font-bold
-        justify-center"
+        justify-center mt-8"
         >
           <router-link
             class="hover:opacity-25 underline"
@@ -53,10 +83,10 @@
           </router-link>
         </div>
 
-        <form class="flex flex-col" @submit.prevent="submit">
+        <form class="flex flex-col ml-4 mr-4" @submit.prevent="submit">
           <input
             v-model="email"
-            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none"
+            class="bg-white rounded py-2 px-4 mb-4 focus:shadow-outline focus:outline-none "
             type="text"
             placeholder="Email"
             required
