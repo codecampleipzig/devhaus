@@ -5,46 +5,19 @@
       Logout
     </button>
     <form @submit.prevent="submit">
-      <input
-        v-model="userInfo.userName"
-        type="text"
-        placeholder="User Name (optional)"
-      ><input
+      <input v-model="userInfo.userName" type="text" placeholder="User Name (optional)" /><input
         v-model="userInfo.githubUsername"
         type="text"
         placeholder="Github Username"
         required
-      >
-      <input
-        v-model="userInfo.firstName"
-        type="text"
-        placeholder="First Name"
-        required
-      >
-      <input
-        v-model="userInfo.lastName"
-        type="text"
-        placeholder="Last Name"
-        required
-      >
-      <input
-        v-model="userInfo.class"
-        type="number"
-        placeholder="Class #"
-      > <input
-        v-model="userInfo.gender"
-        type="text"
-        placeholder="Gender (optional)"
-      > <input
-        v-model="userInfo.birthday"
-        type="date"
-        placeholder="Birthday (optional)"
-      > <input
-        v-model="userInfo.location"
-        type="text"
-        placeholder="Location (optional)"
-      >
-      <input type="submit">
+      />
+      <input v-model="userInfo.firstName" type="text" placeholder="First Name" required />
+      <input v-model="userInfo.lastName" type="text" placeholder="Last Name" required />
+      <input v-model="userInfo.class" type="number" placeholder="Class #" />
+      <input v-model="userInfo.gender" type="text" placeholder="Gender (optional)" />
+      <input v-model="userInfo.birthday" type="date" placeholder="Birthday (optional)" />
+      <input v-model="userInfo.location" type="text" placeholder="Location (optional)" />
+      <input type="submit" />
       <button @click="$store.dispatch('signOut')">
         Logout
       </button>
@@ -53,25 +26,28 @@
 </template>
 
 <script>
-import { db } from '@/firebase';
-import { mapState } from 'vuex';
+import { db } from "@/firebase";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      userInfo: this.createEmptyUserInfo(),
+      userInfo: this.createEmptyUserInfo()
     };
   },
   computed: {
-    ...mapState(['user', 'profile']),
+    ...mapState(["user", "profile"])
   },
   methods: {
     async submit() {
-      await db.collection('profiles').doc(this.user.uid).set({
-        ...this.userInfo,
-      });
+      await db
+        .collection("profiles")
+        .doc(this.user.uid)
+        .set({
+          ...this.userInfo
+        });
       this.userInfo = this.createEmptyUserInfo();
-      await this.$router.push({ name: 'Home' });
+      await this.$router.push({ name: "Home" });
     },
     createEmptyUserInfo() {
       return {
@@ -89,13 +65,11 @@ export default {
         hobbies: [],
         techLanguages: [],
         natLanguages: [],
-        questions: {},
+        questions: {}
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

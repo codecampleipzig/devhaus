@@ -1,20 +1,18 @@
 <template>
-  <div class="mx-auto w-screen max-w-md mt-8">
+  <div class="p-4">
     <section class="flex space-x-4 mb-4">
       <div class="profile-picture" />
       <div class="info">
         <div v-if="!editInfo">
           <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
           <p>{{ $store.state.user.email }}</p>
-          <p class="role">
-            Class #{{ profileInfoFromDB.class }}
-          </p>
+          <p class="role">Class #{{ profileInfoFromDB.class }}</p>
           <p>{{ profileInfoFromDB.githubUsername }}</p>
           <p>{{ profileInfoFromDB.gender }}</p>
           <p>{{ profileInfoFromDB.birthday }}</p>
           <p>{{ profileInfoFromDB.location }}</p>
           <p>{{ profileInfoFromDB.role }}</p>
-          <p v-if="profileInfoFromDB.mentor ">
+          <p v-if="profileInfoFromDB.mentor">
             Mentor
           </p>
         </div>
@@ -25,40 +23,24 @@
               type="text"
               name="first name"
               placeholder="First Name"
-            >
+            />
             <input
               v-model="profileInfos.lastName"
               type="text"
               name="last name"
               placeholder="Last Name"
-            >
+            />
             <input
               v-model="profileInfos.location"
               type="text"
               name="location"
               placeholder="Location"
-            >
-            <input
-              v-model="profileInfos.gender"
-              type="text"
-              name="gender"
-              placeholder="Gender"
-            >
-            <input
-              v-model="profileInfos.role"
-              type="text"
-              name="role"
-              placeholder="Role"
-            >
+            />
+            <input v-model="profileInfos.gender" type="text" name="gender" placeholder="Gender" />
+            <input v-model="profileInfos.role" type="text" name="role" placeholder="Role" />
             <label for="mentor">Mentor</label>
-            <input
-              v-model="profileInfos.mentor"
-              type="checkbox"
-              name="mentor"
-            >
-            <input
-              type="submit"
-            >
+            <input v-model="profileInfos.mentor" type="checkbox" name="mentor" />
+            <input type="submit" />
           </form>
         </div>
       </div>
@@ -75,10 +57,7 @@
       <div v-if="!editAbout">
         <p>{{ profileInfoFromDB.profileAbout }}</p>
       </div>
-      <form
-        v-if="editAbout"
-        @submit.prevent="commitToDB({about: profileAbout })"
-      >
+      <form v-if="editAbout" @submit.prevent="commitToDB({ about: profileAbout })">
         <textarea
           id="about"
           v-model="profileAbout"
@@ -86,7 +65,7 @@
           columns="20"
           :placeholder="profileInfoFromDB.about"
         />
-        <input type="submit">
+        <input type="submit" />
       </form>
       <font-awesome-icon
         v-if="myProfile"
@@ -100,21 +79,19 @@
       <div id="social">
         <h2 class="mt-2">
           Social Links
-        </h2><font-awesome-icon
+        </h2>
+        <font-awesome-icon
           v-if="profileInfoFromDB.facebook != ''"
           class="m-3"
-          :icon="['fab',
-                  'facebook-f']"
+          :icon="['fab', 'facebook-f']"
         /><font-awesome-icon
           v-if="profileInfoFromDB.linkedin != ''"
           class="m-3"
-          :icon="['fab',
-                  'linkedin']"
+          :icon="['fab', 'linkedin']"
         /><font-awesome-icon
           v-if="profileInfoFromDB.instagram != ''"
           class="m-3"
-          :icon="['fab',
-                  'instagram']"
+          :icon="['fab', 'instagram']"
         />
         <font-awesome-icon
           v-if="myProfile"
@@ -123,28 +100,11 @@
           title="Edit section"
           @click="editSocialLinks"
         />
-        <form
-          v-if="editSocial"
-          @submit.prevent="commitToDB(profileSocial)"
-        >
-          <input
-            v-model="profileSocial.facebook"
-            type="text"
-            placeholder="Facebook"
-          >
-          <input
-            v-model="profileSocial.linkedin"
-            type="text"
-            placeholder="LinkedIn"
-          >
-          <input
-            v-model="profileSocial.instagram"
-            type="text"
-            placeholder="Instagram"
-          >
-          <input
-            type="submit"
-          >
+        <form v-if="editSocial" @submit.prevent="commitToDB(profileSocial)">
+          <input v-model="profileSocial.facebook" type="text" placeholder="Facebook" />
+          <input v-model="profileSocial.linkedin" type="text" placeholder="LinkedIn" />
+          <input v-model="profileSocial.instagram" type="text" placeholder="Instagram" />
+          <input type="submit" />
           <form />
         </form>
       </div>
@@ -153,13 +113,8 @@
           Languages
         </h2>
         <p>Technical:</p>
-        <div
-          v-for="language in profileInfoFromDB.techLanguages"
-          :key="language"
-        >
-          <p>
-            {{ language }},
-          </p>
+        <div v-for="language in profileInfoFromDB.techLanguages" :key="language">
+          <p>{{ language }},</p>
         </div>
         <font-awesome-icon
           v-if="myProfile"
@@ -170,60 +125,49 @@
         />
         <form
           v-if="editTechLanguages"
-          @submit.prevent="commitToDB({techLanguages:
-            profileTechLanguages.filter((language)=> language.value)
-              .map((language) => language.name)})"
+          @submit.prevent="
+            commitToDB({
+              techLanguages: profileTechLanguages
+                .filter(language => language.value)
+                .map(language => language.name)
+            })
+          "
         >
-          <div
-            v-for="language in profileTechLanguages"
-            :key="language.name"
-          >
+          <div v-for="language in profileTechLanguages" :key="language.name">
             <input
               v-model="language.value"
               type="checkbox"
               :true-value="true"
               :false-value="false"
-            >
-            <label
-              :for="language.name"
-            > {{ language.name }}</label>
+            />
+            <label :for="language.name"> {{ language.name }}</label>
           </div>
-          <input
-            type="submit"
-          >
+          <input type="submit" />
         </form>
         <p>Natural:</p>
-        <div
-          v-for="language in profileInfoFromDB.natLanguages"
-          :key="language"
-        >
-          <p>
-            {{ language }},
-          </p>
+        <div v-for="language in profileInfoFromDB.natLanguages" :key="language">
+          <p>{{ language }},</p>
         </div>
         <form
           v-if="editNatLanguages"
-          @submit.prevent="commitToDB({natLanguages:
-            profileNatLanguages.filter((language) => language.value)
-              .map((language) => language.name)})"
+          @submit.prevent="
+            commitToDB({
+              natLanguages: profileNatLanguages
+                .filter(language => language.value)
+                .map(language => language.name)
+            })
+          "
         >
-          <div
-            v-for="language in profileNatLanguages"
-            :key="language.name"
-          >
+          <div v-for="language in profileNatLanguages" :key="language.name">
             <input
               v-model="language.value"
               type="checkbox"
               :true-value="true"
               :false-value="false"
-            >
-            <label
-              :for="language.name"
-            > {{ language.name }}</label>
+            />
+            <label :for="language.name"> {{ language.name }}</label>
           </div>
-          <input
-            type="submit"
-          >
+          <input type="submit" />
         </form>
         <font-awesome-icon
           v-if="myProfile"
@@ -237,38 +181,27 @@
         <h2 class="mt-2">
           Hobbies
         </h2>
-        <div
-          v-for="hobby in profileInfoFromDB.hobbies"
-          :key="hobby"
-        >
+        <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
           <p>
             {{ hobby }}
           </p>
         </div>
         <form
           v-if="editHobbies"
-          @submit.prevent="commitToDB({ hobbies:
-            profileHobbies.filter((hobby) => hobby.value)
-              .map((hobby) => hobby.name)})"
+          @submit.prevent="
+            commitToDB({
+              hobbies: profileHobbies.filter(hobby => hobby.value).map(hobby => hobby.name)
+            })
+          "
         >
-          <div
-            v-for="hobby in profileHobbies"
-            :key="hobby.name"
-          >
-            <input
-              v-model="hobby.value"
-              type="checkbox"
-              :true-value="true"
-              :false-vale="false"
-            >
-            <label
-              :for="hobby.name"
-            > {{ hobby.name }} </label>
+          <div v-for="hobby in profileHobbies" :key="hobby.name">
+            <input v-model="hobby.value" type="checkbox" :true-value="true" :false-vale="false" />
+            <label :for="hobby.name"> {{ hobby.name }} </label>
           </div>
-          <input type="submit">
+          <input type="submit" />
         </form>
         <font-awesome-icon
-          v-if="myProfile "
+          v-if="myProfile"
           id="icon"
           icon="edit"
           title="Edit section"
@@ -276,23 +209,18 @@
         />
       </div>
     </section>
-    <section
-      v-if="myProfile == false"
-      class="contact"
-    >
+    <section v-if="myProfile == false" class="contact">
       <div class="contact-form">
         <h2>Contact</h2>
         <textarea
           id="message"
-          class="resize-none contact-input"
+          class="resize-none p-4 border border-black"
           name="message"
           cols="50"
           rows="8"
           placeholder="Your message..."
         />
-        <button
-          class="button"
-        >
+        <button class="button">
           Send
         </button>
       </div>
@@ -301,14 +229,57 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { db } from '@/firebase';
+import { mapState } from "vuex";
+import { db } from "@/firebase";
 
-const natLanguages = ['English', 'German', 'Spanish', 'Mandarin', 'Italian', 'French', 'Croatian', 'Polish', 'Arabic', 'Portuguese', 'Hebrew', 'Japanese'];
-const techLanguages = ['HTML', 'CSS', 'JavaScript', 'Vue', 'React', 'Angular', 'Cypress', 'Express', 'SQL', 'JSON', 'Markdown', 'Java', 'C', 'C++', 'Rust', 'TypeScript', 'Python', 'REST'];
-const hobbies = ['Hiking', 'Running', 'Swimming', 'Writing', 'Yoga', 'Reading', 'Coding', 'Music', 'Knitting', 'Sleeping'];
+const natLanguages = [
+  "English",
+  "German",
+  "Spanish",
+  "Mandarin",
+  "Italian",
+  "French",
+  "Croatian",
+  "Polish",
+  "Arabic",
+  "Portuguese",
+  "Hebrew",
+  "Japanese"
+];
+const techLanguages = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "Vue",
+  "React",
+  "Angular",
+  "Cypress",
+  "Express",
+  "SQL",
+  "JSON",
+  "Markdown",
+  "Java",
+  "C",
+  "C++",
+  "Rust",
+  "TypeScript",
+  "Python",
+  "REST"
+];
+const hobbies = [
+  "Hiking",
+  "Running",
+  "Swimming",
+  "Writing",
+  "Yoga",
+  "Reading",
+  "Coding",
+  "Music",
+  "Knitting",
+  "Sleeping"
+];
 export default {
-  name: 'Profile',
+  name: "Profile",
 
   data() {
     return {
@@ -324,22 +295,22 @@ export default {
       editTechLanguages: false,
       editAbout: false,
       editSocial: false,
-      editHobbies: false,
+      editHobbies: false
     };
   },
 
   computed: {
-    ...mapState(['profiles', 'user']),
+    ...mapState(["profiles", "user"]),
     userId() {
       return this.$route.params.userId;
     },
     profileInfoFromDB() {
       const profileUID = this.userId;
-      return this.profiles.find((profile) => profile.id == profileUID);
+      return this.profiles.find(profile => profile.id == profileUID);
     },
     myProfile() {
       return this.$route.params.userId == this.$store.state.user.uid;
-    },
+    }
   },
 
   methods: {
@@ -357,7 +328,7 @@ export default {
           birthday: this.profileInfoFromDB.birthday,
           location: this.profileInfoFromDB.location,
           jobTitle: this.profileInfoFromDB.jobTitle,
-          company: this.profileInfoFromDB.company,
+          company: this.profileInfoFromDB.company
         };
 
         this.editInfo = true;
@@ -368,9 +339,9 @@ export default {
     },
     editNatLang() {
       if (this.editNatLanguages == false) {
-        this.profileNatLanguages = natLanguages.map((language) => ({
+        this.profileNatLanguages = natLanguages.map(language => ({
           name: language,
-          value: this.profileInfoFromDB.natLanguages.includes(language),
+          value: this.profileInfoFromDB.natLanguages.includes(language)
         }));
         this.editNatLanguages = true;
       } else {
@@ -380,9 +351,9 @@ export default {
     },
     editTechLang() {
       if (this.editTechLanguages == false) {
-        this.profileTechLanguages = techLanguages.map((language) => ({
+        this.profileTechLanguages = techLanguages.map(language => ({
           name: language,
-          value: this.profileInfoFromDB.techLanguages.includes(language),
+          value: this.profileInfoFromDB.techLanguages.includes(language)
         }));
         this.editTechLanguages = true;
       } else {
@@ -395,7 +366,7 @@ export default {
         this.profileSocial = {
           facebook: this.profileInfoFromDB.facebook,
           linkedin: this.profileInfoFromDB.linkedin,
-          instagram: this.profileInfoFromDB.instagram,
+          instagram: this.profileInfoFromDB.instagram
         };
         this.editSocial = true;
       } else {
@@ -404,9 +375,9 @@ export default {
     },
     editHobby() {
       if (this.editHobbies == false) {
-        this.profileHobbies = hobbies.map((hobby) => ({
+        this.profileHobbies = hobbies.map(hobby => ({
           name: hobby,
-          value: this.profileInfoFromDB.hobbies.includes(hobby),
+          value: this.profileInfoFromDB.hobbies.includes(hobby)
         }));
         this.editHobbies = true;
       } else {
@@ -424,7 +395,10 @@ export default {
       }
     },
     async commitToDB(updatedProperties) {
-      await db.collection('profiles').doc(this.profileInfoFromDB.id).set(updatedProperties, { merge: true });
+      await db
+        .collection("profiles")
+        .doc(this.profileInfoFromDB.id)
+        .set(updatedProperties, { merge: true });
       this.editNatLanguages = false;
       this.editTechLanguages = false;
       this.editAbout = false;
@@ -432,13 +406,12 @@ export default {
       this.editSocial = false;
       this.editHobbies = false;
       this.editProjects = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-
 h1 {
   font-style: normal;
   font-weight: bold;
@@ -499,5 +472,4 @@ input {
 .button {
   @apply border border-black py-2 px-6 text-center font-bold cursor-pointer;
 }
-
 </style>
