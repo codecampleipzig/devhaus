@@ -1,69 +1,75 @@
 <template>
-  <div class="flex justify-center w-screen max-w-screen-md mx-auto">
+  <div class="flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
-      <h1>Create Event</h1>
+      <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
+        Create Event
+      </h1>
       <form @submit.prevent="submit">
-        <input v-model="event.title" type="text" placeholder="Event Title" required class="block" />
+        <input
+          v-model="event.title"
+          type="text"
+          placeholder="Event Title"
+          required
+          class="m-6 leading-8 border-black border-b p-2"
+        />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
-          class="block"
+          class="m-6 leading-8 border-black border-b p-2"
         />
-        <div class="flex justify-content items-center border-2">
-          <div name="start" class="">
+        <div class="flex justify-evenly items-center m-0">
+          <div class="flex flex-col">
             <h2>Start</h2>
-            <div class="flex-row">
-              <datepicker v-model="event.startDate" />
-
-              <v-select v-model="event.startTime" :options="times" placeholder="enter start time" />
-            </div>
-            <!--Closing startDateTime-->
+            <datepicker v-model="event.startDate" class="mb-4 border-black" />
+            <v-select
+              v-model="event.startTime"
+              :options="times"
+              placeholder="enter start time"
+              class="border-black"
+            />
           </div>
-          <!--Closing start-->
-          <div name="end" class="">
+          <div class="flex flex-col">
             <h2>End</h2>
             <div>
-              <datepicker v-model="event.endDate" />
+              <datepicker v-model="event.endDate" class="mb-4 border-black" />
               <v-select
+                class="border-black"
                 v-model="event.endTime"
                 :options="times"
                 :autoscroll="true"
                 placeholder="enter closing time"
               />
             </div>
-            <!--Closing endDateTime-->
           </div>
-          <!--Closing end-->
         </div>
-        <!--Closing dateAndTimePicker-->
-
-        <!-- <span>Multiple Days: {{ checked }} </span>
-        <input
-          id="checkbox1"
-          v-model="multipleDays"
-          type="checkbox"
-          value="Multiple Days"
-        > -->
-
         <v-select
           v-model="event.location"
           :options="location"
           :value="event.location"
           placeholder="enter location type"
           @input="location => updateLocation(location)"
+          class="my-4 mx-8"
         />
-        <div>{{ event.location }}</div>
-        <div v-if="event.location == 'online' || event.location == 'hybrid'">
+        <div
+          v-if="event.location == 'online' || event.location == 'hybrid'"
+          class="m-6 leading-8 border-black"
+        >
           <h2>Link to your meeting</h2>
-          <input v-model="event.link" type="text" placeholder="add event link e.g. Zoom" />
+          <input
+            v-model="event.link"
+            type="text"
+            placeholder="add event link e.g. Zoom"
+            class="w-10/12"
+          />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'">
+        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="m-6 leading-8">
           <h2>event address</h2>
           <input
             v-model="event.address"
             type="text"
             placeholder="add place and street of the event"
+            class="w-10/12"
           />
         </div>
         <input type="submit" />
