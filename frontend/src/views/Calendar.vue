@@ -34,7 +34,10 @@
         <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
           New Event
         </router-link>
-        <router-link class="button mt-0" :to="{ name: 'AllEvents' }">
+        <router-link
+          class="button mt-0"
+          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+        >
           View All
         </router-link>
       </div>

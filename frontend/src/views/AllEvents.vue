@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-row justify-evenly">
-    <router-link :to="{ name: 'AllEvents', params: { whose: 'my-events' } }">Yours</router-link>
-    <section class="view-all-events">
+    <router-link :to="{ name: 'AllEvents', params: { whose: 'my-events' } }">My Events</router-link>
+    <router-link :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+      >All Events</router-link
+    >
+    <section class="view-all-events" v-if="eventsMode == 'all-events'">
       <h1 class="m-6 justify-center text-center text-3xl font-medium border-b border-black pb-2 ">
         Upcoming Events
       </h1>
@@ -44,10 +47,10 @@ import moment from "moment";
 export default {
   computed: {
     eventsMode() {
-      this.$route.params.whose;
+      return this.$route.params.whose;
     },
     eventFilter() {
-      this.eventsMode = "all" ? "all" : "my-events";
+      return this.eventsMode == "all-events" ? "all-events" : "my-events";
     },
     allEventsFilter() {
       return this.allEvents;
