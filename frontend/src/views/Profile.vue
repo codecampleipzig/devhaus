@@ -39,6 +39,12 @@
               name="last name"
               placeholder="Last Name"
             />
+            <input
+              v-model="profileInfos.githubUsername"
+              type="text"
+              name="last name"
+              placeholder="GitHub Username"
+            />
             <input v-model="profileInfos.role" type="text" name="role" placeholder="Role" />
             <input
               v-model="profileInfos.jobTitle"
@@ -370,7 +376,7 @@ export default {
       if (this.editInfo == false) {
         this.profileInfos = {
           userName: this.profileInfoFromDB.userName,
-          githubUsername: null,
+          githubUsername: this.profileInfoFromDB.githubUsername,
           firstName: this.profileInfoFromDB.firstName,
           lastName: this.profileInfoFromDB.lastName,
           class: this.profileInfoFromDB.class,
