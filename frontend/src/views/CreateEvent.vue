@@ -21,8 +21,17 @@
         <div class="flex gap-2">
           <div class="w-1/2 flex flex-col">
             <h2>Start</h2>
+
             <datepicker v-model="event.startDate" class="mb-4 border-black" />
-            <v-select v-model="event.startTime" :options="times" placeholder="Enter start time" />
+
+            <v-select
+              v-model="event.startTime"
+              :options="times"
+              placeholder="Enter start time"
+              @input="adjustEndTime(event.startTime)"
+            />
+
+            <!--Closing startDateTime-->
           </div>
           <div class="w-1/2 flex flex-col">
             <h2>End</h2>
@@ -82,17 +91,34 @@ export default {
   data() {
     return {
       times: this.createTimes(),
-
       location: ["online", "local", "hybrid"],
-
       multipleDays: false,
-
       successMsg: "",
-
-      event: this.createEmptyEvent()
+      event: this.createEmptyEvent(),
+      //Test Data for adjustEndTime()
+      passedStartTime: "",
+      newHours: "Before Function",
+      newMinutes: ""
     };
   },
+  computed: {
+    start() {
+      const [startHour, startMinutes] = this.event.startTime.split(":").map(Number);
 
+      return moment(this.event.startDate)
+        .hour(startHour)
+        .minute(startMinutes)
+        .seconds(0);
+    },
+    end() {
+      const [endHour, endMinutes] = this.event.endTime.split(":").map(Number);
+
+      return moment(this.event.endDate)
+        .hour(endHour)
+        .minute(endMinutes)
+        .seconds(0);
+    }
+  },
   methods: {
     createTimes() {
       const res = [];
@@ -166,6 +192,17 @@ export default {
         address: ""
       };
       // this.successMsg = "",
+    },
+    setEnd(time) {
+      this.event.endDate = time.toDate();
+      this.event.endTime = time.format("H:mm");
+    },
+
+    adjustEndTime() {
+      if (this.event.endTime) {
+        return;
+      }
+      this.setEnd(this.start.add(1, "hours"));
     }
   }
 }; // Export
