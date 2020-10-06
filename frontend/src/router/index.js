@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeLayout from "../layouts/HomeLayout.vue";
+import AuthLayout from "../layouts/AuthLayout.vue";
 import Home from "../views/Home.vue";
 import Auth from "../views/Auth.vue";
 import EditProfile from "../views/EditProfile.vue";
@@ -19,16 +20,22 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/auth/:mode",
-    name: "Auth",
-    component: Auth,
-    meta: { requiresAuth: false, requiresProfile: false }
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-    meta: { requiresAuth: true, requiresProfile: false }
+    path: "/auth",
+    component: AuthLayout,
+    children: [
+      {
+        path: "/auth/:mode",
+        name: "Auth",
+        component: Auth,
+        meta: { requiresAuth: false, requiresProfile: false }
+      },
+      {
+        path: "/register",
+        name: "Register",
+        component: Register,
+        meta: { requiresAuth: true, requiresProfile: false }
+      }
+    ]
   },
   {
     path: "/",
