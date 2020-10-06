@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <nprogress-container></nprogress-container>
+
     <router-view />
 
     <Notifications />
@@ -8,11 +10,13 @@
 
 <script>
 import Notifications from "@/components/Notifications.vue";
+import NprogressContainer from "vue-nprogress/src/NprogressContainer";
 
 export default {
   name: "App",
   components: {
-    Notifications
+    Notifications,
+    NprogressContainer
   },
   data() {
     return {
