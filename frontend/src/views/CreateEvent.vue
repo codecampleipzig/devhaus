@@ -1,44 +1,38 @@
 <template>
-  <div class="flex flex-row justify-evenly mt-8">
+  <div class="devhaus-theme flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
       <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
         Create Event
       </h1>
-      <form @submit.prevent="submit">
+      <form class="flex flex-col" @submit.prevent="submit">
         <input
           v-model="event.title"
           type="text"
           placeholder="Event Title"
           required
-          class="m-6 leading-8 border-black border-b p-2"
+          class="mb-4 leading-8 border-black border-b p-2"
         />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
-          class="m-6 leading-8 border-black border-b p-2"
+          class="mb-4 leading-8 border-black border-b p-2"
         />
-        <div class="flex justify-evenly items-center m-0">
-          <div class="flex flex-col">
+        <div class="flex gap-2">
+          <div class="w-1/2 flex flex-col">
             <h2>Start</h2>
             <datepicker v-model="event.startDate" class="mb-4 border-black" />
-            <v-select
-              v-model="event.startTime"
-              :options="times"
-              placeholder="enter start time"
-              class="border-black"
-            />
+            <v-select v-model="event.startTime" :options="times" placeholder="Enter start time" />
           </div>
-          <div class="flex flex-col">
+          <div class="w-1/2 flex flex-col">
             <h2>End</h2>
             <div>
               <datepicker v-model="event.endDate" class="mb-4 border-black" />
               <v-select
-                class="border-black"
                 v-model="event.endTime"
                 :options="times"
                 :autoscroll="true"
-                placeholder="enter closing time"
+                placeholder="Enter closing time"
               />
             </div>
           </div>
@@ -49,30 +43,27 @@
           :value="event.location"
           placeholder="enter location type"
           @input="location => updateLocation(location)"
-          class="my-4 mx-8"
+          class="my-4"
         />
-        <div
-          v-if="event.location == 'online' || event.location == 'hybrid'"
-          class="m-6 leading-8 border-black"
-        >
+        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
           <input
             v-model="event.link"
             type="text"
             placeholder="add event link e.g. Zoom"
-            class="w-10/12"
+            class="w-full"
           />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="m-6 leading-8">
+        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
           <h2>event address</h2>
           <input
             v-model="event.address"
             type="text"
             placeholder="add place and street of the event"
-            class="w-10/12"
+            class="w-full"
           />
         </div>
-        <input type="submit" />
+        <input type="submit" class="button mt-4" value="Create event" />
       </form>
       <div>{{ successMsg }}</div>
     </div>
@@ -180,4 +171,16 @@ export default {
 }; // Export
 </script>
 
-<style></style>
+<style>
+.devhaus-theme .vs__dropdown-toggle {
+  @apply rounded-none border border-black py-2 px-4 font-medium;
+}
+
+.devhaus-theme .vs__selected-option {
+  @apply text-black font-medium;
+}
+
+.devhaus-theme .vs__open-indicator {
+  @apply cursor-pointer;
+}
+</style>
