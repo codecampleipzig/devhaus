@@ -12,7 +12,10 @@
       </header>
       <main class="profile-grid">
         <div v-for="(profile, i) in results" :key="i" class="py-4">
-          <router-link class="w-full" :to="{ name: 'Profile', params: { userId: profile.id } }">
+          <router-link
+            class="w-full"
+            :to="{ name: 'Profile', params: { userId: profile.item.id } }"
+          >
             <div class="w-48 h-48">
               <img
                 class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
