@@ -1,10 +1,6 @@
 <template>
   <div class="flex flex-row justify-evenly">
-    <router-link :to="{ name: 'AllEvents', params: { whose: 'my-events' } }">My Events</router-link>
-    <router-link :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-      >All Events</router-link
-    >
-    <section class="view-all-events" v-if="eventsMode == 'all-events'">
+    <section class="flex flex-col" v-if="eventsMode == 'all-events'">
       <h1 class="m-6 justify-center text-center text-3xl font-medium border-b border-black pb-2 ">
         Upcoming Events
       </h1>
@@ -25,8 +21,14 @@
       </div>
     </section>
     <section v-if="eventsMode == 'my-events'" class="view-your-events">
-      <h1>Your Events</h1>
-      <div class="m-3" v-for="event in sortedMyEvents" :key="event.id">
+      <h1 class="m-6 justify-center text-center text-3xl font-medium border-b border-black pb-2 ">
+        Your Events
+      </h1>
+      <div
+        class="m-6 leading-8 border-black border-b p-2"
+        v-for="event in sortedMyEvents"
+        :key="event.id"
+      >
         <h1 class="font-bold">{{ event.title }}</h1>
         <h2>
           <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
@@ -38,6 +40,20 @@
         <p class="m-1 italic">{{ event.description }}</p>
       </div>
     </section>
+    <div class="m-12">
+      <router-link
+        class="button"
+        v-if="eventsMode == 'all-events'"
+        :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
+        >Your Events</router-link
+      >
+      <router-link
+        class="button"
+        v-if="eventsMode == 'my-events'"
+        :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+        >All Events</router-link
+      >
+    </div>
   </div>
 </template>
 
