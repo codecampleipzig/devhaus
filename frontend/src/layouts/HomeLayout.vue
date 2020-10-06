@@ -11,7 +11,9 @@
       >
         <NavMenu></NavMenu>
       </slide>
-      <button @click="openMenu">Open</button>
+      <button @click="openMenu">
+        <font-awesome-icon icon="hamburger" class=" size: 3rem" />
+      </button>
     </header>
     <NavMenu v-else></NavMenu>
     <div class="overflow-y-auto max-h-screen">
