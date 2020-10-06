@@ -28,8 +28,12 @@ import App from "./App.vue";
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
 import Vuelidate from "vuelidate";
+import NProgress from "vue-nprogress";
 
 Vue.use(Vuelidate);
+Vue.use(NProgress);
+
+const nprogress = new NProgress();
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
@@ -82,5 +86,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  nprogress,
   render: h => h(App)
 }).$mount("#app");
