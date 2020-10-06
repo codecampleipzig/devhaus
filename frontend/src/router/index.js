@@ -60,12 +60,11 @@ const routes = [
         meta: { requiresAuth: true, requiresProfile: true }
       },
       {
-        path: "/view-events",
+        path: "/view-events/:whose",
         name: "AllEvents",
         component: AllEvents,
         meta: { requiresAuth: true, requiresProfile: true }
       },
-
       {
         path: "/event/:id",
         name: "Event",
