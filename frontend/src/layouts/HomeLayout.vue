@@ -12,7 +12,7 @@
         <NavMenu></NavMenu>
       </slide>
       <button @click="openMenu">
-        <font-awesome-icon icon="hamburger" class=" size: 3rem" />
+        <font-awesome-icon icon="hamburger" />
       </button>
     </header>
     <NavMenu v-else></NavMenu>
@@ -138,5 +138,8 @@ export default {
   margin-left: 10px;
   font-weight: 700;
   color: white;
+}
+.svg-inline--fa {
+  font-size: 2.5rem;
 }
 </style>
