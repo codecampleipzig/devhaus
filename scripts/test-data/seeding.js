@@ -23,13 +23,13 @@ db.settings({
 });
 
 const deleteAll = () => {
-    return axios.delete('http://localhost:8080/emulator/v1/projects/firestore-emulator-example/databases/(default)/documents');
+    return axios.delete('http://localhost:8088/emulator/v1/projects/devhaus-testing/databases/(default)/documents');
 };
 
 // Adding exampleProfiles
 const addExampleProfiles = () => {
   return Promise.all(exampleProfiles.map((profile) => 
-    db.collection('profiles').add(profile),
+    db.collection('profiles').doc(String(profile.id)).set(profile),
   ))
 };
 
