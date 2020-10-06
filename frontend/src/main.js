@@ -28,6 +28,9 @@ import App from "./App.vue";
 
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
+import Vuelidate from "vuelidate";
+
+Vue.use(Vuelidate);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
