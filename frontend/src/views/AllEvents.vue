@@ -16,7 +16,9 @@
           v-for="event in sortedAllEvents"
           :key="event.id"
         >
-          <h1 class="hover:font-bold m-2 text-2xl">{{ event.title }}</h1>
+          <router-link :to="{ name: 'Event' }">
+            <h1 class="hover:font-bold m-2 text-2xl">{{ event.title }}</h1>
+          </router-link>
           <h2>
             <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
           </h2>
