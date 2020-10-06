@@ -1,46 +1,62 @@
 <template>
-  <div class="flex flex-row justify-evenly">
-    <section class="flex flex-col" v-if="eventsMode == 'all-events'">
-      <h1 class="m-6 justify-center text-center text-3xl font-medium border-b border-black pb-2 ">
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col items-center">
+      <h1
+        v-if="eventsMode == 'all-events'"
+        class="m-6 text-3xl font-medium border-b-4 border-teal-800 pb-2 "
+      >
         Upcoming Events
       </h1>
-      <div
-        class="m-6 leading-8 border-black border-b p-2"
-        v-for="event in sortedAllEvents"
-        :key="event.id"
+      <section
+        class="flex justify-center flex-grid flex-wrap max-h-screen m-5"
+        v-if="eventsMode == 'all-events'"
       >
-        <h1 class="font-bold">{{ event.title }}</h1>
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          From {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} to
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-        <p class="m-1 italic">{{ event.description }}</p>
-      </div>
-    </section>
-    <section v-if="eventsMode == 'my-events'" class="view-your-events">
-      <h1 class="m-6 justify-center text-center text-3xl font-medium border-b border-black pb-2 ">
+        <div
+          class="leading-8 border-b-4 border-teal-800 m-6 p-2"
+          v-for="event in sortedAllEvents"
+          :key="event.id"
+        >
+          <h1 class="hover:font-bold m-2 text-2xl">{{ event.title }}</h1>
+          <h2>
+            <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
+          </h2>
+          <p>
+            <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+            {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
+            {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+          </p>
+          <p class="m-1 italic">{{ event.description }}</p>
+        </div>
+      </section>
+      <h1
+        v-if="eventsMode == 'my-events'"
+        class="m-6 text-3xl font-medium border-b-4 border-teal-800 pb-2 "
+      >
         Your Events
       </h1>
-      <div
-        class="m-6 leading-8 border-black border-b p-2"
-        v-for="event in sortedMyEvents"
-        :key="event.id"
+      <section
+        v-if="eventsMode == 'my-events'"
+        class="flex justify-center flex-grid flex-wrap max-h-screen m-5"
       >
-        <h1 class="font-bold">{{ event.title }}</h1>
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          From {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} to
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-        <p class="m-1 italic">{{ event.description }}</p>
-      </div>
-    </section>
-    <div class="m-12">
+        <div
+          class="leading-8 border-b-4 border-teal-800 m-6 p-2"
+          v-for="event in sortedMyEvents"
+          :key="event.id"
+        >
+          <h1 class="hover:font-bold m-2 text-2xl">{{ event.title }}</h1>
+          <h2>
+            <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
+          </h2>
+          <p>
+            <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+            {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
+            {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+          </p>
+          <p class="m-1 italic">{{ event.description }}</p>
+        </div>
+      </section>
+    </div>
+    <div class="m-8 flex flex-col text-center">
       <router-link
         class="button"
         v-if="eventsMode == 'all-events'"
@@ -53,6 +69,9 @@
         :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
         >All Events</router-link
       >
+      <router-link class="button mt-4 " :to="{ name: 'CreateEvent' }">
+        New Event
+      </router-link>
     </div>
   </div>
 </template>
