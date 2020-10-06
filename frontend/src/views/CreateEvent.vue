@@ -141,17 +141,18 @@ export default {
         .hour(endHour)
         .minute(endMinutes)
         .toDate();
-
-      await db.collection("events").add({
-        title,
-        description,
-        start,
-        end,
-        location,
-        link,
-        address,
-        creatorId: this.$store.state.user.uid
-      });
+      this.$nprogress.start(),
+        await db.collection("events").add({
+          title,
+          description,
+          start,
+          end,
+          location,
+          link,
+          address,
+          creatorId: this.$store.state.user.uid
+        });
+      this.$nprogress.done();
       this.event = this.createEmptyEvent();
       this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
       await this.$router.push({ name: "Calendar" });

@@ -47,4 +47,8 @@ textarea:focus {
   letter-spacing: 0.2em;
   @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase bg-teal-900 text-white;
 }
+
+#nprogress .bar {
+  background: #4fd1c5;
+}
 </style>
