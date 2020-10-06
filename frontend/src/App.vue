@@ -26,7 +26,7 @@ export default {
 
 input[type="text"],
 input[type="password"] {
-  @apply border border-black py-2 px-4 font-medium;
+  @apply border  border-black  py-2 px-4 font-medium;
 }
 
 input[type="text"]:focus,
