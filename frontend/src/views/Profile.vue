@@ -42,7 +42,7 @@
             <input
               v-model="profileInfos.githubUsername"
               type="text"
-              name="last name"
+              name="github username"
               placeholder="GitHub Username"
             />
             <input v-model="profileInfos.role" type="text" name="role" placeholder="Role" />
