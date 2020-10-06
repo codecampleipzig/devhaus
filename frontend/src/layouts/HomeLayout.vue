@@ -1,39 +1,19 @@
 <template>
   <div class="home-layout max-h-screen">
-    <slide isOpen>
-      <nav
-        class="flex flex-col jusitfy-start pl-8 py-6 pr-20
-      bg-teal-900 max-h-screen"
+    <header v-if="viewportWidth < 800">
+      <slide
+        @closeMenu="menuOpen = false"
+        @openMenu="menuOpen = true"
+        :isOpen="menuOpen"
+        noOverlay
+        closeOnNavigation
+        :burgerIcon="false"
       >
-        <h1 class="text-white font-semibold mb-6 text-2xl">
-          Devhaus Leipzig
-        </h1>
-        <div class="nav flex flex-col items-start flex-1">
-          <router-link class="nav-link" :to="{ name: 'Home' }">
-            Home
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Calendar' }">
-            Calendar
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Members' }">
-            Members
-          </router-link>
-          <router-link
-            class="nav-link"
-            :to="{ name: 'Profile', params: { userId: $store.state.user.uid } }"
-          >
-            Profile
-          </router-link>
-        </div>
-
-        <button
-          class="uppercase font-medium tracking-widest text-teal-100 text-left focus:outline-none"
-          @click="$store.dispatch('signOut')"
-        >
-          Logout
-        </button>
-      </nav>
-    </slide>
+        <NavMenu></NavMenu>
+      </slide>
+      <button @click="openMenu">Open</button>
+    </header>
+    <NavMenu v-else></NavMenu>
     <div class="overflow-y-auto max-h-screen">
       <router-view />
     </div>
@@ -42,12 +22,37 @@
 
 <script>
 import { Slide } from "vue-burger-menu";
+import NavMenu from "@/components/NavMenu.vue";
 // import { component } from 'vue/types/umd';
 
 export default {
   name: "HomeLayout",
+  data() {
+    return {
+      menuOpen: false,
+      viewportWidth: window.innerWidth
+    };
+  },
+  created() {
+    window.addEventListener("resize", this.resize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
+  },
+  methods: {
+    resize() {
+      this.viewportWidth = window.innerWidth;
+    },
+    openMenu() {
+      this.menuOpen = false;
+      setTimeout(() => {
+        this.menuOpen = true;
+      }, 100);
+    }
+  },
   components: {
-    Slide
+    Slide,
+    NavMenu
   }
 };
 </script>
@@ -59,14 +64,14 @@ export default {
   min-height: 100vh;
   max-height: 100vh;
 }
-.nav-link {
-  @apply mb-5 pb-1 uppercase font-medium tracking-widest text-teal-100
-  border-b-2 border-transparent;
+
+@media (max-width: 800px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 4rem 1fr;
+  }
 }
 
-.router-link-exact-active {
-  @apply border-teal-100;
-}
 .bm-burger-button {
   position: fixed;
   width: 36px;
