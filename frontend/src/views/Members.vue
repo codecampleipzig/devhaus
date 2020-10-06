@@ -12,10 +12,7 @@
       </header>
       <main class="profile-grid">
         <div v-for="(profile, i) in results" :key="i" class="py-4">
-          <router-link
-            class="w-full"
-            :to="{ name: 'Profile', params: { userId: profile.item.userId } }"
-          >
+          <router-link class="w-full" :to="{ name: 'Profile', params: { userId: profile.id } }">
             <div class="w-48 h-48">
               <img
                 class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
@@ -73,7 +70,8 @@ export default {
     newProfiles() {
       return this.profiles.map(profile => ({
         ...profile,
-        name: `${profile.firstName} ${profile.lastName}`
+        name: `${profile.firstName} ${profile.lastName}`,
+        id: profile.id
       }));
     },
     results() {

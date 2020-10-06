@@ -1,24 +1,46 @@
 <template>
   <div>
-    <h3>logged in as {{ $store.state.user.email }}</h3>
-    <button @click="$store.dispatch('signOut')">
-      Logout
-    </button>
-    <form @submit.prevent="submit">
-      <input v-model="userInfo.userName" type="text" placeholder="User Name (optional)" /><input
-        v-model="userInfo.githubUsername"
+    <div class="flex justify-center mb-6">
+      <h1
+        class="text-3xl text-black
+        font-bold flex justify-center mt-8 pb-1 border-b-4 border-teal-700"
+      >
+        Create a profile
+      </h1>
+    </div>
+    <form class="flex flex-col" @submit.prevent="submit">
+      <input
+        v-model="userInfo.userName"
+        class="mb-6 focus:shadow-outline"
         type="text"
-        placeholder="Github Username"
+        placeholder="User Name"
+      />
+      <input
+        v-model="userInfo.firstName"
+        class="mb-6 focus:shadow-outline"
+        type="text"
+        placeholder="First Name"
         required
       />
-      <input v-model="userInfo.firstName" type="text" placeholder="First Name" required />
-      <input v-model="userInfo.lastName" type="text" placeholder="Last Name" required />
-      <input v-model="userInfo.class" type="number" placeholder="Class #" />
-      <input v-model="userInfo.gender" type="text" placeholder="Gender (optional)" />
-      <input v-model="userInfo.birthday" type="date" placeholder="Birthday (optional)" />
-      <input v-model="userInfo.location" type="text" placeholder="Location (optional)" />
-      <input type="submit" />
-      <button @click="$store.dispatch('signOut')">
+      <input
+        v-model="userInfo.lastName"
+        class="mb-6 focus:shadow-outline"
+        type="text"
+        placeholder="Last Name"
+        required
+      />
+      <input
+        v-model="userInfo.class"
+        class="mb-6 focus:shadow-outline"
+        type="number"
+        placeholder="Class #"
+        required
+      />
+      <input class="button mb-4 text-white  hover:bg-teal-800 bg-teal-900 w-full" type="submit" />
+      <button
+        class="button text-white  hover:bg-teal-800 bg-teal-900 w-full"
+        @click="$store.dispatch('signOut')"
+      >
         Logout
       </button>
     </form>
