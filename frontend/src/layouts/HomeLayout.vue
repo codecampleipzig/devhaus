@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .home-layout {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -105,28 +105,32 @@ export default {
 .bm-menu {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
-  position: initial; /* Stay in place */
+  position: fixed; /* Stay in place */
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
   background-color: rgb(63, 63, 65); /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
+  padding-top: 0px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
 
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
+.bm-item-list > *:first-child {
+  height: 100%;
+}
 .bm-item-list {
   color: #b8b7ad;
-  margin-left: 10%;
+  margin-left: 0;
+  height: 100%;
   font-size: 20px;
 }
 .bm-item-list > * {
-  display: flex;
-  text-decoration: none;
-  padding: 0.7em;
+  display: inherit;
+  text-decoration: inherit;
+  padding: inherit;
 }
 .bm-item-list > * > span {
   margin-left: 10px;
