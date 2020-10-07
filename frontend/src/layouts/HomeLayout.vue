@@ -39,8 +39,6 @@
 </template>
 
 <script>
-// import { component } from 'vue/types/umd';
-
 export default {
   name: "HomeLayout"
 };

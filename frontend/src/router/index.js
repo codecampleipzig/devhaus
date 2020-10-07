@@ -4,7 +4,6 @@ import HomeLayout from "../layouts/HomeLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 import Home from "../views/Home.vue";
 import Auth from "../views/Auth.vue";
-import EditProfile from "../views/EditProfile.vue";
 import Members from "../views/Members.vue";
 import Profile from "../views/Profile.vue";
 import Register from "../views/Register.vue";
@@ -12,7 +11,7 @@ import Calendar from "../views/Calendar.vue";
 import Event from "../views/Event.vue";
 import CreateEvent from "../views/CreateEvent.vue";
 import store from "../store";
-import NotFound from "../views/404.vue";
+
 import { firebaseAuthConnected } from "../main";
 
 Vue.use(VueRouter);
@@ -75,17 +74,6 @@ const routes = [
         name: "Profile",
         component: Profile,
         meta: { requiresAuth: true, requiresProfile: true }
-      },
-      {
-        path: "/edit-profile",
-        name: "EditProfile",
-        component: EditProfile,
-        meta: { requiresAuth: true, requiresProfile: true }
-      },
-      {
-        path: "*",
-        component: NotFound,
-        meta: { requiresAuth: true, requiresProfile: true }
       }
     ]
   }
@@ -102,14 +90,12 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     // is the user logged in?
     if (store.state.user) {
-      // is the user logged in and needs a profile to continue?
-      // If we can't find the profile let's bind them now
-      if (!store.state.profiles.some(profile => profile.userId == store.state.user.uid)) {
+      if (!store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
         await store.dispatch("bindProfiles");
       }
       if (to.meta.requiresProfile) {
         // check that the logged-in user has a profile
-        if (store.state.profiles.some(profile => profile.userId == store.state.user.uid)) {
+        if (store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
           return next();
         }
         // if not, redirect user to the register page to create a profile
@@ -118,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
       // profile was not required to move forward
       // TODO: if profile exists, move forward to home
       console.assert(to.name == "Register");
-      if (store.state.profiles.some(profile => profile.userId == store.state.user.uid)) {
+      if (store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
         return next({ name: "Home" });
       }
       return next();
