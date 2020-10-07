@@ -78,7 +78,6 @@ export default {
       event: this.createEmptyEvent()
     };
   },
-  computed: {},
   methods: {
     createTimes() {
       const res = [];
