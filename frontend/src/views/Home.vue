@@ -10,14 +10,6 @@
       <div>
         <!-- Create new post -->
         <form class="flex flex-col max-w-lg font-mono" @submit.prevent="">
-          <input
-            type="file"
-            class="hidden"
-            ref="imageInput"
-            @change="uploadImage($event)"
-            accept="image/*"
-          />
-
           <input v-model="title" type="text" name="Title" placeholder="Insert title here" />
           <textarea
             rows="10"
@@ -27,7 +19,6 @@
             name="Create Post"
             placeholder="Write your post in Markdown..."
           />
-          <button>Add Picture</button>
           <button @click="submitPost()" type="submit">Submit</button>
         </form>
       </div>
