@@ -34,7 +34,6 @@ import Vuelidate from "vuelidate";
 import NProgress from "vue-nprogress";
 
 Vue.use(Vuelidate);
-Vue.use(NProgress, options);
 
 const nprogress = new NProgress();
 const options = {
@@ -42,6 +41,7 @@ const options = {
   router: false, // Show progressbar when navigating routes, default: true
   http: false // Show progressbar when doing Vue.http, default: true,\
 };
+Vue.use(NProgress, options);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;

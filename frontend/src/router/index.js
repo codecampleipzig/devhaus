@@ -26,13 +26,13 @@ const routes = [
         path: "/auth/:mode",
         name: "Auth",
         component: Auth,
-        meta: { requiresAuth: false, requiresProfile: false, showProgressBar: false }
+        meta: { requiresAuth: false, requiresProfile: false }
       },
       {
         path: "/register",
         name: "Register",
         component: Register,
-        meta: { requiresAuth: true, requiresProfile: false, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: false }
       }
     ]
   },
@@ -44,48 +44,48 @@ const routes = [
         path: "/",
         name: "Home",
         component: Home,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/members",
         name: "Members",
         component: Members,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/calendar",
         name: "Calendar",
         component: Calendar,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/event/:id",
         name: "Event",
         component: Event,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/create-event",
         name: "CreateEvent",
         component: CreateEvent,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/profile/:userId",
         name: "Profile",
         component: Profile,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "/edit-profile",
         name: "EditProfile",
         component: EditProfile,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       },
       {
         path: "*",
         component: NotFound,
-        meta: { requiresAuth: true, requiresProfile: true, showProgressBar: false }
+        meta: { requiresAuth: true, requiresProfile: true }
       }
     ]
   }
