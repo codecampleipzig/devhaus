@@ -74,6 +74,9 @@
         </div>
         <input type="submit" class="button mt-4" value="Create event" />
       </form>
+      <router-link class="button mt-4" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
+        View All Events
+      </router-link>
       <div>{{ successMsg }}</div>
     </div>
   </div>

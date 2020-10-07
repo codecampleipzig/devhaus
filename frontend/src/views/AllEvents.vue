@@ -68,6 +68,7 @@
       class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
     >
       <div
+        @click="selectEvent(event)"
         class="leading-8 border-b-4 border-teal-800 m-8 p-2"
         v-for="event in sortedMyEvents"
         :key="event.id"
