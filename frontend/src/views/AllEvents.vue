@@ -32,15 +32,15 @@
       </div>
     </div>
     <section
-      class="flex flex-grid justify-center flex-wrap max-h-screen m-5"
+      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
       v-if="eventsMode == 'all-events'"
     >
       <div
-        class="leading-8 border-b-4 border-teal-800 m-6 p-2"
+        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
         v-for="event in sortedAllEvents"
         :key="event.id"
       >
-        <router-link :to="{ name: 'Event', params: { id: 'event-id' } }">
+        <router-link :to="{ name: 'Event', params: { id: event.id } }">
           <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
         </router-link>
         <h2>
@@ -51,20 +51,21 @@
           {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
           {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
         </p>
-        <p class="m-1 italic">{{ event.description }}</p>
       </div>
     </section>
 
     <section
       v-if="eventsMode == 'my-events'"
-      class="flex flex-grid justify-center flex-wrap max-h-screen m-5"
+      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
     >
       <div
-        class="leading-8 border-b-4 border-teal-800 m-6 p-2"
+        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
         v-for="event in sortedMyEvents"
         :key="event.id"
       >
-        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+        <router-link :to="{ name: 'Event', params: { id: event.id } }">
+          <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+        </router-link>
         <h2>
           <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
         </h2>
@@ -73,7 +74,6 @@
           {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
           {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
         </p>
-        <p class="m-1 italic">{{ event.description }}</p>
       </div>
     </section>
   </div>
