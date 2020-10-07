@@ -21,7 +21,7 @@
           <input v-model="title" type="text" name="Title" placeholder="Insert title here" />
           <textarea
             rows="10"
-            class="font-mono border-solid border-2 border-gray-600"
+            class="font-mono border-solid border-2 border-black"
             v-model="text"
             type="text"
             name="Create Post"
@@ -84,6 +84,7 @@ export default {
 
       this.$store.dispatch("notify", { type: "info", text: "Your post has been created" });
       this.text = "";
+      this.title = "";
       this.addPost = false;
     }
   }
