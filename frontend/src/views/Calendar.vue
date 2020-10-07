@@ -31,7 +31,7 @@
         <h2 class="font-bold text-xl">
           {{ selection.format("MMMM YYYY, D dddd") }}
         </h2>
-        <div class="button mr-2 ml-4" @click="setMoment()">
+        <div class="button mr-2 ml-4" @click="setMoment(moment())">
           Today
         </div>
       </div>
@@ -45,11 +45,11 @@
           <div
             v-for="day in week"
             :key="`week-day-${day.format()}`"
-            class="cursor-pointer h-6 w-6 rounded-full flex justify-center items-center"
+            class="cursor-pointer h-6 w-6 border-2 border-transparent rounded-full flex justify-center items-center"
             :class="{
               'font-bold': day.date() == selection.date(),
               'bg-blue-100': eventsForDay(day).length,
-              'border border-red': isToday(day)
+              'border-red-600': isToday(day)
             }"
             @click="setMoment(day)"
           >
