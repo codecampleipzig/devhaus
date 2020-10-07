@@ -62,19 +62,38 @@ export default {
   },
   methods: {
     async submit() {
-      await db.collection("profiles").add({
-        ...this.userInfo,
-        userId: this.user.uid
-      });
+      await db
+        .collection("profiles")
+        .doc(this.user.uid)
+        .set({
+          ...this.userInfo
+        });
       this.userInfo = this.createEmptyUserInfo();
       await this.$router.push({ name: "Home" });
     },
     createEmptyUserInfo() {
       return {
-        userName: "",
-        firstName: "",
-        lastName: "",
-        classNumber: ""
+        userName: null,
+        githubUsername: null,
+        firstName: null,
+        lastName: null,
+        class: null,
+        role: null,
+        gender: null,
+        birthday: null,
+        location: null,
+        jobTitle: null,
+        company: null,
+        mentor: false,
+        facebook: "Facebook",
+        instagram: "Instagram",
+        linkedin: "LinkedIn",
+        hobbies: [],
+        techLanguages: [],
+        natLanguages: [],
+        questions: {},
+        avatar:
+          "https://firebasestorage.googleapis.com/v0/b/devhaus-testing.appspot.com/o/avatar%2Fdefault-harold.jpg?alt=media&token=4452ef96-2f45-482f-bf4a-45198bdaf4ab"
       };
     }
   }
