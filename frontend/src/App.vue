@@ -25,12 +25,14 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic");
 
 input[type="text"],
-input[type="password"] {
-  @apply border  border-black  py-2 px-4 font-medium;
+input[type="password"],
+input[type="number"] {
+  @apply border border-black py-2 px-4 font-medium;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus,
+input[type="number"]:focus,
 .button:focus,
 textarea:focus {
   @apply outline-none;
