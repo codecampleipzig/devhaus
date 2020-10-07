@@ -39,6 +39,11 @@ export default new Vuex.Store({
       }
     }
   },
+  getters: {
+    myProfile: profiles => {
+      return profiles.find(profile => profile.id == this.userId);
+    }
+  },
   actions: {
     notify({ commit }, { type, text }) {
       lastUsedId += 1;

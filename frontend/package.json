@@ -18,6 +18,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.21.1",
     "fuse.js": "^6.4.1",
+    "marked": "^1.2.0",
     "moment": "^2.29.0",
     "tailwindcss": "^1.8.10",
     "vue": "^2.6.11",
