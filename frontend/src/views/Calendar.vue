@@ -27,9 +27,14 @@
       </div>
     </div>
     <header class="flex items-center justify-between mb-2">
-      <h2 class="font-bold text-xl">
-        {{ selection.format("MMMM YYYY, D dddd") }}
-      </h2>
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-xl">
+          {{ selection.format("MMMM YYYY, D dddd") }}
+        </h2>
+        <div class="button mr-2 ml-4" @click="setMoment()">
+          Today
+        </div>
+      </div>
       <router-link class="button mt-0" :to="{ name: 'CreateEvent' }">
         New Event
       </router-link>
@@ -43,7 +48,8 @@
             class="cursor-pointer h-6 w-6 rounded-full flex justify-center items-center"
             :class="{
               'font-bold': day.date() == selection.date(),
-              'bg-blue-100': eventsForDay(day).length
+              'bg-blue-100': eventsForDay(day).length,
+              'border border-red': isToday(day)
             }"
             @click="setMoment(day)"
           >
@@ -140,6 +146,10 @@ export default {
       const currentYear = moment().year();
       return this.range(2019, currentYear + 1);
     },
+    todaysDay() {
+      const currentDay = moment().day();
+      return currentDay;
+    },
     weeksInMonth() {
       const momentInMonth = moment(this.selection);
       const datesInMonth = momentInMonth.daysInMonth();
@@ -185,6 +195,14 @@ export default {
     this.scrollIntoView(12);
   },
   methods: {
+    isToday(date) {
+      return (
+        moment()
+          .startOf("day")
+          .diff(date.startOf("day")) == 0
+      );
+    },
+
     styleForEvent(event, day) {
       return {
         top: `${this.pixelForMs(event.start.diff(day))}px`,
