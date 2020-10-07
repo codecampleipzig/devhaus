@@ -21,13 +21,22 @@
       <div class="info">
         <div v-if="!editInfo">
           <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
-          <p>{{ $store.state.user.email }}</p>
-          <p class="role">Class #{{ profileInfoFromDB.class }}</p>
-          <p>{{ profileInfoFromDB.githubUsername }}</p>
+          <a
+            v-if="profileInfoFromDB.githubUsername"
+            :href="`https://github.com/${profileInfoFromDB.githubUsername}`"
+            ><p>{{ profileInfoFromDB.githubUsername }}</p></a
+          >
+          <p class="role" v-if="profileInfoFromDB.class != 99">
+            Class #{{ profileInfoFromDB.class }} {{ profileInfoFromDB.role }}
+          </p>
+          <p v-if="profileInfoFromDB.class == 99">{{ profileInfoFromDB.role }}</p>
+          <p>
+            {{ profileInfoFromDB.jobTitle }}
+            <span v-if="profileInfoFromDB.company">at {{ profileInfoFromDB.company }}</span>
+          </p>
+          <p>{{ profileInfoFromDB.location }}</p>
           <p>{{ profileInfoFromDB.gender }}</p>
           <p>{{ profileInfoFromDB.birthday }}</p>
-          <p>{{ profileInfoFromDB.location }}</p>
-          <p>{{ profileInfoFromDB.role }}</p>
           <p v-if="profileInfoFromDB.mentor">
             Mentor
           </p>
@@ -47,13 +56,32 @@
               placeholder="Last Name"
             />
             <input
+              v-model="profileInfos.githubUsername"
+              type="text"
+              name="github username"
+              placeholder="GitHub Username"
+            />
+            <input v-model="profileInfos.role" type="text" name="role" placeholder="Role" />
+            <input
+              v-model="profileInfos.jobTitle"
+              type="text"
+              name="jobTitle"
+              placeholder="Job Title"
+            />
+            <input
+              v-model="profileInfos.company"
+              type="text"
+              name="company"
+              placeholder="Company"
+            />
+            <input
               v-model="profileInfos.location"
               type="text"
               name="location"
               placeholder="Location"
             />
             <input v-model="profileInfos.gender" type="text" name="gender" placeholder="Gender" />
-            <input v-model="profileInfos.role" type="text" name="role" placeholder="Role" />
+
             <label for="mentor">Mentor</label>
             <input v-model="profileInfos.mentor" type="checkbox" name="mentor" />
             <input type="submit" />
@@ -96,24 +124,23 @@
         <h2 class="mt-2">
           Social Links
         </h2>
-        <!-- TODO: add vuelidate for these URLS -->
         <a :href="profileInfoFromDB.facebook">
           <font-awesome-icon
-            v-if="profileInfoFromDB.facebook"
+            v-if="profileInfoFromDB.facebook != ''"
             class="m-3"
             :icon="['fab', 'facebook-f']"
           />
         </a>
         <a :href="profileInfoFromDB.linkedin">
           <font-awesome-icon
-            v-if="profileInfoFromDB.linkedin"
+            v-if="profileInfoFromDB.linkedin != ''"
             class="m-3"
             :icon="['fab', 'linkedin']"
           />
         </a>
         <a :href="profileInfoFromDB.instagram">
           <font-awesome-icon
-            v-if="profileInfoFromDB.instagram"
+            v-if="profileInfoFromDB.instagram != ''"
             class="m-3"
             :icon="['fab', 'instagram']"
           />
@@ -125,12 +152,26 @@
           title="Edit section"
           @click="editSocialLinks"
         />
-        <form v-if="editSocial" @submit.prevent="commitToDB(profileSocial)">
-          <input v-model="profileSocial.facebook" type="text" placeholder="Facebook" />
-          <input v-model="profileSocial.linkedin" type="text" placeholder="LinkedIn" />
-          <input v-model="profileSocial.instagram" type="text" placeholder="Instagram" />
+        <form v-if="editSocial" @submit.prevent="validateLinks({ facebook, linkedin, instagram })">
+          <input
+            v-model.trim="facebook"
+            type="url"
+            placeholder="Facebook"
+            @blur="$v.facebook.$touch()"
+          />
+          <input
+            v-model.trim="linkedin"
+            type="url"
+            placeholder="LinkedIn"
+            @blur="$v.linkedin.$touch()"
+          />
+          <input
+            v-model.trim="instagram"
+            type="url"
+            placeholder="Instagram"
+            @blur="$v.instagram.$touch()"
+          />
           <input type="submit" />
-          <form />
         </form>
       </div>
       <div id="languages">
@@ -234,7 +275,7 @@
         />
       </div>
     </section>
-    <section v-if="myProfile == false" class="contact">
+    <section v-if="!myProfile" class="contact">
       <div class="contact-form">
         <h2>Contact</h2>
         <textarea
@@ -255,7 +296,8 @@
 
 <script>
 import { mapState } from "vuex";
-import { db, storage } from "@/firebase";
+import { db } from "@/firebase";
+import { url } from "vuelidate/lib/validators";
 
 const natLanguages = [
   "English",
@@ -314,12 +356,9 @@ export default {
       profileNatLanguages: null,
       profileAbout: null,
       profileHobbies: null,
-      profileSocial: {
-        facebook: "",
-        instagram: "",
-        linkedin: ""
-      },
-
+      facebook: "",
+      instagram: "",
+      linkedin: "",
       editInfo: false,
       editNatLanguages: false,
       editTechLanguages: false,
@@ -328,7 +367,11 @@ export default {
       editHobbies: false
     };
   },
-
+  validations: {
+    facebook: { url },
+    linkedin: { url },
+    instagram: { url }
+  },
   computed: {
     ...mapState(["profiles", "user"]),
     avatar() {
@@ -351,7 +394,7 @@ export default {
       if (this.editInfo == false) {
         this.profileInfos = {
           userName: this.profileInfoFromDB.userName,
-          githubUsername: null,
+          githubUsername: this.profileInfoFromDB.githubUsername,
           firstName: this.profileInfoFromDB.firstName,
           lastName: this.profileInfoFromDB.lastName,
           class: this.profileInfoFromDB.class,
@@ -396,11 +439,9 @@ export default {
     },
     editSocialLinks() {
       if (this.editSocial == false) {
-        this.profileSocial = {
-          facebook: this.profileInfoFromDB.facebook,
-          linkedin: this.profileInfoFromDB.linkedin,
-          instagram: this.profileInfoFromDB.instagram
-        };
+        this.facebook = this.profileInfoFromDB.facebook;
+        this.linkedin = this.profileInfoFromDB.linkedin;
+        this.instagram = this.profileInfoFromDB.instagram;
         this.editSocial = true;
       } else {
         this.editSocial = false;
@@ -425,6 +466,14 @@ export default {
       } else {
         this.editAbout = false;
         this.profileAbout = null;
+      }
+    },
+    validateLinks(updatedProperties) {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.$store.dispatch("notify", { type: "error", text: "Please enter a valid URL." });
+      } else {
+        this.commitToDB(updatedProperties);
       }
     },
     async commitToDB(updatedProperties) {
@@ -499,8 +548,10 @@ a {
   color: #2e354f;
 }
 
-input {
+input,
+textarea {
   border: 1px solid black;
+  border-radius: 4px;
 }
 
 #icon {
