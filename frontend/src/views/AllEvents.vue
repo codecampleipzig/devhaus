@@ -16,7 +16,7 @@
           v-for="event in sortedAllEvents"
           :key="event.id"
         >
-          <router-link :to="{ name: 'Event' }">
+          <router-link :to="{ name: 'Event', params: { id: 'event-id' } }">
             <h1 class="hover:font-bold m-2 text-2xl">{{ event.title }}</h1>
           </router-link>
           <h2>
@@ -116,6 +116,9 @@ export default {
     },
     myEvents(event) {
       return event.creatorId == this.$store.state.user.uid;
+    },
+    eventId(event) {
+      return event.id == this.$store.state.event.id;
     },
     moment(date) {
       return moment(date);
