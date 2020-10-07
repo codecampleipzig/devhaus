@@ -46,8 +46,10 @@
               </span>
             </h2>
             <div class="flex space-x-2 mt-4">
-              <font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon>
-              <font-awesome-icon :icon="['fa', 'envelope']"></font-awesome-icon>
+              <a href="https://github.com"
+                ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
+              ></a>
+              <a href=""><font-awesome-icon :icon="['fa', 'envelope']"></font-awesome-icon></a>
             </div>
           </div>
         </div>
