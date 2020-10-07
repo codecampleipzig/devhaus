@@ -1,7 +1,13 @@
 <template>
   <div class="p-4">
     <section class="flex space-x-4 mb-4">
-      <div class="profile-picture" />
+      <div @click="$refs.imageInput.click()" class="w-48 h-48">
+        <img
+          class="bg-gray-100 object-cover h-full w-full"
+          :src="profileInfoFromDB.avatar"
+          alt=""
+        />
+      </div>
       <div class="info">
         <div v-if="!editInfo">
           <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
@@ -26,6 +32,15 @@
           </p>
         </div>
         <div v-else>
+          <div class="hidden">
+            <input
+              ref="imageInput"
+              @change="uploadImage($event)"
+              type="file"
+              name="profilePicture"
+              accept="image/*"
+            />
+          </div>
           <form @submit.prevent="commitToDB(profileInfos)">
             <input
               v-model="profileInfos.firstName"
@@ -156,7 +171,6 @@
             @blur="$v.instagram.$touch()"
           />
           <input type="submit" />
-          <form />
         </form>
       </div>
       <div id="languages">
@@ -281,7 +295,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import { url } from "vuelidate/lib/validators";
 
 const natLanguages = [
@@ -335,6 +349,7 @@ export default {
 
   data() {
     return {
+      imageFile: null,
       profileInfos: null,
       profileTechLanguages: null,
       profileNatLanguages: null,
@@ -343,7 +358,6 @@ export default {
       facebook: "",
       instagram: "",
       linkedin: "",
-
       editInfo: false,
       editNatLanguages: false,
       editTechLanguages: false,
@@ -359,6 +373,9 @@ export default {
   },
   computed: {
     ...mapState(["profiles", "user"]),
+    avatar() {
+      return this.profileImagesRef.getDownloadURL();
+    },
     userId() {
       return this.$route.params.userId;
     },
@@ -471,6 +488,31 @@ export default {
       this.editSocial = false;
       this.editHobbies = false;
       this.editProjects = false;
+    },
+    async uploadImage(event) {
+      this.imageFile = event.target.files[0];
+
+      const imageName = `${this.profileInfoFromDB.id}`;
+      const storageRef = storage.ref();
+
+      const profileImageRef = storageRef.child(`avatar/${imageName}`);
+      try {
+        await profileImageRef.put(this.imageFile);
+        console.log("Successful upload");
+      } catch (error) {
+        console.log(error);
+      }
+      let imageURL = await profileImageRef.getDownloadURL();
+      console.log(imageURL);
+      try {
+        await db
+          .collection("profiles")
+          .doc(this.profileInfoFromDB.id)
+          .update({ avatar: imageURL });
+        console.log("Set image in profile");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

@@ -84,13 +84,16 @@ export default {
         location: null,
         jobTitle: null,
         company: null,
+        mentor: false,
         facebook: "Facebook",
         instagram: "Instagram",
         linkedin: "LinkedIn",
         hobbies: [],
         techLanguages: [],
         natLanguages: [],
-        questions: {}
+        questions: {},
+        avatar:
+          "https://firebasestorage.googleapis.com/v0/b/devhaus-testing.appspot.com/o/avatar%2Fdefault-harold.jpg?alt=media&token=4452ef96-2f45-482f-bf4a-45198bdaf4ab"
       };
     }
   }
