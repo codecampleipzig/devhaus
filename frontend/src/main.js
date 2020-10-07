@@ -4,8 +4,6 @@ import Vue from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
-  faCalendarDay,
-  faCompass,
   faGithub,
   faFacebookF,
   faLinkedin,
@@ -15,6 +13,8 @@ import {
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
 import {
+  faCalendarDay,
+  faCompass,
   faCoffee,
   faSpinner,
   faEdit,
