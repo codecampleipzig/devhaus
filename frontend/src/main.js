@@ -12,14 +12,7 @@ import {
   faReact,
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
-import {
-  faSpinner,
-  faEdit,
-  faCircle,
-  faCheck,
-  faEnvelope,
-  faComment
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
@@ -66,14 +59,8 @@ library.add(
   faJsSquare,
   faVuejs,
   faReact,
-
-  faSpinner,
   faEdit,
-  faCircle,
-  faCheck,
-
-  faEnvelope,
-  faComment
+  faEnvelope
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
