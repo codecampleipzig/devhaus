@@ -112,7 +112,7 @@ router.beforeEach(async (to, from, next) => {
       }
       if (to.meta.requiresProfile) {
         // check that the logged-in user has a profile
-        if (store.state.profiles.some(profile => profile.userId == store.state.user.uid)) {
+        if (store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
           return next();
         }
         // if not, redirect user to the register page to create a profile
@@ -121,7 +121,7 @@ router.beforeEach(async (to, from, next) => {
       // profile was not required to move forward
       // TODO: if profile exists, move forward to home
       console.assert(to.name == "Register");
-      if (store.state.profiles.some(profile => profile.userId == store.state.user.uid)) {
+      if (store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
         return next({ name: "Home" });
       }
       return next();

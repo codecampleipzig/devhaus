@@ -6,28 +6,31 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faCalendarDay,
   faCompass,
+  faGithub,
+  faFacebookF,
+  faLinkedin,
+  faInstagram,
+  faJsSquare,
+  faReact,
+  faVuejs
+} from "@fortawesome/fontawesome-free-brands";
+import {
   faCoffee,
   faSpinner,
   faEdit,
   faCircle,
   faCheck,
+  faCode,
   faPlus,
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment,
-  faEnvelope
+  faComment
 } from "@fortawesome/free-solid-svg-icons";
-
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-
-import vSelect from "vue-select";
-import router from "./router";
-import store from "./store";
-
-import App from "./App.vue";
-
-import "vue-select/dist/vue-select.css";
+import store from "@/store";
+import router from "@/router";
+import App from "@/App.vue";
+import vSelect from "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
 import Vuelidate from "vuelidate";
 
@@ -61,8 +64,19 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
+<<<<<<< HEAD
   faCalendarDay,
   faCompass,
+=======
+  faCode,
+  faGithub,
+  faFacebookF,
+  faLinkedin,
+  faInstagram,
+  faJsSquare,
+  faVuejs,
+  faReact,
+>>>>>>> 4c031e66c98111f6b230776073d5247df93d3901
   faCoffee,
   faSpinner,
   faEdit,
@@ -72,9 +86,7 @@ library.add(
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment,
-  faEnvelope,
-  faGithub
+  faComment
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
