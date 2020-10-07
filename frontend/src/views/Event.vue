@@ -5,9 +5,10 @@
       <p>{{ eventFromDB.description }}</p>
       <p>
         From {{ moment(eventFromDB.start.toDate()).format("ddd D.MMM HH:mm") }} to
-        {{ moment(eventFromDB.end.toDate()).format("ddd D.MMM HH:mm") }}
+        {{ moment(eventFromDB.end.toDate()).format("ddd D.MMM HH:mm") }}.
       </p>
-      <p>{{ eventFromDB.location }}</p>
+      <p>Location: {{ eventFromDB.location }}</p>
+      <p>Address: {{ eventFromDB.address }}</p>
       <font-awesome-icon
         v-if="myEvent"
         id="icon"
@@ -15,63 +16,67 @@
         title="Edit Event"
         @click="editMyEvent"
       />
-      <p>{{ eventFromDB }}</p>
     </div>
-    <div v-if="myEvent">
-      <form class="flex flex-col" @submit.prevent="submit">
-        <input
-          v-model="event.title"
-          type="text"
-          placeholder="Event Title"
-          required
-          class="mb-4 leading-8 border-black border-b p-2"
-        />
-        <input
-          v-model="event.description"
-          type="text"
-          placeholder="Event Description"
-          class="mb-4 leading-8 border-black border-b p-2"
-        />
-        <div class="flex gap-2">
-          <div class="w-1/2 flex flex-col">
-            <h2>Start</h2>
-            <DateTimePicker v-model="event.start" @input="adjustEndTime" />
-            <!--Closing startDateTime-->
-          </div>
-          <div class="w-1/2 flex flex-col">
-            <h2>End</h2>
-            <DateTimePicker v-model="event.end" />
-            <!--Closing endDateTime-->
-          </div>
-        </div>
-        <v-select
-          v-model="event.location"
-          :options="location"
-          :value="event.location"
-          placeholder="enter location type"
-          @input="location => updateLocation(location)"
-          class="my-4"
-        />
-        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
-          <h2>Link to your meeting</h2>
+    <div v-if="editEvent" class="flex flex-row justify-evenly">
+      <div class="mb-8 text-1xl ">
+        <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
+          Update Event
+        </h1>
+        <form class="flex flex-col" @submit.prevent="submit">
           <input
-            v-model="event.link"
+            v-model="event.title"
             type="text"
-            placeholder="add event link e.g. Zoom"
-            class="w-full"
+            placeholder="Event Title"
+            required
+            class="mb-4 leading-8 border-black border-b p-2"
           />
-        </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
-          <h2>event address</h2>
           <input
-            v-model="event.address"
+            v-model="event.description"
             type="text"
-            placeholder="add place and street of the event"
-            class="w-full"
+            placeholder="Event Description"
+            class="mb-4 leading-8 border-black border-b p-2"
           />
-        </div>
-        <input type="submit" class="button mt-4" value="Create event" />
-      </form>
+          <div class="flex gap-2">
+            <div class="w-1/2 flex flex-col">
+              <h2>Start</h2>
+              <DateTimePicker v-model="event.start" @input="adjustEndTime" />
+              <!--Closing startDateTime-->
+            </div>
+            <div class="w-1/2 flex flex-col">
+              <h2>End</h2>
+              <DateTimePicker v-model="event.end" />
+              <!--Closing endDateTime-->
+            </div>
+          </div>
+          <v-select
+            v-model="event.location"
+            :options="location"
+            :value="event.location"
+            placeholder="enter location type"
+            @input="location => updateLocation(location)"
+            class="my-4"
+          />
+          <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
+            <h2>Link to your meeting</h2>
+            <input
+              v-model="event.link"
+              type="text"
+              placeholder="add event link e.g. Zoom"
+              class="w-full"
+            />
+          </div>
+          <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
+            <h2>event address</h2>
+            <input
+              v-model="event.address"
+              type="text"
+              placeholder="add place and street of the event"
+              class="w-full"
+            />
+          </div>
+          <input type="submit" class="button mt-4" value="Update event" />
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -110,7 +115,9 @@ export default {
     editMyEvent() {
       if (!this.editEvent) {
         this.editEvent = true;
-        this.event = this.eventFromDB;
+        const start = this.eventFromDB.start.toDate();
+        const end = this.eventFromDB.end.toDate();
+        this.event = { ...this.eventFromDB, start, end };
       } else {
         this.editEvent = false;
       }
@@ -139,9 +146,12 @@ export default {
       this.event.location = location;
     },
     async submit() {
-      await db.collection("events").add({ ...this.event, creatorId: this.$store.state.user.uid });
-      this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
-      await this.$router.push({ name: "Calendar" });
+      await db
+        .collection("events")
+        .doc(this.eventFromDB.id)
+        .set({ ...this.event }, { merge: true });
+      this.editEvent = false;
+      this.$store.dispatch("notify", { type: "info", text: "Your event has been updated" });
     },
     adjustEndTime() {
       if (this.event.start.getTime() > this.event.end.getTime()) {
@@ -154,5 +164,4 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
+<style></style>

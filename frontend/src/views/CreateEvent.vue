@@ -1,8 +1,8 @@
 <template>
-  <div class="devhaus-theme flex flex-row justify-evenly mt-8">
+  <div class="flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
       <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
-        Create Event
+        New Event
       </h1>
       <form class="flex flex-col" @submit.prevent="submit">
         <input
@@ -20,12 +20,12 @@
         />
         <div class="flex gap-2">
           <div class="w-1/2 flex flex-col">
-            <h2>Start</h2>
+            <h2>Event start:</h2>
             <DateTimePicker v-model="event.start" @input="adjustEndTime" />
             <!--Closing startDateTime-->
           </div>
           <div class="w-1/2 flex flex-col">
-            <h2>End</h2>
+            <h2>Event end:</h2>
             <DateTimePicker v-model="event.end" />
             <!--Closing endDateTime-->
           </div>
@@ -34,7 +34,7 @@
           v-model="event.location"
           :options="location"
           :value="event.location"
-          placeholder="enter location type"
+          placeholder="Select location type:"
           @input="location => updateLocation(location)"
           class="my-4"
         />
@@ -128,16 +128,4 @@ export default {
 };
 </script>
 
-<style>
-.devhaus-theme .vs__dropdown-toggle {
-  @apply rounded-none border border-black py-2 px-4 font-medium;
-}
-
-.devhaus-theme .vs__selected-option {
-  @apply text-black font-medium;
-}
-
-.devhaus-theme .vs__open-indicator {
-  @apply cursor-pointer;
-}
-</style>
+<style></style>

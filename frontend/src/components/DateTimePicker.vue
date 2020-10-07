@@ -1,14 +1,8 @@
 <template>
   <div>
-    <div class="flex justify-content items-center border-2">
-      <div name="start" class="">
-        <div class="flex-row">
-          <datepicker :value="value" @input="setDate" class="mb-4 border-black" />
+    <datepicker :value="value" @input="setDate" class="mb-4 border-black w-full" />
 
-          <v-select :options="timeSelector" :value="time" @input="setTime" />
-        </div>
-      </div>
-    </div>
+    <v-select :options="timeSelector" :value="time" @input="setTime" class="w-full" />
   </div>
 </template>
 
@@ -81,4 +75,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.vdp-datepicker input[type="text"] {
+  width: 100%;
+}
+</style>
