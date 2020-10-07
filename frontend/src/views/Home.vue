@@ -10,7 +10,13 @@
       <div>
         <!-- Create new post -->
         <form class="flex flex-col max-w-lg font-mono" @submit.prevent="">
-          <input type="file" class="hidden" ref="addPicture" />
+          <input
+            type="file"
+            class="hidden"
+            ref="imageInput"
+            @change="uploadImage($event)"
+            accept="image/*"
+          />
 
           <input v-model="title" type="text" name="Title" placeholder="Insert title here" />
           <textarea
