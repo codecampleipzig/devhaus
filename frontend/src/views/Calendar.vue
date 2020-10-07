@@ -30,9 +30,17 @@
       <h2 class="font-bold text-xl">
         {{ selection.format("MMMM YYYY, D dddd") }}
       </h2>
-      <router-link class="button mt-0" :to="{ name: 'CreateEvent' }">
-        New Event
-      </router-link>
+      <div class="flex flex-row">
+        <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
+          New Event
+        </router-link>
+        <router-link
+          class="button mt-0"
+          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+        >
+          View All
+        </router-link>
+      </div>
     </header>
     <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
       <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">

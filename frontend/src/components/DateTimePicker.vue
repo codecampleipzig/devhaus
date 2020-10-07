@@ -3,7 +3,7 @@
     <div class="flex justify-content items-center border-2">
       <div name="start" class="">
         <div class="flex-row">
-          <datepicker :value="value" @input="setDate" />
+          <datepicker :value="value" @input="setDate" class="mb-4 border-black" />
 
           <v-select :options="timeSelector" :value="time" @input="setTime" />
         </div>

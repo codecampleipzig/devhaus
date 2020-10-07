@@ -4,15 +4,7 @@ import Vue from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
-  faGithub,
-  faFacebookF,
-  faLinkedin,
-  faInstagram,
-  faJsSquare,
-  faReact,
-  faVuejs
-} from "@fortawesome/fontawesome-free-brands";
-import {
+  faCompass,
   faCoffee,
   faSpinner,
   faEdit,
@@ -66,17 +58,11 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
-  faCode,
-  faGithub,
-  faFacebookF,
-  faLinkedin,
-  faInstagram,
-  faJsSquare,
-  faVuejs,
-  faReact,
+  faCompass,
   faCoffee,
   faSpinner,
   faEdit,
+  faCode,
   faCircle,
   faCheck,
   faPlus,

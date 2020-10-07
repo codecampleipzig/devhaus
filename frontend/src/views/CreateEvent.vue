@@ -1,51 +1,62 @@
 <template>
-  <div class="flex justify-center w-screen max-w-screen-md mx-auto">
+  <div class="devhaus-theme flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
-      <h1>Create Event</h1>
-      <form @submit.prevent="submit">
-        <input v-model="event.title" type="text" placeholder="Event Title" required class="block" />
+      <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
+        Create Event
+      </h1>
+      <form class="flex flex-col" @submit.prevent="submit">
+        <input
+          v-model="event.title"
+          type="text"
+          placeholder="Event Title"
+          required
+          class="mb-4 leading-8 border-black border-b p-2"
+        />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
-          class="block"
+          class="mb-4 leading-8 border-black border-b p-2"
         />
-        <div class="flex justify-content items-center border-2">
-          <div name="start" class="">
+        <div class="flex gap-2">
+          <div class="w-1/2 flex flex-col">
             <h2>Start</h2>
             <DateTimePicker v-model="event.start" @input="adjustEndTime" />
             <!--Closing startDateTime-->
           </div>
-          <!--Closing start-->
-          <div name="end" class="">
+          <div class="w-1/2 flex flex-col">
             <h2>End</h2>
             <DateTimePicker v-model="event.end" />
             <!--Closing endDateTime-->
           </div>
-          <!--Closing end-->
         </div>
-        <!--Closing dateAndTimePicker-->
         <v-select
           v-model="event.location"
           :options="location"
           :value="event.location"
           placeholder="enter location type"
           @input="location => updateLocation(location)"
+          class="my-4"
         />
-        <div>{{ event.location }}</div>
-        <div v-if="event.location == 'online' || event.location == 'hybrid'">
+        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
-          <input v-model="event.link" type="text" placeholder="add event link e.g. Zoom" />
+          <input
+            v-model="event.link"
+            type="text"
+            placeholder="add event link e.g. Zoom"
+            class="w-full"
+          />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'">
+        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
           <h2>event address</h2>
           <input
             v-model="event.address"
             type="text"
             placeholder="add place and street of the event"
+            class="w-full"
           />
         </div>
-        <input type="submit" />
+        <input type="submit" class="button mt-4" value="Create event" />
       </form>
     </div>
   </div>
@@ -118,4 +129,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.devhaus-theme .vs__dropdown-toggle {
+  @apply rounded-none border border-black py-2 px-4 font-medium;
+}
+
+.devhaus-theme .vs__selected-option {
+  @apply text-black font-medium;
+}
+
+.devhaus-theme .vs__open-indicator {
+  @apply cursor-pointer;
+}
+</style>
