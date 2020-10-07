@@ -84,6 +84,7 @@ export default {
         location: null,
         jobTitle: null,
         company: null,
+        mentor: false,
         facebook: "Facebook",
         instagram: "Instagram",
         linkedin: "LinkedIn",

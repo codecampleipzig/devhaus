@@ -1,15 +1,5 @@
 <template>
   <div class="p-4">
-    <div class="invisible">
-      <input
-        ref="imageInput"
-        class="invisible"
-        @change="uploadImage($event)"
-        type="file"
-        name="profilePicture"
-        accept="image/*"
-      />
-    </div>
     <section class="flex space-x-4 mb-4">
       <div @click="$refs.imageInput.click()" class="w-48 h-48">
         <img
@@ -42,6 +32,15 @@
           </p>
         </div>
         <div v-else>
+          <div class="hidden">
+            <input
+              ref="imageInput"
+              @change="uploadImage($event)"
+              type="file"
+              name="profilePicture"
+              accept="image/*"
+            />
+          </div>
           <form @submit.prevent="commitToDB(profileInfos)">
             <input
               v-model="profileInfos.firstName"
@@ -296,7 +295,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import { url } from "vuelidate/lib/validators";
 
 const natLanguages = [
