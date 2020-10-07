@@ -20,28 +20,28 @@
         />
         <div class="flex gap-2">
           <div class="w-1/2 flex flex-col">
-            <h2>Start</h2>
+            <h2>Start Date</h2>
 
             <datepicker v-model="event.startDate" class="mb-4 border-black" />
 
             <v-select
               v-model="event.startTime"
               :options="times"
-              placeholder="Enter start time"
+              placeholder="Select Start Time"
               @input="adjustEndTime(event.startTime)"
             />
 
             <!--Closing startDateTime-->
           </div>
           <div class="w-1/2 flex flex-col">
-            <h2>End</h2>
+            <h2>End Date</h2>
             <div>
               <datepicker v-model="event.endDate" class="mb-4 border-black" />
               <v-select
                 v-model="event.endTime"
                 :options="times"
                 :autoscroll="true"
-                placeholder="Enter closing time"
+                placeholder="Select End Time"
               />
             </div>
           </div>
@@ -50,25 +50,25 @@
           v-model="event.location"
           :options="location"
           :value="event.location"
-          placeholder="enter location type"
+          placeholder="Select Location Type"
           @input="location => updateLocation(location)"
           class="my-4"
         />
-        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
+        <div v-if="event.location == 'Online' || event.location == 'Hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
           <input
             v-model="event.link"
             type="text"
-            placeholder="add event link e.g. Zoom"
+            placeholder="Add the event link e.g. Zoom"
             class="w-full"
           />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
-          <h2>event address</h2>
+        <div v-if="event.location == 'Local' || event.location == 'Hybrid'" class="mb-4">
+          <h2>Address</h2>
           <input
             v-model="event.address"
             type="text"
-            placeholder="add place and street of the event"
+            placeholder="Add the address of the event"
             class="w-full"
           />
         </div>
@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       times: this.createTimes(),
-      location: ["online", "local", "hybrid"],
+      location: ["Online", "Local", "Hybrid"],
       multipleDays: false,
       successMsg: "",
       event: this.createEmptyEvent(),
@@ -210,7 +210,7 @@ export default {
 
 <style>
 .devhaus-theme .vs__dropdown-toggle {
-  @apply rounded-none border border-black py-2 px-4 font-medium;
+  @apply rounded-none border border-black py-2 px-2 font-medium;
 }
 
 .devhaus-theme .vs__selected-option {
