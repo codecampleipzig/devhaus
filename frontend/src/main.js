@@ -13,6 +13,8 @@ import {
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
 import {
+  faBriefcase,
+  faGraduationCap,
   faCalendarDay,
   faCompass,
   faCoffee,
@@ -66,6 +68,8 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
+  faBriefcase,
+  faGraduationCap,
   faCalendarDay,
   faCompass,
   faCode,

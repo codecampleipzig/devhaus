@@ -42,4 +42,8 @@ textarea:focus {
   letter-spacing: 0.2em;
   @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase text-center bg-teal-900 text-white;
 }
+
+.button:hover {
+  @apply bg-teal-800;
+}
 </style>

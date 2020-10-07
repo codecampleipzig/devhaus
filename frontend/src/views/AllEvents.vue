@@ -40,6 +40,9 @@
         Your Events
       </h1>
       <div class="m-10 flex flex-col text-center">
+        <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
+          Create New Event
+        </router-link>
         <router-link
           class="button hover:opacity-75"
           v-if="eventsMode == 'all-events'"
@@ -52,9 +55,6 @@
           :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
           >All Events</router-link
         >
-        <router-link class="button mt-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
-          New Event
-        </router-link>
       </div>
     </div>
     <section
