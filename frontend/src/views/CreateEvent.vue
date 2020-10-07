@@ -1,72 +1,78 @@
 <template>
-  <div class="flex justify-center w-screen max-w-screen-md mx-auto">
+  <div class="devhaus-theme flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
-      <h1>Create Event</h1>
-      <form @submit.prevent="submit">
-        <input v-model="event.title" type="text" placeholder="Event Title" required class="block" />
+      <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
+        Create Event
+      </h1>
+      <form class="flex flex-col" @submit.prevent="submit">
+        <input
+          v-model="event.title"
+          type="text"
+          placeholder="Event Title"
+          required
+          class="mb-4 leading-8 border-black border-b p-2"
+        />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
-          class="block"
+          class="mb-4 leading-8 border-black border-b p-2"
         />
-        <div class="flex justify-content items-center border-2">
-          <div name="start" class="">
+        <div class="flex gap-2">
+          <div class="w-1/2 flex flex-col">
             <h2>Start</h2>
-            <div class="flex-row">
-              <datepicker v-model="event.startDate" />
 
-              <v-select v-model="event.startTime" :options="times" placeholder="enter start time" />
-            </div>
+            <datepicker v-model="event.startDate" class="mb-4 border-black" />
+
+            <v-select
+              v-model="event.startTime"
+              :options="times"
+              placeholder="Enter start time"
+              @input="adjustEndTime(event.startTime)"
+            />
+
             <!--Closing startDateTime-->
           </div>
-          <!--Closing start-->
-          <div name="end" class="">
+          <div class="w-1/2 flex flex-col">
             <h2>End</h2>
             <div>
-              <datepicker v-model="event.endDate" />
+              <datepicker v-model="event.endDate" class="mb-4 border-black" />
               <v-select
                 v-model="event.endTime"
                 :options="times"
                 :autoscroll="true"
-                placeholder="enter closing time"
+                placeholder="Enter closing time"
               />
             </div>
-            <!--Closing endDateTime-->
           </div>
-          <!--Closing end-->
         </div>
-        <!--Closing dateAndTimePicker-->
-
-        <!-- <span>Multiple Days: {{ checked }} </span>
-        <input
-          id="checkbox1"
-          v-model="multipleDays"
-          type="checkbox"
-          value="Multiple Days"
-        > -->
-
         <v-select
           v-model="event.location"
           :options="location"
           :value="event.location"
           placeholder="enter location type"
           @input="location => updateLocation(location)"
+          class="my-4"
         />
-        <div>{{ event.location }}</div>
-        <div v-if="event.location == 'online' || event.location == 'hybrid'">
+        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
-          <input v-model="event.link" type="text" placeholder="add event link e.g. Zoom" />
+          <input
+            v-model="event.link"
+            type="text"
+            placeholder="add event link e.g. Zoom"
+            class="w-full"
+          />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'">
+        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
           <h2>event address</h2>
           <input
             v-model="event.address"
             type="text"
             placeholder="add place and street of the event"
+            class="w-full"
           />
         </div>
-        <input type="submit" />
+        <input type="submit" class="button mt-4" value="Create event" />
       </form>
       <div>{{ successMsg }}</div>
     </div>
@@ -85,17 +91,34 @@ export default {
   data() {
     return {
       times: this.createTimes(),
-
       location: ["online", "local", "hybrid"],
-
       multipleDays: false,
-
       successMsg: "",
-
-      event: this.createEmptyEvent()
+      event: this.createEmptyEvent(),
+      //Test Data for adjustEndTime()
+      passedStartTime: "",
+      newHours: "Before Function",
+      newMinutes: ""
     };
   },
+  computed: {
+    start() {
+      const [startHour, startMinutes] = this.event.startTime.split(":").map(Number);
 
+      return moment(this.event.startDate)
+        .hour(startHour)
+        .minute(startMinutes)
+        .seconds(0);
+    },
+    end() {
+      const [endHour, endMinutes] = this.event.endTime.split(":").map(Number);
+
+      return moment(this.event.endDate)
+        .hour(endHour)
+        .minute(endMinutes)
+        .seconds(0);
+    }
+  },
   methods: {
     createTimes() {
       const res = [];
@@ -169,9 +192,32 @@ export default {
         address: ""
       };
       // this.successMsg = "",
+    },
+    setEnd(time) {
+      this.event.endDate = time.toDate();
+      this.event.endTime = time.format("H:mm");
+    },
+
+    adjustEndTime() {
+      if (this.event.endTime) {
+        return;
+      }
+      this.setEnd(this.start.add(1, "hours"));
     }
   }
 }; // Export
 </script>
 
-<style></style>
+<style>
+.devhaus-theme .vs__dropdown-toggle {
+  @apply rounded-none border border-black py-2 px-4 font-medium;
+}
+
+.devhaus-theme .vs__selected-option {
+  @apply text-black font-medium;
+}
+
+.devhaus-theme .vs__open-indicator {
+  @apply cursor-pointer;
+}
+</style>
