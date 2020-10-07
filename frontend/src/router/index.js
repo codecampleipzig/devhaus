@@ -4,7 +4,6 @@ import HomeLayout from "../layouts/HomeLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 import Home from "../views/Home.vue";
 import Auth from "../views/Auth.vue";
-import EditProfile from "../views/EditProfile.vue";
 import Members from "../views/Members.vue";
 import Profile from "../views/Profile.vue";
 import Register from "../views/Register.vue";
@@ -74,12 +73,6 @@ const routes = [
         path: "/profile/:userId",
         name: "Profile",
         component: Profile,
-        meta: { requiresAuth: true, requiresProfile: true }
-      },
-      {
-        path: "/edit-profile",
-        name: "EditProfile",
-        component: EditProfile,
         meta: { requiresAuth: true, requiresProfile: true }
       },
       { path: "*", component: NotFound, meta: { requiresAuth: true, requiresProfile: true } }
