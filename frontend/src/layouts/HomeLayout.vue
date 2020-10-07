@@ -25,7 +25,6 @@
 <script>
 import { Slide } from "vue-burger-menu";
 import NavMenu from "@/components/NavMenu.vue";
-// import { component } from 'vue/types/umd';
 
 export default {
   name: "HomeLayout",
