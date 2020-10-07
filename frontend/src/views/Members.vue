@@ -46,10 +46,33 @@
               </span>
             </h2>
             <div class="flex space-x-2 mt-4">
-              <a href="https://github.com"
+              <a
+                v-if="profile.item.githubUsername"
+                :href="`https://github.com/${profile.item.githubUsername}`"
                 ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
               ></a>
-              <a href=""><font-awesome-icon :icon="['fa', 'envelope']"></font-awesome-icon></a>
+            </div>
+
+            <div class="flex space-x-2 mt-4">
+              <a
+                v-if="profile.item.facebookUsername"
+                :href="`https://facebook.com/${profile.item.facebookUsername}`"
+                ><font-awesome-icon :icon="['fa', 'facebook']"></font-awesome-icon
+              ></a>
+            </div>
+            <div class="flex space-x-2 mt-4">
+              <a
+                v-if="profile.item.linkedinUsername"
+                :href="`https://linkedin.com/${profile.item.linkedinUsername}`"
+                ><font-awesome-icon :icon="['fa', 'linkedin']"></font-awesome-icon
+              ></a>
+            </div>
+            <div class="flex space-x-2 mt-4">
+              <a
+                v-if="profile.item.instagramUsername"
+                :href="`https://instagram.com/${profile.item.instagramUsername}`"
+                ><font-awesome-icon :icon="['fa', 'instagram']"></font-awesome-icon
+              ></a>
             </div>
           </div>
         </div>

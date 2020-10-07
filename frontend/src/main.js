@@ -5,7 +5,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faGithub,
-  faFacebookF,
+  faFacebook,
   faLinkedin,
   faInstagram,
   faJsSquare,
@@ -66,7 +66,7 @@ auth.onAuthStateChanged(async user => {
 library.add(
   faCode,
   faGithub,
-  faFacebookF,
+  faFacebook,
   faLinkedin,
   faInstagram,
   faJsSquare,
