@@ -32,7 +32,7 @@
                   profile.item.name,
                   profile.matches && profile.matches.find(match => match.key == 'name')
                 )"
-                :key="segment.text + index + profile.item.userId"
+                :key="segment.text + index + profile.item.id"
                 :class="{
                   'text-teal-500': segment.match
                 }"
