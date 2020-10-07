@@ -64,10 +64,8 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
-<<<<<<< HEAD
   faCalendarDay,
   faCompass,
-=======
   faCode,
   faGithub,
   faFacebookF,
@@ -76,7 +74,6 @@ library.add(
   faJsSquare,
   faVuejs,
   faReact,
->>>>>>> 4c031e66c98111f6b230776073d5247df93d3901
   faCoffee,
   faSpinner,
   faEdit,
