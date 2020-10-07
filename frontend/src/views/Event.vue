@@ -9,13 +9,25 @@
       </p>
       <p>{{ event.location }}</p>
     </div>
+
+    <DateTimePicker v-model="date" />
+    <p>{{ date }}</p>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import DateTimePicker from "@/components/DateTimePicker.vue";
 
 export default {
+  data() {
+    return {
+      date: new Date()
+    };
+  },
+  components: {
+    DateTimePicker
+  },
   computed: {
     id() {
       return this.$route.params.id;

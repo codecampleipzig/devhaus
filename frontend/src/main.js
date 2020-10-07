@@ -28,7 +28,9 @@ import {
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
-import vSelect from "vue-select/dist/vue-select.css";
+import vSelect from "vue-select";
+
+import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
 import Vuelidate from "vuelidate";
 
@@ -84,6 +86,8 @@ library.add(
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("v-select", vSelect);
+
+console.log("v-select registered");
 
 Vue.use(firestorePlugin);
 Vue.config.productionTip = false;
