@@ -1,5 +1,14 @@
 <template>
   <div class="p-4">
+    <transition name="slide"
+      ><div
+        @click="selectEvent(null)"
+        v-if="selectedEvent"
+        class="fixed h-full right-0 top-0 bg-white w-full max-w-sm border-l"
+      >
+        {{ selectedEvent.title }}
+      </div></transition
+    >
     <div class="flex space-x-2">
       <div
         v-for="year in years"
@@ -94,7 +103,11 @@
             :key="event.id"
             :to="{ name: 'Event', params: { id: event.id } }"
           >
-            <div class="absolute w-full pl-8" :style="styleForEvent(event, day)">
+            <div
+              class="absolute w-full pl-8"
+              :style="styleForEvent(event, day)"
+              @click="selectEvent(event)"
+            >
               <div
                 class="bg-blue-100 border border-blue-200 border-opacity-50
               bg-opacity-50 p-2 h-full"
@@ -128,6 +141,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      sidebarShown: true,
+      selectedEvent: null,
       viewportWidth: window.innerWidth,
       selection: moment(),
       months: this.range(0, 11),
@@ -193,6 +208,9 @@ export default {
     this.scrollIntoView(12);
   },
   methods: {
+    selectEvent(event) {
+      this.selectedEvent = event;
+    },
     styleForEvent(event, day) {
       return {
         top: `${this.pixelForMs(event.start.diff(day))}px`,

@@ -10,17 +10,14 @@
       </p>
       <p>{{ event.location }}</p>
       <p class="italic text-1xl">{{ event.description }}</p>
-      <button class="button flex justify-center mt-6 hover:opacity-75">RSVP</button>
+
       <div class="flex flex-row m-4">
         <router-link
-          class="button m-3"
+          class="button m-3 w-full"
           :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
         >
-          View All
+          View All Events
         </router-link>
-        <router-link class="button m-3" :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
-          >Your Events</router-link
-        >
       </div>
     </div>
   </div>
