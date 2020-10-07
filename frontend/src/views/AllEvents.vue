@@ -1,5 +1,14 @@
 <template>
   <div class="flex flex-col">
+    <transition name="slide"
+      ><div
+        @click="selectEvent(null)"
+        v-if="selectedEvent"
+        class="fixed h-full right-0 top-0 bg-white w-full max-w-sm border-l"
+      >
+        {{ selectedEvent.title }}
+      </div></transition
+    >
     <div class="flex flex-row justify-between text-center">
       <h1
         v-if="eventsMode == 'all-events'"
@@ -36,13 +45,13 @@
       v-if="eventsMode == 'all-events'"
     >
       <div
+        @click="selectEvent(event)"
         class="leading-8 border-b-4 border-teal-800 m-8 p-2"
         v-for="event in sortedAllEvents"
         :key="event.id"
       >
-        <router-link :to="{ name: 'Event', params: { id: event.id } }">
-          <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-        </router-link>
+        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+
         <h2>
           <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
         </h2>
@@ -63,9 +72,8 @@
         v-for="event in sortedMyEvents"
         :key="event.id"
       >
-        <router-link :to="{ name: 'Event', params: { id: event.id } }">
-          <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-        </router-link>
+        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+
         <h2>
           <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
         </h2>
@@ -83,6 +91,15 @@
 import moment from "moment";
 
 export default {
+  data() {
+    return {
+      sidebarShown: true,
+      selectedEvent: null
+    };
+  },
+  created() {
+    this.$store.dispatch("bindEvents");
+  },
   computed: {
     eventsMode() {
       return this.$route.params.whose;
@@ -112,6 +129,9 @@ export default {
     }
   },
   methods: {
+    selectEvent(event) {
+      this.selectedEvent = event;
+    },
     allEvents() {
       return true;
     },
@@ -129,9 +149,13 @@ export default {
 </script>
 
 <style scoped>
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(100%);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 1s ease-in-out;
 }
 </style>
