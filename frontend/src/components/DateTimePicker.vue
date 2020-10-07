@@ -14,7 +14,6 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
-// import { db } from "@/firebase";
 import moment from "moment";
 
 export default {

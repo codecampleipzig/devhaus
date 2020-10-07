@@ -13,39 +13,18 @@
         <div class="flex justify-content items-center border-2">
           <div name="start" class="">
             <h2>Start</h2>
-            <div class="flex-row">
-              <datepicker v-model="event.startDate" />
-
-              <v-select v-model="event.startTime" :options="times" placeholder="enter start time" />
-            </div>
+            <DateTimePicker v-model="eventStart" />
             <!--Closing startDateTime-->
           </div>
           <!--Closing start-->
           <div name="end" class="">
             <h2>End</h2>
-            <div>
-              <datepicker v-model="event.endDate" />
-              <v-select
-                v-model="event.endTime"
-                :options="times"
-                :autoscroll="true"
-                placeholder="enter closing time"
-              />
-            </div>
+            <DateTimePicker v-model="eventEnd" />
             <!--Closing endDateTime-->
           </div>
           <!--Closing end-->
         </div>
         <!--Closing dateAndTimePicker-->
-
-        <!-- <span>Multiple Days: {{ checked }} </span>
-        <input
-          id="checkbox1"
-          v-model="multipleDays"
-          type="checkbox"
-          value="Multiple Days"
-        > -->
-
         <v-select
           v-model="event.location"
           :options="location"
@@ -74,13 +53,12 @@
 </template>
 
 <script>
-import Datepicker from "vuejs-datepicker";
+import DateTimePicker from "@/components/DateTimePicker.vue";
 import { db } from "@/firebase";
-import moment from "moment";
 
 export default {
   components: {
-    Datepicker
+    DateTimePicker
   },
   data() {
     return {
@@ -91,7 +69,8 @@ export default {
       multipleDays: false,
 
       successMsg: "",
-
+      eventStart: new Date(),
+      eventEnd: new Date(),
       event: this.createEmptyEvent()
     };
   },
@@ -121,26 +100,12 @@ export default {
       const {
         title,
         description,
-        startDate,
-        startTime,
-        endDate,
-        endTime,
+        start = this.eventStart,
+        end = this.eventEnd,
         location,
         link,
         address
       } = this.event;
-
-      const [startHour, startMinutes] = startTime.split(":").map(Number);
-      const [endHour, endMinutes] = endTime.split(":").map(Number);
-
-      const start = moment(startDate)
-        .hour(startHour)
-        .minute(startMinutes)
-        .toDate();
-      const end = moment(endDate)
-        .hour(endHour)
-        .minute(endMinutes)
-        .toDate();
 
       await db.collection("events").add({
         title,
@@ -168,10 +133,9 @@ export default {
         link: "",
         address: ""
       };
-      // this.successMsg = "",
     }
   }
-}; // Export
+};
 </script>
 
 <style></style>
