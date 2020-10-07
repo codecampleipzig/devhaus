@@ -36,8 +36,8 @@ Vue.use(NProgress, options);
 const nprogress = new NProgress();
 const options = {
   latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
-  router: true, // Show progressbar when navigating routes, default: true
-  http: false // Show progressbar when doing Vue.http, default: true
+  router: false, // Show progressbar when navigating routes, default: true
+  http: false // Show progressbar when doing Vue.http, default: true,\
 };
 
 let markProfilesAsBound = null;
