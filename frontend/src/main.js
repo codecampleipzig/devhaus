@@ -13,16 +13,11 @@ import {
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
 import {
-  faCoffee,
   faSpinner,
   faEdit,
   faCircle,
   faCheck,
-  faCode,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
+  faEnvelope,
   faComment
 } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
@@ -64,7 +59,6 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
-  faCode,
   faGithub,
   faFacebookF,
   faLinkedin,
@@ -72,15 +66,13 @@ library.add(
   faJsSquare,
   faVuejs,
   faReact,
-  faCoffee,
+
   faSpinner,
   faEdit,
   faCircle,
   faCheck,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
+
+  faEnvelope,
   faComment
 );
 
