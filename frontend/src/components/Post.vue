@@ -12,10 +12,24 @@
           <div>{{ formattedDate }}</div>
         </div>
       </div>
-      <div class="">
-        <div class="pb-4">{{ post.title }}</div>
-        <div class="md" v-html="markdown"></div>
+
+      <div v-if="!editTitle" class="pb-4">
+        {{ post.title }}
+        <button @click="editTitle = true" class="bg-gray-700 w-1/12 rounded">Edit Title</button>
       </div>
+      <div v-else>
+        <input v-model="post.title" type="text" name="title" id="" />
+        <button @click="savePost" class="bg-gray-700 w-1/12 rounded">Save</button>
+      </div>
+      <div v-if="!editText">
+        <div class="md" v-html="markdown"></div>
+        <button @click="editText = true" class="bg-gray-700 w-1/12 rounded">EditText</button>
+      </div>
+      <div v-else>
+        <textarea v-model="post.text" name="text" id="" cols="30" rows="10"></textarea>
+        <button @click="savePost" class="bg-gray-700 w-1/12 rounded">Save</button>
+      </div>
+
       <button @click="deletePost" class="bg-gray-700 w-1/12 rounded">Delete</button>
     </div>
   </div>
@@ -35,6 +49,12 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      editTitle: false,
+      editText: false
+    };
+  },
   computed: {
     ...mapState(["profiles"]),
     author() {
@@ -48,6 +68,18 @@ export default {
     }
   },
   methods: {
+    async savePost() {
+      await db
+        .collection("posts")
+        .doc(this.post.id)
+        .update({
+          title: this.post.title,
+          text: this.post.text
+        });
+
+      this.editText = false;
+      this.editTitle = false;
+    },
     async deletePost() {
       await db
         .collection("posts")
