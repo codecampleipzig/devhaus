@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <div v-if="eventFromDB">
-      <h1>{{ eventFromDB.title }}</h1>
+  <div class="flex justify-center">
+    <div class="m-48 flex flex-col justify-center" v-if="eventFromDB">
+      <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
+        {{ eventFromDB.title }}
+      </h1>
       <p>{{ eventFromDB.description }}</p>
       <p>
         From {{ moment(eventFromDB.start.toDate()).format("ddd D.MMM HH:mm") }} to
@@ -9,6 +11,16 @@
       </p>
       <p>Location: {{ eventFromDB.location }}</p>
       <p>Address: {{ eventFromDB.address }}</p>
+      <p class="italic text-1xl">{{ eventFromDB.description }}</p>
+      <div class="flex flex-row m-4">
+        <router-link
+          class="button m-3 w-full"
+          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+        >
+          View All Events
+        </router-link>
+      </div>
+
       <font-awesome-icon
         v-if="myEvent"
         id="icon"
@@ -17,7 +29,7 @@
         @click="editMyEvent"
       />
     </div>
-    <div v-if="editEvent" class="flex flex-row justify-evenly">
+    <div v-if="editEvent" class="flex flex-row justify-evenly m-4">
       <div class="mb-8 text-1xl ">
         <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
           Update Event
@@ -40,12 +52,10 @@
             <div class="w-1/2 flex flex-col">
               <h2>Start</h2>
               <DateTimePicker v-model="event.start" @input="adjustEndTime" />
-              <!--Closing startDateTime-->
             </div>
             <div class="w-1/2 flex flex-col">
               <h2>End</h2>
               <DateTimePicker v-model="event.end" />
-              <!--Closing endDateTime-->
             </div>
           </div>
           <v-select
@@ -85,6 +95,7 @@
 import moment from "moment";
 import DateTimePicker from "@/components/DateTimePicker.vue";
 import { db } from "@/firebase";
+import store from "@/store";
 
 export default {
   data() {
@@ -111,6 +122,13 @@ export default {
         : false;
     }
   },
+  async beforeRouteEnter(to, from, next) {
+    const id = to.params.id;
+    if (!store.state.events.find(event => event.id == id)) {
+      await store.dispatch("bindEvents");
+    }
+    next();
+  },
   methods: {
     editMyEvent() {
       if (!this.editEvent) {
@@ -136,12 +154,12 @@ export default {
           let min = i;
           if (min == 0) {
             min = "00";
-          } // if statement
+          }
           res.push(`${hours}:${min}`);
-        } // For Loop minutes
-      } // For Loop Hours
+        }
+      }
       return res;
-    }, // createTimes
+    },
     updateLocation(location) {
       this.event.location = location;
     },

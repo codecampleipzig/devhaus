@@ -22,12 +22,10 @@
           <div class="w-1/2 flex flex-col">
             <h2>Event start:</h2>
             <DateTimePicker v-model="event.start" @input="adjustEndTime" />
-            <!--Closing startDateTime-->
           </div>
           <div class="w-1/2 flex flex-col">
             <h2>Event end:</h2>
             <DateTimePicker v-model="event.end" />
-            <!--Closing endDateTime-->
           </div>
         </div>
         <v-select
@@ -38,26 +36,29 @@
           @input="location => updateLocation(location)"
           class="my-4"
         />
-        <div v-if="event.location == 'online' || event.location == 'hybrid'" class="mb-4">
+        <div v-if="event.location == 'Online' || event.location == 'Hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
           <input
             v-model="event.link"
             type="text"
-            placeholder="add event link e.g. Zoom"
+            placeholder="Add the event link e.g. Zoom"
             class="w-full"
           />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'" class="mb-4">
-          <h2>event address</h2>
+        <div v-if="event.location == 'Local' || event.location == 'Hybrid'" class="mb-4">
+          <h2>Address</h2>
           <input
             v-model="event.address"
             type="text"
-            placeholder="add place and street of the event"
+            placeholder="Add the address of the event"
             class="w-full"
           />
         </div>
         <input type="submit" class="button mt-4" value="Create event" />
       </form>
+      <router-link class="button mt-4" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
+        View All Events
+      </router-link>
     </div>
   </div>
 </template>
@@ -90,12 +91,12 @@ export default {
           let min = i;
           if (min == 0) {
             min = "00";
-          } // if statement
+          }
           res.push(`${hours}:${min}`);
-        } // For Loop minutes
-      } // For Loop Hours
+        }
+      }
       return res;
-    }, // createTimes
+    },
     updateLocation(location) {
       this.event.location = location;
     },

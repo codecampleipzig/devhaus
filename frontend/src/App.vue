@@ -40,7 +40,7 @@ textarea:focus {
 
 .button {
   letter-spacing: 0.2em;
-  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase bg-teal-900 text-white;
+  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase text-center bg-teal-900 text-white;
 }
 
 .devhaus-theme .vs__dropdown-toggle {
