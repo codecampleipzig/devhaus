@@ -11,26 +11,25 @@
           <div>{{ author.firstName }} {{ author.lastName }}</div>
           <div>{{ formattedDate }}</div>
         </div>
+        <font-awesome-icon id="icon" icon="trash" title="Delete Post" @click="deletePost" />
       </div>
 
       <div v-if="!editTitle" class="pb-4">
         {{ post.title }}
-        <button @click="editTitle = true" class="bg-gray-700 w-1/12 rounded">Edit Title</button>
+        <font-awesome-icon id="icon" icon="edit" title="Edit Title" @click="editTitle = true" />
       </div>
       <div v-else>
         <input v-model="post.title" type="text" name="title" id="" />
         <button @click="savePost" class="bg-gray-700 w-1/12 rounded">Save</button>
       </div>
       <div v-if="!editText">
+        <font-awesome-icon id="icon" icon="edit" title="Edit section" @click="editText = true" />
         <div class="md" v-html="markdown"></div>
-        <button @click="editText = true" class="bg-gray-700 w-1/12 rounded">EditText</button>
       </div>
       <div v-else>
         <textarea v-model="post.text" name="text" id="" cols="30" rows="10"></textarea>
         <button @click="savePost" class="bg-gray-700 w-1/12 rounded">Save</button>
       </div>
-
-      <button @click="deletePost" class="bg-gray-700 w-1/12 rounded">Delete</button>
     </div>
   </div>
 </template>

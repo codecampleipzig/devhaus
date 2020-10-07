@@ -7,7 +7,15 @@
     </div>
     <div>
       <!-- Whole Blog -->
-      <div>
+      <div v-if="!addPost">
+        <font-awesome-icon
+          id="icon"
+          icon="plus-circle"
+          title="Add Post"
+          @click="addPost = true"
+        ></font-awesome-icon>
+      </div>
+      <div v-else>
         <!-- Create new post -->
         <form class="flex flex-col max-w-lg font-mono" @submit.prevent="">
           <input v-model="title" type="text" name="Title" placeholder="Insert title here" />
@@ -20,6 +28,7 @@
             placeholder="Write your post in Markdown..."
           />
           <button @click="submitPost()" type="submit">Submit</button>
+          <button @click="addPost = false">Cancel</button>
         </form>
       </div>
       <div>
@@ -42,6 +51,7 @@ export default {
   data() {
     return {
       myProfile: undefined,
+      addPost: false,
       title: "",
       text: ""
     };
@@ -74,6 +84,7 @@ export default {
 
       this.$store.dispatch("notify", { type: "info", text: "Your post has been created" });
       this.text = "";
+      this.addPost = false;
     }
   }
 };

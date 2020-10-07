@@ -23,7 +23,9 @@ import {
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment
+  faComment,
+  faTrash,
+  faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
@@ -79,7 +81,9 @@ library.add(
   faEquals,
   faArrowRight,
   faPencilAlt,
-  faComment
+  faComment,
+  faTrash,
+  faPlusCircle
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
