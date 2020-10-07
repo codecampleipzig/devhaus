@@ -49,8 +49,6 @@ export default {
       this.$emit("input", date.toDate());
     },
     setDate(date) {
-      // year/month/date
-      console.log(date);
       this.setValue(date);
     },
     setTime(time) {

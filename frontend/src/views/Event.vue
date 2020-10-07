@@ -16,12 +16,6 @@
 import moment from "moment";
 
 export default {
-  data() {
-    return {
-      date: new Date()
-    };
-  },
-
   computed: {
     id() {
       return this.$route.params.id;

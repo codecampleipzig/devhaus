@@ -87,8 +87,6 @@ library.add(
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("v-select", vSelect);
 
-console.log("v-select registered");
-
 Vue.use(firestorePlugin);
 Vue.config.productionTip = false;
 
