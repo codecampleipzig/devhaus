@@ -12,27 +12,16 @@ import {
   faReact,
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
-import {
-  faCoffee,
-  faSpinner,
-  faEdit,
-  faCircle,
-  faCheck,
-  faCode,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment,
-  faTrash,
-  faPlusCircle
-} from "@fortawesome/free-solid-svg-icons";
+
+import { faEdit, faEnvelope, faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
-import vSelect from "vue-select/dist/vue-select.css";
-import "./assets/tailwind.css";
+import vSelect from "vue-select";
 import Vuelidate from "vuelidate";
+
+import "vue-select/dist/vue-select.css";
+import "./assets/tailwind.css";
 
 Vue.use(Vuelidate);
 
@@ -64,7 +53,6 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
-  faCode,
   faGithub,
   faFacebookF,
   faLinkedin,
@@ -72,18 +60,10 @@ library.add(
   faJsSquare,
   faVuejs,
   faReact,
-  faCoffee,
-  faSpinner,
   faEdit,
-  faCircle,
-  faCheck,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment,
   faTrash,
-  faPlusCircle
+  faPlusCircle,
+  faEnvelope
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -14,13 +14,15 @@
         <div v-for="(profile, i) in results" :key="i" class="py-4">
           <router-link
             class="w-full"
-            :to="{ name: 'Profile', params: { userId: profile.item.userId } }"
+            :to="{ name: 'Profile', params: { userId: profile.item.id } }"
           >
-            <img
-              class="w-full bg-gray-100 flex-shrink-0"
-              style="padding-top: 100%"
-              :src="profile.item.photo"
-            />
+            <div class="w-48 h-48">
+              <img
+                class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
+                style=""
+                :src="profile.item.avatar"
+              />
+            </div>
           </router-link>
           <div class="m-2">
             <h2 class="font-bold text-xl mt-2 pb-1 border-b-4 border-teal-800 mb-2">
@@ -30,7 +32,7 @@
                   profile.item.name,
                   profile.matches && profile.matches.find(match => match.key == 'name')
                 )"
-                :key="segment.text + index + profile.item.userId"
+                :key="segment.text + index + profile.item.id"
                 :class="{
                   'text-teal-500': segment.match
                 }"
@@ -71,7 +73,8 @@ export default {
     newProfiles() {
       return this.profiles.map(profile => ({
         ...profile,
-        name: `${profile.firstName} ${profile.lastName}`
+        name: `${profile.firstName} ${profile.lastName}`,
+        id: profile.id
       }));
     },
     results() {
