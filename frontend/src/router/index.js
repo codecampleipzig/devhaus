@@ -11,6 +11,7 @@ import Calendar from "../views/Calendar.vue";
 import Event from "../views/Event.vue";
 import CreateEvent from "../views/CreateEvent.vue";
 import store from "../store";
+import NotFound from "../views/404.vue";
 
 import { firebaseAuthConnected } from "../main";
 
@@ -74,7 +75,8 @@ const routes = [
         name: "Profile",
         component: Profile,
         meta: { requiresAuth: true, requiresProfile: true }
-      }
+      },
+      { path: "*", component: NotFound, meta: { requiresAuth: true, requiresProfile: true } }
     ]
   }
 ];
