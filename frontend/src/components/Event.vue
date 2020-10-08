@@ -1,5 +1,8 @@
 <template>
   <div class="flex justify-center">
+    <div>
+      <RSVP />
+    </div>
     <div class="m-48 flex flex-col justify-center" v-if="eventFromDB">
       <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
         {{ eventFromDB.title }}
@@ -29,9 +32,7 @@
         @click="editMyEvent"
       />
     </div>
-    <div>
-      <RSVP />
-    </div>
+
     <div v-if="editEvent" class="flex flex-row justify-evenly m-4">
       <div class="mb-8 text-1xl ">
         <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
