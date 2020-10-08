@@ -1,17 +1,22 @@
 <template>
   <div id="app" class="devhaus-theme">
+    <nprogress-container></nprogress-container>
+
     <router-view />
+
     <Notifications />
   </div>
 </template>
 
 <script>
 import Notifications from "@/components/Notifications.vue";
+import NprogressContainer from "vue-nprogress/src/NprogressContainer";
 
 export default {
   name: "App",
   components: {
-    Notifications
+    Notifications,
+    NprogressContainer
   },
   data() {
     return {
@@ -56,5 +61,9 @@ textarea:focus {
 
 .devhaus-theme .vs__open-indicator {
   @apply cursor-pointer;
+}
+
+#nprogress .bar {
+  @apply bg-teal-300;
 }
 </style>
