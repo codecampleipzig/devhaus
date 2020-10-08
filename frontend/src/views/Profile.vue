@@ -52,7 +52,7 @@
               accept="image/*"
             />
           </div>
-          <form @submit.prevent="commitToDB(profileInfos)">
+          <form class="flex flex-col" @submit.prevent="commitToDB(profileInfos)">
             <input
               v-model="profileInfos.firstName"
               type="text"
