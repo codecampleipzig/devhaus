@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-col p-4 bg-gray-400 rounded max-w-screen-lg">
+    <div class="flex flex-col p-4 bg-teal-100 rounded">
       <div class="flex mb-4">
         <img
           :src="author.avatar"
@@ -11,19 +11,37 @@
           <div>{{ author.firstName }} {{ author.lastName }}</div>
           <div>{{ formattedDate }}</div>
         </div>
-        <font-awesome-icon id="icon" icon="trash" title="Delete Post" @click="deletePost" />
+        <font-awesome-icon
+          v-if="author.id == $store.state.user.uid"
+          id="icon"
+          icon="trash"
+          title="Delete Post"
+          @click="deletePost"
+        />
       </div>
 
+      {{ post.title }}
       <div v-if="!editTitle" class="pb-4">
-        {{ post.title }}
-        <font-awesome-icon id="icon" icon="edit" title="Edit Title" @click="editTitle = true" />
+        <font-awesome-icon
+          v-if="author.id == $store.state.user.uid"
+          id="icon"
+          icon="edit"
+          title="Edit Title"
+          @click="editTitle = true"
+        />
       </div>
       <div v-else>
         <input v-model="post.title" type="text" name="title" id="" />
         <button @click="savePost" class="bg-gray-700 w-1/12 rounded">Save</button>
       </div>
       <div v-if="!editText">
-        <font-awesome-icon id="icon" icon="edit" title="Edit section" @click="editText = true" />
+        <font-awesome-icon
+          v-if="author.id == $store.state.user.uid"
+          id="icon"
+          icon="edit"
+          title="Edit section"
+          @click="editText = true"
+        />
         <div class="md" v-html="markdown"></div>
       </div>
       <div v-else>
@@ -36,7 +54,6 @@
 
 <script>
 import marked from "marked";
-import DOMPurify from "dompurify";
 import moment from "moment";
 import { mapState } from "vuex";
 import { db } from "@/firebase";
@@ -64,20 +81,25 @@ export default {
       return moment(this.post.date.toDate()).format("MMMM Do YYYY, h:mm a");
     },
     markdown() {
-      const clean = DOMPurify.sanitize(this.post.text);
-      return marked(clean);
+      return marked(this.post.text);
     }
   },
   methods: {
     async savePost() {
-      const clean = DOMPurify.sanitize(this.post.text);
-      await db
-        .collection("posts")
-        .doc(this.post.id)
-        .update({
-          title: this.post.title,
-          text: clean
-        });
+      try {
+        await db
+          .collection("posts")
+          .doc(this.post.id)
+          .update({
+            title: this.post.title,
+            text: this.post.text
+          });
+      } catch (error) {
+        console.log(error.message);
+        error.message == "Missing or insufficient permissions."
+          ? this.$store.dispatch("notify", { type: "error", text: "That ain't your Post dude!" })
+          : this.$store.dispatch("notify", { type: "error", text: error });
+      }
 
       this.editText = false;
       this.editTitle = false;
