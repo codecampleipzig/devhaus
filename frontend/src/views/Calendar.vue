@@ -139,7 +139,7 @@
 <script>
 import moment from "moment";
 import { mapState } from "vuex";
-import Event from "@/views/Event.vue";
+import Event from "@/components/Event.vue";
 
 export default {
   components: {

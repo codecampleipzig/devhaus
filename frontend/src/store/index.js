@@ -57,6 +57,9 @@ export default new Vuex.Store({
   getters: {
     myProfile: state => {
       return state.profiles.find(profile => profile.id == state.user.uid);
+    },
+    getProfileById: state => id => {
+      return state.profiles.find(profile => profile.id == id);
     }
   },
   actions: {
