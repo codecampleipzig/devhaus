@@ -1,5 +1,5 @@
 <template>
-  <div class="m-8">
+  <div class="m-8 mt-16">
     <section class="flex space-x-4">
       <div @click="$refs.imageInput.click()" class="w-48 h-48">
         <img

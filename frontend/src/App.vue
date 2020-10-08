@@ -33,7 +33,7 @@ input[type="text"],
 input[type="password"],
 input[type="number"],
 textarea {
-  @apply border border-black py-2 px-4 font-medium;
+  @apply border border-black py-2 px-3 font-medium;
 }
 
 input[type="text"]:focus,
@@ -52,8 +52,17 @@ textarea:focus {
 .button:hover {
   @apply bg-teal-800;
 }
+
+.button-inverse {
+  @apply bg-transparent text-teal-900;
+}
+
+.button-inverse:hover {
+  @apply bg-teal-600 bg-opacity-25;
+}
+
 .devhaus-theme .vs__dropdown-toggle {
-  @apply rounded-none border border-black py-2 px-4 font-medium;
+  @apply rounded-none border border-black py-2 px-2 font-medium;
 }
 
 .devhaus-theme .vs__selected-option {

@@ -1,20 +1,18 @@
 <template>
-  <div class="p-4 max-w-screen-md sm:px-12">
-    <header class="flex items-center justify-between mb-4">
-      <h1 class="text-4xl font-bold">Devhaus Leipzig</h1>
-      <div class="flex justify-center" v-if="!addPost">
+  <div class="p-8 md:pl-16 max-w-screen-md sm:px-12">
+    <portal to="header">
+      <div class="flex justify-between items-center">
+        <h1 class="font-semibold text-lg">News</h1>
         <font-awesome-icon
-          class="text-2xl cursor-pointer text-teal-900"
+          class="text-xl cursor-pointer text-teal-900"
           id="icon"
           icon="plus-circle"
           title="Add Post"
           @click="addPost = true"
-        ></font-awesome-icon>
-      </div>
-    </header>
+        ></font-awesome-icon></div
+    ></portal>
     <div class="">
       <!-- Whole Blog -->
-
       <div
         class="fixed left-0 top-0 w-full h-full flex justify-center items-center bg-black bg-opacity-25"
         v-if="addPost"
@@ -46,11 +44,11 @@
           </div>
         </form>
       </div>
-      <div class="">
+      <div>
         <!-- Show Posts -->
 
         <markedPost
-          class="mb-16"
+          class="mb-24"
           :post="post"
           v-for="post in sortedPosts"
           :key="post.id"

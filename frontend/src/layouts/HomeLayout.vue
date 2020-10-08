@@ -1,45 +1,51 @@
 <template>
   <div class="home-layout max-h-screen">
-    <div
-      class="pl-8 py-6 pr-8
-        bg-teal-900 min-h-screen flex"
-      v-if="viewportWidth > 500"
-    >
-      <NavMenu v-if="menuOpen"></NavMenu>
-      <nav v-else>
-        <font-awesome-icon
-          icon="arrow-right"
-          class="text-white cursor-pointer"
-          @click="$store.commit('EXPAND_MENU')"
-        ></font-awesome-icon>
-      </nav>
-    </div>
-    <div v-else>
-      <nav>
-        <font-awesome-icon
-          icon="arrow-right"
-          class="text-black cursor-pointer"
-          @click="$store.commit('EXPAND_MENU')"
-        ></font-awesome-icon>
-        <transition name="slide-left">
-          <div
-            v-if="menuOpen"
-            class="pl-8 py-6 pr-8
-          bg-teal-900 min-h-screen flex fixed top-0 left-0 z-20"
-          >
-            <NavMenu></NavMenu>
-          </div>
-        </transition>
-      </nav>
-    </div>
+    <transition>
+      <NavMenu
+        v-if="menuOpen"
+        class="z-20"
+        :class="viewportWidth < 900 ? 'fixed' : ''"
+        :showCloseIcon="true"
+      ></NavMenu>
+    </transition>
+    <div v-if="!menuOpen || viewportWidth < 900"></div>
+
     <div class="overflow-y-auto max-h-screen">
+      <header
+        class="py-2 px-4 flex items-center top-0 justify-between
+      bg-white sticky border-b border-gray-200 z-10"
+      >
+        <font-awesome-icon
+          v-if="!menuOpen"
+          icon="bars"
+          class="cursor-pointer"
+          @click="$store.commit('TOGGLE_MENU')"
+        ></font-awesome-icon>
+        <portal-target class="flex-1 pl-4 pr-4" name="header"></portal-target>
+        <div class="flex items-center space-x-4">
+          <router-link :to="{ name: 'Calendar' }">
+            <font-awesome-icon
+              id="show-calendar"
+              class="text-lg text-teal-900 hover:opacity-75 mt-1"
+              :icon="['fa', 'calendar-alt']"
+            ></font-awesome-icon>
+          </router-link>
+          <router-link
+            class="nav-link"
+            id="profile-link"
+            :to="{ name: 'Profile', params: { userId: $store.state.user.uid } }"
+          >
+            <img class="rounded-full h-10 w-10" :src="$store.getters.myProfile.avatar" alt="" />
+          </router-link>
+        </div>
+      </header>
       <router-view />
     </div>
     <transition name="fade">
       <div>
         <div
           v-if="sidebarOpen"
-          class="fixed h-full w-full left-0 top-0 z-0
+          class="fixed h-full w-full left-0 top-0 z-20
         bg-black bg-opacity-25"
           @click="$store.commit('HIDE_SIDEBAR')"
         ></div>
@@ -50,9 +56,9 @@
         v-show="sidebarOpen"
         class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-sm border-l overflow-y-scroll"
       >
-        <div class="fixed m-4">
+        <div class="fixed m-6 text-teal-900">
           <font-awesome-icon
-            class="text-xl"
+            class="text-xl cursor-pointer"
             :icon="['fa', 'window-close']"
             @click="$store.commit('HIDE_SIDEBAR')"
           ></font-awesome-icon>
@@ -83,7 +89,7 @@ export default {
     window.addEventListener("resize", this.resize);
   },
   beforeDestroy() {
-    window.removeEventListner("resize", this.resize);
+    window.removeEventListener("resize", this.resize);
   },
   methods: {
     resize() {
@@ -91,7 +97,7 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    if (this.viewportWidth < 500) {
+    if (this.viewportWidth < 900) {
       this.$store.commit("COLLAPSE_MENU");
     }
     next();

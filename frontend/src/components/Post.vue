@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="">
-      <h2 class="font-bold text-2xl mb-2">{{ post.title }}</h2>
+      <div class="flex">
+        <h2 class="font-bold text-5xl mb-2 border-teal-900 border-b-4 pb-1">{{ post.title }}</h2>
+      </div>
       <div v-if="!editTitle" class="pb-4">
         <font-awesome-icon
           v-if="author.id == $store.state.user.uid"
@@ -121,5 +123,13 @@ export default {
 }
 .md h2 {
   @apply font-bold text-xl mb-2;
+}
+
+.md p {
+  @apply font-serif leading-loose text-lg mb-4;
+}
+
+.md img {
+  @apply my-6;
 }
 </style>

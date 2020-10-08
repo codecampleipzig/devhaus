@@ -10,9 +10,7 @@ describe("Profile", () => {
       cy.get("input[placeholder=Password]").type("Lotte123");
       cy.get("input[type=submit]").click();
     });
-    cy.get("nav")
-      .contains("Profile")
-      .click();
+    cy.get("#profile-link").click();
     cy.location("pathname").should("eq", "/profile/s6hxMKPQOqa8r65HoWT584xo7zG3");
   });
 });

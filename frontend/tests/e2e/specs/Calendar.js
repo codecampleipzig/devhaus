@@ -39,11 +39,11 @@ describe("Calendar", () => {
       .contains("Events")
       .click();
 
-    cy.contains("Create New Event").click();
+    cy.contains("New Event").click();
 
     cy.location("pathname").should("eq", "/create-event");
-    cy.get("input[placeholder='Event Title']").type("Cypress Test Event");
-    cy.get("input[placeholder='Event Description']").type("Test Description");
+    cy.get("input[placeholder='Title']").type("Cypress Test Event");
+    cy.get("input[placeholder='Description']").type("Test Description");
     cy.get("input[placeholder='Select location type:']").type("online");
     cy.contains("Create event").click();
     cy.contains("Your event has been created");

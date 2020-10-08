@@ -10,7 +10,7 @@ describe("Signin", () => {
       cy.get("input[placeholder=Password]").type("Lotte123");
       cy.get("input[type=submit]").click();
     });
-    cy.location("pathname").should("eq", "/");
+    cy.location("pathname").should("eq", "/news");
   });
 
   it("signs in with user but no profile and lands on /register", () => {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="fixed bottom-0 left-0 w-full z-40">
+    <div class="fixed bottom-0 left-0 w-full z-40 flex justify-end">
       <transition-group name="fade">
         <Notification
           v-for="notification in notifications"
@@ -46,6 +46,6 @@ export default {
 }
 
 .fade-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 </style>

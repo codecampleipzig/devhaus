@@ -24,7 +24,8 @@ import {
   faPlusCircle,
   faArrowRight,
   faArrowLeft,
-  faWindowClose
+  faWindowClose,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 
 import store from "@/store";
@@ -95,7 +96,8 @@ library.add(
   faEnvelope,
   faArrowRight,
   faArrowLeft,
-  faWindowClose
+  faWindowClose,
+  faBars
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

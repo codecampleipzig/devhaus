@@ -22,15 +22,11 @@ describe("Nav", () => {
       .contains("Members")
       .click();
     cy.location("pathname").should("eq", "/members");
-    // Profile
-    cy.get("nav")
-      .contains("Profile")
-      .click();
-    cy.location("pathname").should("eq", "/profile/s6hxMKPQOqa8r65HoWT584xo7zG3");
+
     // Home
     cy.get("nav")
-      .contains("Home")
+      .contains("News")
       .click();
-    cy.location("pathname").should("eq", "/");
+    cy.location("pathname").should("eq", "/news");
   });
 });

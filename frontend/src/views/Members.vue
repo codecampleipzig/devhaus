@@ -3,28 +3,31 @@
     <portal to="sidebar">
       <Profile v-if="selectedProfileId" :userId="selectedProfileId"></Profile>
     </portal>
-    <div class="px-4">
-      <header class="flex flex-col mb-2 sticky top-0 w-full bg-white py-4">
+    <div class="px-4 py-8 pb-16">
+      <portal to="header">
         <input
           v-model.trim="search"
           type="text"
           name="search"
-          class="max-w-lg text-lg"
+          class="search max-w-lg text-lg"
           placeholder="Search"
         />
-      </header>
-      <main class="profile-grid">
-        <div v-for="(profile, i) in results" :key="i" class="py-4">
-          <div class="w-full" @click="selectProfile(profile)">
-            <div class="w-48 h-48">
-              <img
-                class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
-                style=""
-                :src="profile.item.avatar"
-              />
-            </div>
+      </portal>
+
+      <main class="profile-grid md:p-4 gap-4 md:gap-8">
+        <div v-for="(profile, i) in results" :key="i">
+          <div
+            class="w-full relative cursor-pointer"
+            style="padding-top: 100%"
+            @click="selectProfile(profile)"
+          >
+            <img
+              class="absolute top-0 left-0 w-full h-full bg-gray-100 flex-shrink-0 object-cover"
+              style=""
+              :src="profile.item.avatar"
+            />
           </div>
-          <div class="m-2">
+          <div class="mt-2">
             <h2 class="font-bold text-xl mt-2 pb-1 border-b-4 border-teal-800 mb-2">
               <span
                 class="inline-block m-0"
@@ -45,7 +48,7 @@
                 }}
               </span>
             </h2>
-            <div class="flex space-x-2 mt-4">
+            <div class="flex space-x-2 mt-4 text-xl">
               <a
                 v-if="profile.item.githubUsername"
                 :href="`https://github.com/${profile.item.githubUsername}`"
@@ -166,7 +169,10 @@ export default {
 <style scoped>
 .profile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}
+
+.search {
+  @apply border-0 bg-gray-100 w-screen max-w-md py-1;
 }
 </style>

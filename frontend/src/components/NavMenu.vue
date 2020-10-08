@@ -1,58 +1,70 @@
 <template>
-  <nav class="flex flex-col justify-between">
-    <div>
-      <header class="flex items-center space-x-4 mb-6">
-        <h1 class="text-white font-semibold text-2xl">
-          Devhaus Leipzig
-        </h1>
-        <font-awesome-icon
-          class="text-white cursor-pointer"
-          icon="arrow-left"
-          @click="$store.commit('COLLAPSE_MENU')"
-        ></font-awesome-icon>
-      </header>
-      <div class="nav flex flex-col items-start flex-1">
-        <router-link class="nav-link" :to="{ name: 'Home' }">
-          Home
-        </router-link>
-        <router-link class="nav-link" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
-          Events
-        </router-link>
-        <router-link class="nav-link" :to="{ name: 'Members' }">
-          Members
-        </router-link>
-        <router-link
-          class="nav-link"
-          :to="{ name: 'Profile', params: { userId: $store.state.user.uid } }"
-        >
-          Profile
-        </router-link>
-      </div>
-    </div>
-
-    <button
-      class="uppercase font-medium tracking-widest text-teal-100 text-left
-        focus:outline-none justify-self-end"
-      @click="$store.dispatch('signOut')"
+  <div>
+    <nav
+      class="z-50 flex flex-col justify-between pb-2 pr-2
+          bg-white border-r-2 border-teal-700 min-h-screen"
     >
-      Logout
-    </button>
-  </nav>
+      <div>
+        <header class="flex pt-6 mb-12 h-12 px-6 items-center space-x-2">
+          <font-awesome-icon
+            v-if="showCloseIcon"
+            class="text-black cursor-pointer"
+            icon="bars"
+            @click="$store.commit('COLLAPSE_MENU')"
+          ></font-awesome-icon>
+          <h1 class="text-black font-semibold text-lg">
+            Devhaus Leipzig
+          </h1>
+        </header>
+        <div class="flex flex-col items-start flex-1 px-6">
+          <router-link class="nav-link" :to="{ name: 'Home' }">
+            News
+          </router-link>
+          <router-link
+            class="nav-link"
+            :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+          >
+            Events
+          </router-link>
+          <router-link class="nav-link" :to="{ name: 'Calendar' }">
+            Calendar
+          </router-link>
+          <router-link class="nav-link" :to="{ name: 'Members' }">
+            Members
+          </router-link>
+        </div>
+      </div>
+
+      <button
+        class="nav-link  text-left
+          focus:outline-none justify-self-end px-6"
+        @click="$store.dispatch('signOut')"
+      >
+        Logout
+      </button>
+    </nav>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "NavMenu"
+  name: "NavMenu",
+  props: {
+    showCloseIcon: {
+      type: Boolean,
+      default: true
+    }
+  }
 };
 </script>
 
 <style scoped>
 .nav-link {
-  @apply mb-5 pb-1 uppercase font-medium tracking-widest text-teal-100
+  @apply mb-5 pb-1 uppercase font-medium tracking-widest text-black
   border-b-2 border-transparent;
 }
 
-.router-link-exact-active {
-  @apply border-white;
+.router-link-active {
+  @apply border-teal-800;
 }
 </style>
