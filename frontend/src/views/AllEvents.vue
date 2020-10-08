@@ -35,6 +35,9 @@
             :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
             >Your Events</router-link
           >
+          <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'Calendar' }">
+            Calendar
+          </router-link>
           <router-link
             class="button hover:opacity-75"
             v-if="eventsMode == 'my-events'"
