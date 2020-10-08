@@ -31,25 +31,27 @@
         </div>
       </div>
       <header class="flex items-center justify-between mb-2">
-        <div class="flex items-center justify-between">
-          <h2 class="font-bold text-xl">
-            {{ selection.format("dddd, D MMMM YYYY") }}
-          </h2>
-          <div class="flex flex-row">
-            <div class="button mr-2 ml-4" @click="setMoment()">
+        <div class="flex flex-col w-full md:flex-row items-start justify-between">
+          <div class="flex flex-col mb-4 w-screen max-w-screen-sm items-start">
+            <h2 class="font-bold text-xl">
+              {{ selection.format("dddd, D MMMM YYYY") }}
+            </h2>
+            <div class="button text-sm py-1" @click="setMoment()">
               Today
             </div>
           </div>
-          <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
-            New Event
-          </router-link>
+          <div class="space-x-2 flex">
+            <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
+              New Event
+            </router-link>
 
-          <router-link
-            class="button mt-0"
-            :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-          >
-            View All
-          </router-link>
+            <router-link
+              class="button mt-0"
+              :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+            >
+              View All
+            </router-link>
+          </div>
         </div>
       </header>
 
@@ -59,11 +61,11 @@
             <div
               v-for="day in week"
               :key="`week-day-${day.format()}`"
-              class="cursor-pointer border h-6 w-6 rounded-full flex justify-center items-center"
+              class="cursor-pointer border-2 border-transparent h-6 w-6 rounded-full flex justify-center items-center"
               :class="{
                 'font-bold': day.date() == selection.date(),
                 'bg-blue-100': eventsForDay(day).length,
-                'border-red-800 border-4': isToday(day)
+                'border-red-800': isToday(day)
               }"
               @click="setMoment(day)"
             >
