@@ -391,7 +391,12 @@ const hobbies = [
 ];
 export default {
   name: "Profile",
-
+  props: {
+    userId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       imageFile: null,
@@ -421,15 +426,12 @@ export default {
     avatar() {
       return this.profileImagesRef.getDownloadURL();
     },
-    userId() {
-      return this.$route.params.userId;
-    },
     profileInfoFromDB() {
       const profileUID = this.userId;
       return this.profiles.find(profile => profile.id == profileUID);
     },
     myProfile() {
-      return this.$route.params.userId == this.$store.state.user.uid;
+      return this.userId == this.$store.state.user.uid;
     }
   },
 

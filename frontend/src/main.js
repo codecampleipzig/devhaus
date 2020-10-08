@@ -18,15 +18,21 @@ import {
   faCompass,
   faEnvelope,
   faEdit,
-  faCode
+  faCode,
+  faTrash,
+  faPlusCircle,
+  faArrowRight,
+  faArrowLeft,
+  faWindowClose
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
 import vSelect from "vue-select";
 import Vuelidate from "vuelidate";
+import PortalVue from "portal-vue";
+Vue.use(PortalVue);
 
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
@@ -75,7 +81,10 @@ library.add(
   faEdit,
   faTrash,
   faPlusCircle,
-  faEnvelope
+  faEnvelope,
+  faArrowRight,
+  faArrowLeft,
+  faWindowClose
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

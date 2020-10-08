@@ -15,7 +15,8 @@ export default new Vuex.Store({
     user: null,
     profiles: [],
     events: [],
-    posts: []
+    posts: [],
+    sidebarOpen: false
   },
   plugins: [
     CreatePersistedState({
@@ -38,6 +39,12 @@ export default new Vuex.Store({
         state.profiles = [];
         state.events = [];
       }
+    },
+    SHOW_SIDEBAR(state) {
+      state.sidebarOpen = true;
+    },
+    HIDE_SIDEBAR(state) {
+      state.sidebarOpen = false;
     }
   },
   getters: {
