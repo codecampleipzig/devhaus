@@ -43,6 +43,9 @@ textarea:focus {
   @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase text-center bg-teal-900 text-white;
 }
 
+.button:hover {
+  @apply bg-teal-800;
+}
 .devhaus-theme .vs__dropdown-toggle {
   @apply rounded-none border border-black py-2 px-4 font-medium;
 }

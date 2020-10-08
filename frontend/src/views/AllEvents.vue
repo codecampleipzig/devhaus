@@ -6,30 +6,22 @@
         v-if="selectedEvent"
         class="fixed h-full right-0 top-0 bg-white w-full max-w-lg border-l"
       >
-        <div class="flex flex-col justify-center m-5">
+        <button class="button">x</button>
+        <div class="flex flex-col justify-center m-6">
           <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold text-3xl">
             {{ selectedEvent.title }}
           </h1>
-          <div class="ml-10 leading-8">
-            <p class="font-medium">
+          <div class="leading-10">
+            <p class="font-medium text-2xl">
               <font-awesome-icon class="mr-2" :icon="['fa', 'calendar-day']"></font-awesome-icon>
               {{ moment(selectedEvent.start.toDate()).format("ddd D.MMM HH:mm") }} -
               {{ moment(selectedEvent.end.toDate()).format("ddd D.MMM HH:mm") }}
             </p>
-            <p>
+            <p class="text-2xl">
               <font-awesome-icon class="mr-2" :icon="['fa', 'compass']"></font-awesome-icon
               >{{ selectedEvent.location }}
             </p>
-            <p class="m-4 italic text-1xl">{{ selectedEvent.description }}</p>
-          </div>
-
-          <div class="flex justify-center mt-4">
-            <router-link
-              class="button m-3"
-              :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-            >
-              close
-            </router-link>
+            <p class="m-6 italic text-2xl">{{ selectedEvent.description }}</p>
           </div>
         </div>
       </div></transition
@@ -48,6 +40,9 @@
         Your Events
       </h1>
       <div class="m-10 flex flex-col text-center">
+        <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
+          Create New Event
+        </router-link>
         <router-link
           class="button hover:opacity-75"
           v-if="eventsMode == 'all-events'"
@@ -60,9 +55,6 @@
           :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
           >All Events</router-link
         >
-        <router-link class="button mt-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
-          New Event
-        </router-link>
       </div>
     </div>
     <section
@@ -119,7 +111,6 @@ import moment from "moment";
 export default {
   data() {
     return {
-      sidebarShown: true,
       selectedEvent: null
     };
   },
