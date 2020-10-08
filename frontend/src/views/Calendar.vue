@@ -45,11 +45,11 @@
           <div
             v-for="day in week"
             :key="`week-day-${day.format()}`"
-            class="cursor-pointer h-6 w-6 rounded-full flex justify-center items-center"
+            class="cursor-pointer border h-6 w-6 rounded-full flex justify-center items-center"
             :class="{
               'font-bold': day.date() == selection.date(),
               'bg-blue-100': eventsForDay(day).length,
-              'border border-red': isToday(day)
+              'border-red-800 border-4': isToday(day)
             }"
             @click="setMoment(day)"
           >
