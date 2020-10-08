@@ -34,6 +34,7 @@
           />
           <textarea
             rows="10"
+            v-model="text"
             class="font-mono p-4 "
             type="text"
             name="Create Post"
