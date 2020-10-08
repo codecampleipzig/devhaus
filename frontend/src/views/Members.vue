@@ -1,5 +1,8 @@
 <template>
   <div>
+    <portal to="sidebar">
+      <Profile v-if="selectedProfileId" :userId="selectedProfileId"></Profile>
+    </portal>
     <div class="px-4">
       <header class="flex flex-col mb-2 sticky top-0 w-full bg-white py-4">
         <input
@@ -12,10 +15,7 @@
       </header>
       <main class="profile-grid">
         <div v-for="(profile, i) in results" :key="i" class="py-4">
-          <router-link
-            class="w-full"
-            :to="{ name: 'Profile', params: { userId: profile.item.id } }"
-          >
+          <div class="w-full" @click="selectProfile(profile)">
             <div class="w-48 h-48">
               <img
                 class="w-full h-full bg-gray-100 flex-shrink-0 object-cover"
@@ -23,7 +23,7 @@
                 :src="profile.item.avatar"
               />
             </div>
-          </router-link>
+          </div>
           <div class="m-2">
             <h2 class="font-bold text-xl mt-2 pb-1 border-b-4 border-teal-800 mb-2">
               <span
@@ -71,11 +71,16 @@
 <script>
 import Fuse from "fuse.js";
 import { mapState } from "vuex";
+import Profile from "@/views/Profile.vue";
 
 export default {
   name: "Members",
+  components: {
+    Profile
+  },
   data() {
     return {
+      selectedProfileId: null,
       fuse: null,
       search: ""
     };
@@ -108,6 +113,10 @@ export default {
     this.fuse = new Fuse(this.newProfiles, options);
   },
   methods: {
+    selectProfile(profile) {
+      this.selectedProfileId = profile.item.id;
+      this.$store.commit("SHOW_SIDEBAR");
+    },
     getHighlights(string, match) {
       if (!match) {
         return [

@@ -1,115 +1,111 @@
 <template>
-  <div class="p-4">
-    <transition name="slide"
-      ><div
-        @click="selectEvent(null)"
-        v-if="selectedEvent"
-        class="fixed h-full right-0 top-0 bg-white w-full max-w-sm border-l"
-      >
-        {{ selectedEvent.title }}
-      </div></transition
-    >
-    <div class="flex space-x-2">
-      <div
-        v-for="year in years"
-        :key="year"
-        class="cursor-pointer"
-        :class="{
-          'font-bold': year == selection.year()
-        }"
-        @click="setYear(year)"
-      >
-        {{ year }}
-      </div>
-    </div>
-    <div class="flex space-x-2">
-      <div
-        v-for="month in months"
-        :key="`month-${month}`"
-        class="cursor-pointer"
-        :class="{
-          'font-bold': month == selection.month()
-        }"
-        @click="setMonth(month)"
-      >
-        {{ formatMonth(month) }}
-      </div>
-    </div>
-    <header class="flex items-center justify-between mb-2">
-      <div class="flex items-center justify-between">
-        <h2 class="font-bold text-xl">
-          {{ selection.format("dddd, D MMMM YYYY") }}
-        </h2>
-        <div class="flex flex-row">
-          <div class="button mr-2 ml-4" @click="setMoment()">
-            Today
-          </div>
-        </div>
-        <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
-          New Event
-        </router-link>
-        <router-link
-          class="button mt-0"
-          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-        >
-          View All
-        </router-link>
-      </div>
-    </header>
-    <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
-      <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
-        <div class="flex space-x-2">
-          <div
-            v-for="day in week"
-            :key="`week-day-${day.format()}`"
-            class="cursor-pointer border h-6 w-6 rounded-full flex justify-center items-center"
-            :class="{
-              'font-bold': day.date() == selection.date(),
-              'bg-blue-100': eventsForDay(day).length,
-              'border-red-800 border-4': isToday(day)
-            }"
-            @click="setMoment(day)"
-          >
-            {{ day.date() }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="calendar-view">
-      <div
-        v-for="day in selectedDays"
-        :key="day.format()"
-        class="cursor-pointer"
-        @click="setMoment(day)"
-      >
-        <h3
-          class="text-sm"
+  <div>
+    <portal to="sidebar">
+      <Event v-if="selectedEventId" :id="selectedEventId"></Event>
+    </portal>
+    <div class="p-4">
+      <div class="flex space-x-2">
+        <div
+          v-for="year in years"
+          :key="year"
+          class="cursor-pointer"
           :class="{
-            'font-bold': day.date() == selection.date()
+            'font-bold': year == selection.year()
           }"
+          @click="setYear(year)"
         >
-          {{ day.format("D dddd") }}
-        </h3>
+          {{ year }}
+        </div>
       </div>
-    </div>
-    <div
-      ref="eventView"
-      class="calendar-view overflow-y-scroll"
-      style="max-height: calc(100vh - 16rem)"
-    >
-      <div
-        v-for="day in selectedDays"
-        :key="day.format()"
-        class="cursor-pointer"
-        @click="setMoment(day)"
-      >
-        <div class="relative">
-          <router-link
-            v-for="event in eventsForDay(day)"
-            :key="event.id"
-            :to="{ name: 'Event', params: { id: event.id } }"
-          >
+      <div class="flex space-x-2">
+        <div
+          v-for="month in months"
+          :key="`month-${month}`"
+          class="cursor-pointer"
+          :class="{
+            'font-bold': month == selection.month()
+          }"
+          @click="setMonth(month)"
+        >
+          {{ formatMonth(month) }}
+        </div>
+      </div>
+      <header class="flex items-center justify-between mb-2">
+        <div class="flex flex-col w-full md:flex-row items-start justify-between">
+          <div class="flex flex-col mb-4 w-screen max-w-screen-sm items-start">
+            <h2 class="font-bold text-xl">
+              {{ selection.format("dddd, D MMMM YYYY") }}
+            </h2>
+            <div class="button text-sm py-1" @click="setMoment()">
+              Today
+            </div>
+          </div>
+          <div class="space-x-2 flex">
+            <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
+              New Event
+            </router-link>
+
+            <router-link
+              class="button mt-0"
+              :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+            >
+              View All
+            </router-link>
+          </div>
+        </div>
+      </header>
+
+      <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
+        <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
+          <div class="flex space-x-2">
             <div
+              v-for="day in week"
+              :key="`week-day-${day.format()}`"
+              class="cursor-pointer border-2 border-transparent h-6 w-6 rounded-full flex justify-center items-center"
+              :class="{
+                'font-bold': day.date() == selection.date(),
+                'bg-blue-100': eventsForDay(day).length,
+                'border-red-800': isToday(day)
+              }"
+              @click="setMoment(day)"
+            >
+              {{ day.date() }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="calendar-view">
+        <div
+          v-for="day in selectedDays"
+          :key="day.format()"
+          class="cursor-pointer"
+          @click="setMoment(day)"
+        >
+          <h3
+            class="text-sm"
+            :class="{
+              'font-bold': day.date() == selection.date()
+            }"
+          >
+            {{ day.format("D dddd") }}
+          </h3>
+        </div>
+      </div>
+      <div
+        ref="eventView"
+        class="calendar-view overflow-y-scroll"
+        style="max-height: calc(100vh - 16rem)"
+      >
+        <div
+          v-for="day in selectedDays"
+          :key="day.format()"
+          class="cursor-pointer"
+          @click="setMoment(day)"
+        >
+          <div class="relative">
+            <div
+              v-for="event in eventsForDay(day)"
+              :key="event.id"
               class="absolute w-full pl-8"
               :style="styleForEvent(event, day)"
               @click="selectEvent(event)"
@@ -123,16 +119,16 @@
                 </h3>
               </div>
             </div>
-          </router-link>
-          <div
-            v-for="hour in range(0, 24)"
-            :key="hour"
-            class=" text-gray-400 text-xs"
-            :style="{ height: `${pixelPerHour}px` }"
-            :data-hour="hour"
-          >
-            <div class="w-full border-gray-200 border-b" style="height: 50%;">{{ hour }}:00</div>
-            <div class="w-full  border-gray-400 border-b" style="height: 50%;">{{ hour }}:30</div>
+            <div
+              v-for="hour in range(0, 24)"
+              :key="hour"
+              class=" text-gray-400 text-xs"
+              :style="{ height: `${pixelPerHour}px` }"
+              :data-hour="hour"
+            >
+              <div class="w-full border-gray-200 border-b" style="height: 50%;">{{ hour }}:00</div>
+              <div class="w-full  border-gray-400 border-b" style="height: 50%;">{{ hour }}:30</div>
+            </div>
           </div>
         </div>
       </div>
@@ -143,12 +139,15 @@
 <script>
 import moment from "moment";
 import { mapState } from "vuex";
+import Event from "@/views/Event.vue";
 
 export default {
+  components: {
+    Event
+  },
   data() {
     return {
-      sidebarShown: true,
-      selectedEvent: null,
+      selectedEventId: null,
       viewportWidth: window.innerWidth,
       selection: moment(),
       months: this.range(0, 11),
@@ -227,7 +226,8 @@ export default {
     },
 
     selectEvent(event) {
-      this.selectedEvent = event;
+      this.selectedEventId = event.id;
+      this.$store.commit("SHOW_SIDEBAR");
     },
     styleForEvent(event, day) {
       return {
