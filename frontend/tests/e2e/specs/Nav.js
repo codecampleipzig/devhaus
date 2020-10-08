@@ -16,7 +16,7 @@ describe("Nav", () => {
     cy.get("nav")
       .contains("Events")
       .click();
-    cy.location("pathname").should("eq", "/view-events/:whose");
+    cy.location("pathname").should("eq", "/view-events/all-events");
     // Members
     cy.get("nav")
       .contains("Members")
