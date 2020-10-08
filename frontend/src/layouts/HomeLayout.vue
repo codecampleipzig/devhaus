@@ -48,16 +48,18 @@
     <transition name="slide">
       <div
         v-show="sidebarOpen"
-        class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-sm border-l"
+        class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-sm border-l overflow-y-scroll"
       >
-        <div class="flex justify-end pr-4 pt-4">
+        <div class="fixed m-4">
           <font-awesome-icon
             class="text-xl"
             :icon="['fa', 'window-close']"
             @click="$store.commit('HIDE_SIDEBAR')"
           ></font-awesome-icon>
         </div>
-        <portal-target name="sidebar"> </portal-target>
+        <div class="">
+          <portal-target name="sidebar"> </portal-target>
+        </div>
       </div>
     </transition>
   </div>

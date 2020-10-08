@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center flex-col">
     <div class="m-10 flex flex-col justify-center" v-if="eventFromDB">
       <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
         {{ eventFromDB.title }}

@@ -108,7 +108,7 @@
         @click="editInformation"
       />
     </section>
-    <div class="flex flex-grid">
+    <div class="flex flex-grid flex-wrap">
       <section class="flex flex-col mt-8 w-64">
         <h2 class="text-2xl font-medium border-b border-teal-800">
           About Me
@@ -141,7 +141,7 @@
         </form>
       </section>
 
-      <section class="flex m-8 flex-col w-64">
+      <section class="flex mt-8 flex-col w-64">
         <div id="social">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Social Links
@@ -208,7 +208,7 @@
         </div>
       </section>
     </div>
-    <div class="flex flex-grid">
+    <div class="md:flex flex-grid">
       <section class="flex mt-8 flex-col w-64">
         <div id="languages">
           <h2 class="text-2xl font-medium border-b border-teal-800">
@@ -307,7 +307,7 @@
           </div>
         </div>
       </section>
-      <section class="flex m-8 flex-col w-64">
+      <section class="flex mt-8 flex-col w-64">
         <div id="hobbies">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Hobbies
@@ -342,14 +342,14 @@
         </div>
       </section>
     </div>
-    <section v-if="!myProfile" class="contact flex m-8 flex-col">
+    <section v-if="!myProfile" class="contact flex mt-8 flex-col md:justify-left">
       <div class="contact-form">
         <h2 class="text-2xl font-medium ">Contact</h2>
         <textarea
           id="message"
           class="resize-none p-4 mt-2 border border-black"
           name="message"
-          cols="50"
+          cols="30"
           rows="8"
           placeholder="Your message..."
         />
