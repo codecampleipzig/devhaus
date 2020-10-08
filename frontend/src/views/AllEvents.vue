@@ -98,7 +98,7 @@ import moment from "moment";
 import Event from "@/views/Event.vue";
 
 export default {
-  name: "All Events",
+  name: "all Events",
   components: {
     Event
   },
