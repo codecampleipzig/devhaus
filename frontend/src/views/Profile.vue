@@ -107,7 +107,7 @@
       />
     </section>
     <div class="flex flex-grid">
-      <section class="flex flex-col m-8 w-64">
+      <section class="flex flex-col mt-8 w-64">
         <h2 class="text-2xl font-medium border-b border-teal-800">
           About Me
           <font-awesome-icon
@@ -198,12 +198,13 @@
       </section>
     </div>
     <div class="flex flex-grid">
-      <section class="flex m-8 flex-col w-64">
-        <div id="languages" class="">
+      <section class="flex mt-8 flex-col w-64">
+        <div id="languages">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Languages
           </h2>
-          <p class="font-bold">
+
+          <p class="font-bold mt-3">
             Technical
             <font-awesome-icon
               class="text-sm"
@@ -219,7 +220,7 @@
             v-for="language in profileInfoFromDB.techLanguages"
             :key="language"
           >
-            <p>{{ language }},</p>
+            <p class="flex justify-evenly">{{ language }},</p>
           </div>
 
           <form
@@ -243,7 +244,8 @@
             </div>
             <input type="submit" />
           </form>
-          <p class="font-bold">
+
+          <p class="font-bold mt-3">
             Natural
             <font-awesome-icon
               v-if="myProfile"
@@ -253,8 +255,13 @@
               @click="editNatLang"
             />
           </p>
-          <div v-for="language in profileInfoFromDB.natLanguages" :key="language">
-            <p>{{ language }},</p>
+
+          <div
+            class="flex flex-row"
+            v-for="language in profileInfoFromDB.natLanguages"
+            :key="language"
+          >
+            <p class="flex justify-evenly ">{{ language }},</p>
           </div>
           <form
             v-if="editNatLanguages"
@@ -293,9 +300,7 @@
             />
           </h2>
           <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
-            <p>
-              {{ hobby }}
-            </p>
+            <p class="mt-3">{{ hobby }},</p>
           </div>
           <form
             v-if="editHobbies"
