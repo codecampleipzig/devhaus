@@ -5,7 +5,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faGithub,
-  faFacebookF,
+  faFacebook,
   faLinkedin,
   faInstagram,
   faJsSquare,
@@ -76,7 +76,7 @@ library.add(
   faCompass,
   faCode,
   faGithub,
-  faFacebookF,
+  faFacebook,
   faLinkedin,
   faInstagram,
   faJsSquare,

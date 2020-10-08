@@ -46,8 +46,20 @@
               </span>
             </h2>
             <div class="flex space-x-2 mt-4">
-              <font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon>
-              <font-awesome-icon :icon="['fa', 'envelope']"></font-awesome-icon>
+              <a
+                v-if="profile.item.githubUsername"
+                :href="`https://github.com/${profile.item.githubUsername}`"
+                ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
+              ></a>
+              <a v-if="profile.item.facebook" :href="profile.item.facebook"
+                ><font-awesome-icon :icon="['fab', 'facebook']"></font-awesome-icon
+              ></a>
+              <a v-if="profile.item.linkedin" :href="profile.item.linkedin"
+                ><font-awesome-icon :icon="['fab', 'linkedin']"></font-awesome-icon
+              ></a>
+              <a v-if="profile.item.instagram" :href="profile.item.instagram"
+                ><font-awesome-icon :icon="['fab', 'instagram']"></font-awesome-icon
+              ></a>
             </div>
           </div>
         </div>
