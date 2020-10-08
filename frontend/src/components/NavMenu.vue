@@ -51,4 +51,8 @@ export default {
   @apply mb-5 pb-1 uppercase font-medium tracking-widest text-teal-100
   border-b-2 border-transparent;
 }
+
+.router-link-exact-active {
+  @apply border-white;
+}
 </style>
