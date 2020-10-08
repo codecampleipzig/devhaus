@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4>Confirm your attendance:</h4>
-    <form @submit.prevent>
+    <form @submit.prevent="commitToDB">
       <input
         type="checkbox"
         name="Yes"
@@ -21,6 +21,7 @@
       <label for="Maybe">Maybe</label>
       <input type="checkbox" name="No" v-model="not" :true-value="true" :false-value="false" />
       <label for="No">Not attending</label>
+      <input type="submit" />
     </form>
     <h4 class="cursor-pointer" @click="seeAttendees">Click to see all attendees:</h4>
     <div v-if="viewAttendees">
@@ -33,6 +34,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { db } from "@/firebase";
 
 export default {
   name: "RSVP",
@@ -80,6 +82,28 @@ export default {
     },
     async commitToDB() {
       this.rsvpToEvent();
+      if (this.attending) {
+        await db
+          .collection("events")
+          .doc(this.id)
+          .set(this.attendees, { merge: true });
+      }
+      if (this.maybe) {
+        await db
+          .collection("events")
+          .doc(this.id)
+          .set(this.maybes, { merge: true });
+      }
+      if (this.not) {
+        await db
+          .collection("events")
+          .doc(this.id)
+          .set(this.nots, { merge: true });
+      }
+      this.$store.dispatch("notify", {
+        type: "info",
+        text: "You have updated your attendance for this event"
+      });
     }
   }
 };
