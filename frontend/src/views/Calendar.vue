@@ -1,75 +1,92 @@
 <template>
-  <div>
+  <div class="max-w-full overflow-hidden">
+    <portal to="header">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div
+            class="hidden sm:block button hover:opacity-75 button text-sm py-1 px-4"
+            @click="setMoment()"
+          >
+            Today
+          </div>
+          <h2 class="font-semibold text-xl">
+            {{ selection.format("dddd, D MMMM YYYY") }}
+          </h2>
+        </div>
+        <div class="flex items-center space-x-4">
+          <router-link
+            class="hidden sm:block button hover:opacity-75 text-sm py-2 px-4"
+            :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+          >
+            View All
+          </router-link>
+          <router-link
+            class="button hover:opacity-75 text-sm py-2 px-4"
+            :to="{ name: 'CreateEvent' }"
+          >
+            New Event
+          </router-link>
+        </div>
+      </div>
+    </portal>
     <portal to="sidebar">
       <Event v-if="selectedEventId" :id="selectedEventId"></Event>
     </portal>
-    <div class="p-4">
-      <div class="flex space-x-2">
+    <div class="px-4 py-2">
+      <div class="flex space-x-2 mb-1">
         <div
           v-for="year in years"
           :key="year"
-          class="cursor-pointer"
+          class="cursor-pointer border-b-4 border-transparent"
           :class="{
-            'font-bold': year == selection.year()
+            'font-bold': year == selection.year(),
+            'border-teal-900': year == selection.year()
           }"
           @click="setYear(year)"
         >
           {{ year }}
         </div>
       </div>
-      <div class="flex space-x-2">
+      <div class="flex space-x-2 mb-1">
         <div
           v-for="month in months"
           :key="`month-${month}`"
-          class="cursor-pointer"
+          class="cursor-pointer border-b-4 border-transparent"
           :class="{
-            'font-bold': month == selection.month()
+            'font-bold': month == selection.month(),
+            'border-teal-900': month == selection.month()
           }"
           @click="setMonth(month)"
         >
           {{ formatMonth(month) }}
         </div>
       </div>
-      <header class="flex items-center justify-between mb-2">
-        <div class="flex flex-col w-full md:flex-row items-start justify-between">
-          <div class="flex flex-col mb-4 w-screen max-w-screen-sm items-start">
-            <h2 class="font-bold text-xl">
-              {{ selection.format("dddd, D MMMM YYYY") }}
-            </h2>
-            <div class="button text-sm py-1" @click="setMoment()">
-              Today
-            </div>
-          </div>
-          <div class="space-x-2 flex">
-            <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
-              New Event
-            </router-link>
 
-            <router-link
-              class="button mt-0"
-              :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-            >
-              View All
-            </router-link>
-          </div>
-        </div>
-      </header>
-
-      <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
+      <div class="flex space-x-8 w-screen overflow-x-scroll mb-4">
         <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
           <div class="flex space-x-2">
             <div
               v-for="day in week"
               :key="`week-day-${day.format()}`"
-              class="cursor-pointer border-2 border-transparent h-6 w-6 rounded-full flex justify-center items-center"
+              class="cursor-pointer border-b-4 pb-1 border-transparent"
               :class="{
                 'font-bold': day.date() == selection.date(),
-                'bg-blue-100': eventsForDay(day).length,
-                'border-red-800': isToday(day)
+                'border-teal-900': day.date() == selection.date()
               }"
               @click="setMoment(day)"
             >
-              {{ day.date() }}
+              <div
+                class="rounded-sm h-6 w-6 flex justify-center items-center bg-opacity-25"
+                :class="{
+                  'bg-teal-200': eventsForDay(day).length,
+                  'bg-teal-900': isToday(day),
+                  'bg-opacity-100': isToday(day),
+                  'text-white': isToday(day),
+                  'font-bold': isToday(day)
+                }"
+              >
+                {{ day.date() }}
+              </div>
             </div>
           </div>
         </div>
@@ -82,12 +99,18 @@
           @click="setMoment(day)"
         >
           <h3
-            class="text-sm"
+            class="text-base border-gray-100 border-b-4 pb-1"
             :class="{
-              'font-bold': day.date() == selection.date()
+              'font-bold': day.date() == selection.date(),
+              'border-teal-900': day.date() == selection.date()
             }"
           >
-            {{ day.format("D dddd") }}
+            <span
+              class="rounded-sm h-6 w-6 inline-flex justify-center items-center"
+              :class="isToday(day) ? 'text-white bg-teal-900 font-bold' : ''"
+              >{{ day.format("D") }}</span
+            >
+            {{ day.format("dddd") }}
           </h3>
         </div>
       </div>
@@ -106,17 +129,20 @@
             <div
               v-for="event in eventsForDay(day)"
               :key="event.id"
-              class="absolute w-full pl-8"
+              class="absolute w-full"
               :style="styleForEvent(event, day)"
               @click="selectEvent(event)"
             >
               <div
-                class="bg-blue-100 border border-blue-200 border-opacity-50
-              bg-opacity-50 p-2 h-full"
+                class="bg-teal-400 bg-opacity-25 border border-teal-500 border-opacity-50 p-2 h-full"
               >
                 <h3 class="font-semibold">
                   {{ event.title }}
                 </h3>
+                <p>
+                  {{ moment(event.start).format("H:mm") }} -
+                  {{ moment(event.end).format("H:mm") }}
+                </p>
               </div>
             </div>
             <div
@@ -191,7 +217,7 @@ export default {
       return res;
     },
     selectedDays() {
-      if (this.viewportWidth > 700) {
+      if (this.viewportWidth > 800) {
         const week = [];
         for (let day = 1; day <= 7; day += 1) {
           week.push(
@@ -217,6 +243,9 @@ export default {
     this.scrollIntoView(12);
   },
   methods: {
+    moment(n) {
+      return moment(n);
+    },
     isToday(date) {
       return (
         moment()

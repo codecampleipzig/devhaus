@@ -52,6 +52,9 @@ export default new Vuex.Store({
     },
     COLLAPSE_MENU(state) {
       state.menuOpen = false;
+    },
+    TOGGLE_MENU(state) {
+      state.menuOpen = !state.menuOpen;
     }
   },
   getters: {

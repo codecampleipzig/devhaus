@@ -3,42 +3,33 @@
     <div>
       <RSVP :id="id" />
     </div>
-    <div class="flex justify-end text-2xl mt-4 mr-16">
-      <font-awesome-icon
-        v-if="myEvent"
-        id="icon"
-        icon="edit"
-        title="Edit Event"
-        @click="editMyEvent"
-      />
-    </div>
-    <div class="m-10 flex flex-col justify-center" v-if="eventFromDB">
-      <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
-        {{ eventFromDB.title }}
-      </h1>
+
+    <div class="p-10 pt-16 flex flex-col justify-center" v-if="eventFromDB">
+      <div class="flex space-x-4 items-start">
+        <h1 class="border-b-4 border-teal-800 pb-2 font-bold mb-4 text-3xl">
+          {{ eventFromDB.title }}
+        </h1>
+        <font-awesome-icon
+          v-if="myEvent"
+          class="mt-4 cursor-pointer"
+          id="icon"
+          icon="edit"
+          title="Edit Event"
+          @click="editMyEvent"
+        />
+      </div>
       <div class="space-y-4">
         <p class="italic text-2xl">{{ eventFromDB.description }}</p>
-        <p>
+        <p class="text-lg">
           <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
           {{ moment(eventFromDB.start.toDate()).format("ddd D.MMM HH:mm") }} -
           {{ moment(eventFromDB.end.toDate()).format("ddd D.MMM HH:mm") }}.
         </p>
 
-        <p>
+        <p class="text-lg">
           <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon>
           {{ eventFromDB.address }}
         </p>
-      </div>
-
-      <div class="flex flex-col w-1/2">
-        <button @click="$store.commit('HIDE_SIDEBAR')" class="button mt-12 ">
-          <router-link :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
-            View All Events
-          </router-link>
-        </button>
-        <button @click="$store.commit('HIDE_SIDEBAR')" class="button mt-3">
-          <router-link :to="{ name: 'Calendar' }">Calendar</router-link>
-        </button>
       </div>
     </div>
     <div v-if="editEvent" class="flex flex-row justify-evenly m-4">

@@ -38,10 +38,14 @@ const routes = [
   },
   {
     path: "/",
+    redirect: "/news"
+  },
+  {
+    path: "/",
     component: HomeLayout,
     children: [
       {
-        path: "/",
+        path: "/news",
         name: "Home",
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true }
