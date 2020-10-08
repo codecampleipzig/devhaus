@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="devhaus-theme">
     <router-view />
     <Notifications />
   </div>
@@ -45,5 +45,16 @@ textarea:focus {
 
 .button:hover {
   @apply bg-teal-800;
+}
+.devhaus-theme .vs__dropdown-toggle {
+  @apply rounded-none border border-black py-2 px-4 font-medium;
+}
+
+.devhaus-theme .vs__selected-option {
+  @apply text-black font-medium;
+}
+
+.devhaus-theme .vs__open-indicator {
+  @apply cursor-pointer;
 }
 </style>

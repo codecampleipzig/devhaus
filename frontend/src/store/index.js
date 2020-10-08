@@ -14,7 +14,8 @@ export default new Vuex.Store({
     notifications: [],
     user: null,
     profiles: [],
-    events: []
+    events: [],
+    posts: []
   },
   plugins: [
     CreatePersistedState({
@@ -37,6 +38,11 @@ export default new Vuex.Store({
         state.profiles = [];
         state.events = [];
       }
+    }
+  },
+  getters: {
+    myProfile: state => {
+      return state.profiles.find(profile => profile.id == state.user.uid);
     }
   },
   actions: {
@@ -68,6 +74,9 @@ export default new Vuex.Store({
     ),
     bindEvents: firestoreAction(({ bindFirestoreRef }) =>
       bindFirestoreRef("events", db.collection("events"))
+    ),
+    bindPosts: firestoreAction(({ bindFirestoreRef }) =>
+      bindFirestoreRef("posts", db.collection("posts"))
     )
   },
   modules: {}

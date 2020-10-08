@@ -21,6 +21,7 @@ import {
   faCode
 } from "@fortawesome/free-solid-svg-icons";
 
+import { faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
@@ -70,9 +71,10 @@ library.add(
   faLinkedin,
   faInstagram,
   faJsSquare,
-
   faReact,
   faEdit,
+  faTrash,
+  faPlusCircle,
   faEnvelope
 );
 
