@@ -4,29 +4,34 @@ import Vue from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
-  faCoffee,
-  faSpinner,
+  faGithub,
+  faFacebookF,
+  faLinkedin,
+  faInstagram,
+  faJsSquare,
+  faReact
+} from "@fortawesome/fontawesome-free-brands";
+import {
+  faBriefcase,
+  faGraduationCap,
+  faCalendarDay,
+  faCompass,
+  faEnvelope,
   faEdit,
-  faCircle,
-  faCheck,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment,
-  faEnvelope
+  faCode
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-
+import { faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import store from "@/store";
+import router from "@/router";
+import App from "@/App.vue";
 import vSelect from "vue-select";
-import router from "./router";
-import store from "./store";
-
-import App from "./App.vue";
+import Vuelidate from "vuelidate";
 
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
+
+Vue.use(Vuelidate);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
@@ -56,18 +61,21 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
-  faCoffee,
-  faSpinner,
+  faBriefcase,
+  faGraduationCap,
+  faCalendarDay,
+  faCompass,
+  faCode,
+  faGithub,
+  faFacebookF,
+  faLinkedin,
+  faInstagram,
+  faJsSquare,
+  faReact,
   faEdit,
-  faCircle,
-  faCheck,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment,
-  faEnvelope,
-  faGithub
+  faTrash,
+  faPlusCircle,
+  faEnvelope
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -1,101 +1,84 @@
 <template>
-  <div class="flex justify-center w-screen max-w-screen-md mx-auto">
+  <div class="flex flex-row justify-evenly mt-8">
     <div class="m-8 text-1xl ">
-      <h1>Create Event</h1>
-      <form @submit.prevent="submit">
-        <input v-model="event.title" type="text" placeholder="Event Title" required class="block" />
+      <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
+        New Event
+      </h1>
+      <form class="flex flex-col" @submit.prevent="submit">
+        <input
+          v-model="event.title"
+          type="text"
+          placeholder="Event Title"
+          required
+          class="mb-4 leading-8 border-black border-b p-2"
+        />
         <input
           v-model="event.description"
           type="text"
           placeholder="Event Description"
-          class="block"
+          class="mb-4 leading-8 border-black border-b p-2"
         />
-        <div class="flex justify-content items-center border-2">
-          <div name="start" class="">
-            <h2>Start</h2>
-            <div class="flex-row">
-              <datepicker v-model="event.startDate" />
-
-              <v-select v-model="event.startTime" :options="times" placeholder="enter start time" />
-            </div>
-            <!--Closing startDateTime-->
+        <div class="flex gap-2">
+          <div class="w-1/2 flex flex-col">
+            <h2>Event start:</h2>
+            <DateTimePicker v-model="event.start" @input="adjustEndTime" />
           </div>
-          <!--Closing start-->
-          <div name="end" class="">
-            <h2>End</h2>
-            <div>
-              <datepicker v-model="event.endDate" />
-              <v-select
-                v-model="event.endTime"
-                :options="times"
-                :autoscroll="true"
-                placeholder="enter closing time"
-              />
-            </div>
-            <!--Closing endDateTime-->
+          <div class="w-1/2 flex flex-col">
+            <h2>Event end:</h2>
+            <DateTimePicker v-model="event.end" />
           </div>
-          <!--Closing end-->
         </div>
-        <!--Closing dateAndTimePicker-->
-
-        <!-- <span>Multiple Days: {{ checked }} </span>
-        <input
-          id="checkbox1"
-          v-model="multipleDays"
-          type="checkbox"
-          value="Multiple Days"
-        > -->
-
         <v-select
           v-model="event.location"
           :options="location"
           :value="event.location"
-          placeholder="enter location type"
+          placeholder="Select location type:"
           @input="location => updateLocation(location)"
+          class="my-4"
         />
-        <div>{{ event.location }}</div>
-        <div v-if="event.location == 'online' || event.location == 'hybrid'">
+        <div v-if="event.location == 'Online' || event.location == 'Hybrid'" class="mb-4">
           <h2>Link to your meeting</h2>
-          <input v-model="event.link" type="text" placeholder="add event link e.g. Zoom" />
+          <input
+            v-model="event.link"
+            type="text"
+            placeholder="Add the event link e.g. Zoom"
+            class="w-full"
+          />
         </div>
-        <div v-if="event.location == 'local' || event.location == 'hybrid'">
-          <h2>event address</h2>
+        <div v-if="event.location == 'Local' || event.location == 'Hybrid'" class="mb-4">
+          <h2>Address</h2>
           <input
             v-model="event.address"
             type="text"
-            placeholder="add place and street of the event"
+            placeholder="Add the address of the event"
+            class="w-full"
           />
         </div>
-        <input type="submit" />
+        <input type="submit" class="button mt-4" value="Create event" />
       </form>
-      <div>{{ successMsg }}</div>
+      <router-link class="button mt-4" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
+        View All Events
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import Datepicker from "vuejs-datepicker";
+import DateTimePicker from "@/components/DateTimePicker.vue";
 import { db } from "@/firebase";
 import moment from "moment";
 
 export default {
   components: {
-    Datepicker
+    DateTimePicker
   },
   data() {
     return {
       times: this.createTimes(),
-
       location: ["online", "local", "hybrid"],
-
-      multipleDays: false,
-
-      successMsg: "",
-
       event: this.createEmptyEvent()
     };
   },
-
   methods: {
     createTimes() {
       const res = [];
@@ -108,50 +91,17 @@ export default {
           let min = i;
           if (min == 0) {
             min = "00";
-          } // if statement
+          }
           res.push(`${hours}:${min}`);
-        } // For Loop minutes
-      } // For Loop Hours
+        }
+      }
       return res;
-    }, // createTimes
+    },
     updateLocation(location) {
       this.event.location = location;
     },
     async submit() {
-      const {
-        title,
-        description,
-        startDate,
-        startTime,
-        endDate,
-        endTime,
-        location,
-        link,
-        address
-      } = this.event;
-
-      const [startHour, startMinutes] = startTime.split(":").map(Number);
-      const [endHour, endMinutes] = endTime.split(":").map(Number);
-
-      const start = moment(startDate)
-        .hour(startHour)
-        .minute(startMinutes)
-        .toDate();
-      const end = moment(endDate)
-        .hour(endHour)
-        .minute(endMinutes)
-        .toDate();
-
-      await db.collection("events").add({
-        title,
-        description,
-        start,
-        end,
-        location,
-        link,
-        address,
-        creatorId: this.$store.state.user.uid
-      });
+      await db.collection("events").add({ ...this.event, creatorId: this.$store.state.user.uid });
       this.event = this.createEmptyEvent();
       this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
       await this.$router.push({ name: "Calendar" });
@@ -160,18 +110,23 @@ export default {
       return {
         title: "",
         description: "",
-        startDate: new Date(),
-        startTime: "",
-        endDate: new Date(),
-        endTime: "",
+        start: new Date(),
+        end: new Date(),
         location: "",
         link: "",
         address: ""
       };
-      // this.successMsg = "",
+    },
+    adjustEndTime() {
+      if (this.event.start.getTime() > this.event.end.getTime()) {
+        this.event.end = moment(this.event.start)
+          .add(1, "hours")
+          .toDate();
+      }
+      return;
     }
   }
-}; // Export
+};
 </script>
 
 <style></style>

@@ -67,3 +67,5 @@ node_modules/
 
 # private
 private
+
+.DS_Store
