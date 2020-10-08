@@ -9,32 +9,38 @@ import {
   faLinkedin,
   faInstagram,
   faJsSquare,
-  faReact,
-  faVuejs
+  faReact
 } from "@fortawesome/fontawesome-free-brands";
 import {
-  faCoffee,
-  faSpinner,
+  faBriefcase,
+  faGraduationCap,
+  faCalendarDay,
+  faCompass,
+  faEnvelope,
   faEdit,
-  faCircle,
-  faCheck,
-  faCode,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment
+  faCode
 } from "@fortawesome/free-solid-svg-icons";
+
+import { faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
 import vSelect from "vue-select";
 import Vuelidate from "vuelidate";
+import NProgress from "vue-nprogress";
 
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
 
 Vue.use(Vuelidate);
+
+const nprogress = new NProgress();
+const options = {
+  latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
+  router: false, // Show progressbar when navigating routes, default: true
+  http: false // Show progressbar when doing Vue.http, default: true,\
+};
+Vue.use(NProgress, options);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
@@ -64,24 +70,21 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
+  faBriefcase,
+  faGraduationCap,
+  faCalendarDay,
+  faCompass,
   faCode,
   faGithub,
   faFacebook,
   faLinkedin,
   faInstagram,
   faJsSquare,
-  faVuejs,
   faReact,
-  faCoffee,
-  faSpinner,
   faEdit,
-  faCircle,
-  faCheck,
-  faPlus,
-  faEquals,
-  faArrowRight,
-  faPencilAlt,
-  faComment
+  faTrash,
+  faPlusCircle,
+  faEnvelope
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
@@ -93,5 +96,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  nprogress,
   render: h => h(App)
 }).$mount("#app");

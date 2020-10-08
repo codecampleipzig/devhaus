@@ -5,7 +5,7 @@
         class="text-3xl text-black
         font-bold flex justify-center mt-8 pb-1 border-b-4 border-teal-700"
       >
-        Create a profile
+        Create your profile
       </h1>
     </div>
     <form class="flex flex-col" @submit.prevent="submit">
@@ -85,9 +85,9 @@ export default {
         jobTitle: null,
         company: null,
         mentor: false,
-        facebook: "Facebook",
-        instagram: "Instagram",
-        linkedin: "LinkedIn",
+        facebook: "",
+        instagram: "",
+        linkedin: "",
         hobbies: [],
         techLanguages: [],
         natLanguages: [],

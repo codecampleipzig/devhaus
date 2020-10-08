@@ -1,17 +1,22 @@
 <template>
-  <div id="app">
+  <div id="app" class="devhaus-theme">
+    <nprogress-container></nprogress-container>
+
     <router-view />
+
     <Notifications />
   </div>
 </template>
 
 <script>
 import Notifications from "@/components/Notifications.vue";
+import NprogressContainer from "vue-nprogress/src/NprogressContainer";
 
 export default {
   name: "App",
   components: {
-    Notifications
+    Notifications,
+    NprogressContainer
   },
   data() {
     return {
@@ -26,7 +31,8 @@ export default {
 
 input[type="text"],
 input[type="password"],
-input[type="number"] {
+input[type="number"],
+textarea {
   @apply border border-black py-2 px-4 font-medium;
 }
 
@@ -40,6 +46,25 @@ textarea:focus {
 
 .button {
   letter-spacing: 0.2em;
-  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase bg-teal-900 text-white;
+  @apply px-8 py-2 cursor-pointer block rounded-sm font-medium uppercase text-center bg-teal-900 text-white;
+}
+
+.button:hover {
+  @apply bg-teal-800;
+}
+.devhaus-theme .vs__dropdown-toggle {
+  @apply rounded-none border border-black py-2 px-4 font-medium;
+}
+
+.devhaus-theme .vs__selected-option {
+  @apply text-black font-medium;
+}
+
+.devhaus-theme .vs__open-indicator {
+  @apply cursor-pointer;
+}
+
+#nprogress .bar {
+  @apply bg-teal-300;
 }
 </style>
