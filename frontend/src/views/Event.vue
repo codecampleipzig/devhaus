@@ -1,20 +1,29 @@
 <template>
   <div class="flex justify-center">
-    <div class="m-48 flex flex-col justify-center" v-if="eventFromDB">
+    <div class="m-10 flex flex-col justify-center" v-if="eventFromDB">
       <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
         {{ eventFromDB.title }}
       </h1>
-      <p>{{ eventFromDB.description }}</p>
-      <p>
-        From {{ moment(eventFromDB.start.toDate()).format("ddd D.MMM HH:mm") }} to
-        {{ moment(eventFromDB.end.toDate()).format("ddd D.MMM HH:mm") }}.
-      </p>
-      <p>Location: {{ eventFromDB.location }}</p>
-      <p>Address: {{ eventFromDB.address }}</p>
-      <p class="italic text-1xl">{{ eventFromDB.description }}</p>
-      <div class="flex flex-row m-4">
+      <div class="space-y-4">
+        <p class="italic text-2xl">{{ eventFromDB.description }}</p>
+        <p>
+          <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+          {{ moment(eventFromDB.start.toDate()).format("ddd D.MMM HH:mm") }} -
+          {{ moment(eventFromDB.end.toDate()).format("ddd D.MMM HH:mm") }}.
+        </p>
+
+        <p>
+          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon>
+          {{ eventFromDB.address }}
+        </p>
+      </div>
+
+      <div class="flex flex-col m-12">
+        <router-link class="button" :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
+          >Your Events</router-link
+        >
         <router-link
-          class="button m-3 w-full"
+          class="button mt-3 "
           :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
         >
           View All Events

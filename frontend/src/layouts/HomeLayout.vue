@@ -50,13 +50,13 @@
         v-show="sidebarOpen"
         class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-sm border-l"
       >
-        <header class="flex justify-end p-4">
+        <div class="flex justify-end pr-4 pt-4">
           <font-awesome-icon
             class="text-xl"
             :icon="['fa', 'window-close']"
             @click="$store.commit('HIDE_SIDEBAR')"
           ></font-awesome-icon>
-        </header>
+        </div>
         <portal-target name="sidebar"> </portal-target>
       </div>
     </transition>
