@@ -36,12 +36,14 @@
       </div>
     </div>
     <header class="flex items-center justify-between mb-2">
-      <h2 class="font-bold text-xl">
-        {{ selection.format("dddd, D MMMM YYYY") }}
-      </h2>
-      <div class="flex flex-row">
-        <div class="button mr-2 ml-4" @click="setMoment()">
-          Today
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-xl">
+          {{ selection.format("dddd, D MMMM YYYY") }}
+        </h2>
+        <div class="flex flex-row">
+          <div class="button mr-2 ml-4" @click="setMoment()">
+            Today
+          </div>
         </div>
         <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
           New Event
