@@ -51,26 +51,13 @@
                 :href="`https://github.com/${profile.item.githubUsername}`"
                 ><font-awesome-icon :icon="['fab', 'github']"></font-awesome-icon
               ></a>
-            </div>
-
-            <div class="flex space-x-2 mt-4">
-              <a
-                v-if="profile.item.facebookUsername"
-                :href="`https://facebook.com/${profile.item.facebookUsername}`"
+              <a v-if="profile.item.facebook" :href="profile.item.facebook"
                 ><font-awesome-icon :icon="['fa', 'facebook']"></font-awesome-icon
               ></a>
-            </div>
-            <div class="flex space-x-2 mt-4">
-              <a
-                v-if="profile.item.linkedinUsername"
-                :href="`https://linkedin.com/${profile.item.linkedinUsername}`"
+              <a v-if="profile.item.linkedin" :href="profile.item.linkedin"
                 ><font-awesome-icon :icon="['fa', 'linkedin']"></font-awesome-icon
               ></a>
-            </div>
-            <div class="flex space-x-2 mt-4">
-              <a
-                v-if="profile.item.instagramUsername"
-                :href="`https://instagram.com/${profile.item.instagramUsername}`"
+              <a v-if="profile.item.instagram" :href="profile.item.instagram"
                 ><font-awesome-icon :icon="['fa', 'instagram']"></font-awesome-icon
               ></a>
             </div>
