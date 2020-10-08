@@ -114,7 +114,10 @@ export default {
         end: new Date(),
         location: "",
         link: "",
-        address: ""
+        address: "",
+        attendees: [],
+        maybes: [],
+        nots: []
       };
     },
     adjustEndTime() {

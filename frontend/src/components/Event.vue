@@ -29,6 +29,9 @@
         @click="editMyEvent"
       />
     </div>
+    <div>
+      <RSVP />
+    </div>
     <div v-if="editEvent" class="flex flex-row justify-evenly m-4">
       <div class="mb-8 text-1xl ">
         <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
@@ -108,8 +111,9 @@
 </template>
 
 <script>
-import moment from "moment";
 import DateTimePicker from "@/components/DateTimePicker.vue";
+import RSVP from "@/components/RSVP.vue";
+import moment from "moment";
 import { db } from "@/firebase";
 import store from "@/store";
 
@@ -125,8 +129,10 @@ export default {
     };
   },
   components: {
-    DateTimePicker
+    DateTimePicker,
+    RSVP
   },
+
   computed: {
     id() {
       return this.$route.params.id;
