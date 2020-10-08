@@ -1,5 +1,14 @@
 <template>
   <div class="flex justify-center flex-col">
+    <div class="flex justify-end text-2xl mt-4 mr-16">
+      <font-awesome-icon
+        v-if="myEvent"
+        id="icon"
+        icon="edit"
+        title="Edit Event"
+        @click="editMyEvent"
+      />
+    </div>
     <div class="m-10 flex flex-col justify-center" v-if="eventFromDB">
       <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold m-2 text-3xl">
         {{ eventFromDB.title }}
@@ -18,25 +27,16 @@
         </p>
       </div>
 
-      <div class="flex flex-col m-12">
-        <router-link class="button" :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
-          >Your Events</router-link
-        >
-        <router-link
-          class="button mt-3 "
-          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-        >
-          View All Events
-        </router-link>
+      <div class="flex flex-col w-1/2">
+        <button @click="$store.commit('HIDE_SIDEBAR')" class="button mt-12 ">
+          <router-link :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
+            View All Events
+          </router-link>
+        </button>
+        <button @click="$store.commit('HIDE_SIDEBAR')" class="button mt-3">
+          <router-link :to="{ name: 'Calendar' }">Calendar</router-link>
+        </button>
       </div>
-
-      <font-awesome-icon
-        v-if="myEvent"
-        id="icon"
-        icon="edit"
-        title="Edit Event"
-        @click="editMyEvent"
-      />
     </div>
     <div v-if="editEvent" class="flex flex-row justify-evenly m-4">
       <div class="mb-8 text-1xl ">

@@ -12,6 +12,7 @@ import {
   faReact
 } from "@fortawesome/fontawesome-free-brands";
 import {
+  faCalendarAlt,
   faBriefcase,
   faGraduationCap,
   faCalendarDay,
@@ -67,6 +68,7 @@ auth.onAuthStateChanged(async user => {
 });
 
 library.add(
+  faCalendarAlt,
   faBriefcase,
   faGraduationCap,
   faCalendarDay,

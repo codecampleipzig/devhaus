@@ -5,18 +5,26 @@
     </portal>
     <div class="flex flex-col">
       <div class="flex flex-row justify-between text-center">
-        <h1
-          v-if="eventsMode == 'all-events'"
-          class="m-10 text-3xl font-medium border-b-4 border-teal-800"
-        >
-          Upcoming Events
-        </h1>
-        <h1
-          v-if="eventsMode == 'my-events'"
-          class="m-10 text-3xl font-medium border-b-4 border-teal-800"
-        >
-          Your Events
-        </h1>
+        <div class="flex flex-row">
+          <h1
+            v-if="eventsMode == 'all-events'"
+            class="m-10 text-3xl font-medium border-b-4 border-teal-800"
+          >
+            Upcoming Events
+          </h1>
+          <h1
+            v-if="eventsMode == 'my-events'"
+            class="m-10 text-3xl font-medium border-b-4 border-teal-800"
+          >
+            Your Events
+          </h1>
+          <router-link :to="{ name: 'Calendar' }">
+            <font-awesome-icon
+              class="text-5xl text-teal-900 mt-10"
+              :icon="['fa', 'calendar-alt']"
+            ></font-awesome-icon>
+          </router-link>
+        </div>
         <div class="m-10 flex flex-col text-center">
           <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
             Create New Event
@@ -87,6 +95,7 @@ import moment from "moment";
 import Event from "@/views/Event.vue";
 
 export default {
+  name: "All Events",
   components: {
     Event
   },

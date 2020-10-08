@@ -15,8 +15,8 @@
         <router-link class="nav-link" :to="{ name: 'Home' }">
           Home
         </router-link>
-        <router-link class="nav-link" :to="{ name: 'Calendar' }">
-          Calendar
+        <router-link class="nav-link" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
+          Events
         </router-link>
         <router-link class="nav-link" :to="{ name: 'Members' }">
           Members
@@ -26,6 +26,12 @@
           :to="{ name: 'Profile', params: { userId: $store.state.user.uid } }"
         >
           Profile
+        </router-link>
+        <router-link :to="{ name: 'Calendar' }">
+          <font-awesome-icon
+            class="text-white text-2xl mt-1"
+            :icon="['fa', 'calendar-alt']"
+          ></font-awesome-icon>
         </router-link>
       </div>
     </div>
