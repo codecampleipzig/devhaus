@@ -12,7 +12,8 @@ import {
   faReact,
   faVuejs
 } from "@fortawesome/fontawesome-free-brands";
-import { faEdit, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+
+import { faEdit, faEnvelope, faTrash, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import store from "@/store";
 import router from "@/router";
 import App from "@/App.vue";
@@ -60,6 +61,8 @@ library.add(
   faVuejs,
   faReact,
   faEdit,
+  faTrash,
+  faPlusCircle,
   faEnvelope
 );
 
