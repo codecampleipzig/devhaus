@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       times: this.createTimes(),
-      location: ["online", "local", "hybrid"],
+      location: ["Online", "Local", "Hybrid"],
       event: this.createEmptyEvent()
     };
   },
