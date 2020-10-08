@@ -86,6 +86,22 @@
           </div>
           <input type="submit" class="button mt-4" value="Update event" />
         </form>
+        <div>
+          <button class="button mt-4 w-full" @click="deleteEventPrompt">Delete event</button>
+          <template v-if="eventRemove">
+            <h2 class="m-4 text-center text-1xl font-medium">
+              Are you sure you would like to delete this event?
+            </h2>
+            <div>
+              <button class="button mt-4 w-full" @click="deleteEvent">
+                Yes, delete this event.
+              </button>
+              <button class="button mt-4 w-full" @click="deleteEventPrompt">
+                No, I do not want to delete it.
+              </button>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
   </div>
@@ -104,7 +120,8 @@ export default {
       times: this.createTimes(),
       location: ["online", "local", "hybrid"],
       event: null,
-      editEvent: false
+      editEvent: false,
+      eventRemove: false
     };
   },
   components: {
@@ -170,7 +187,26 @@ export default {
         .doc(this.eventFromDB.id)
         .set({ ...this.event }, { merge: true });
       this.editEvent = false;
+
       this.$store.dispatch("notify", { type: "info", text: "Your event has been updated" });
+    },
+    deleteEventPrompt() {
+      if (!this.eventRemove) {
+        this.eventRemove = true;
+      } else {
+        this.eventRemove = false;
+      }
+    },
+    async deleteEvent() {
+      await db
+        .collection("events")
+        .doc(this.eventFromDB.id)
+        .delete();
+      this.$router.push({ name: "Calendar" });
+      this.$store.dispatch("notify", {
+        type: "info",
+        text: "Your event has been successfully deleted."
+      });
     },
     adjustEndTime() {
       if (this.event.start.getTime() > this.event.end.getTime()) {
