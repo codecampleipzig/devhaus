@@ -14,13 +14,5 @@ describe("Profile", () => {
       .contains("Profile")
       .click();
     cy.location("pathname").should("eq", "/profile/s6hxMKPQOqa8r65HoWT584xo7zG3");
-    cy.contains("Edit profile").click();
-    cy.get("input")
-      .contains("Cypress")
-      .type("Cypress");
-    cy.get("input")
-      .contains("submit")
-      .click();
-    cy.contains("Your profile has been updated.");
   });
 });
