@@ -111,7 +111,6 @@ import moment from "moment";
 export default {
   data() {
     return {
-      sidebarShown: true,
       selectedEvent: null
     };
   },
