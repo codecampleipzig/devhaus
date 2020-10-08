@@ -1,17 +1,17 @@
 module.exports = [
   {
-    id: "9yfZpdDgKIcBwLrmIRenQN9Xdxi1",
-    profileName: "I-ssah",
-    firstName: "Issah",
-    lastName: "yussif",
-    email: "chemical@gmail.com",
+    id: "s6hxMKPQOqa8r65HoWT584xo7zG3",
+    profileName: "cypress",
+    firstName: "cypress",
+    lastName: "test",
+    email: "cypress@test.com",
     photo: "https://i.imgur.com/R4w9K1Y.jpeg",
     links: ["https/github.com/i-ssah"],
     role: "Admin",
     userClass: "Class3",
     mentoring: false,
     userLanguages: ["Python", "JavaScript"],
-    userId: "9yfZpdDgKIcBwLrmIRenQN9Xdxi1" 
+    userId: "s6hxMKPQOqa8r65HoWT584xo7zG3" 
   },
   {
     id: 0,
