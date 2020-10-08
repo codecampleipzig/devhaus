@@ -1,20 +1,16 @@
 <template>
   <div>
     <div class="p-4">
-      <!-- Whole Blog -->
-      <div class="flex justify-center" v-if="!addPost">
-        <font-awesome-icon
-          class="text-6xl cursor-pointer text-teal-900"
-          id="icon"
-          icon="plus-circle"
-          title="Add Post"
-          @click="addPost = true"
-        ></font-awesome-icon>
-      </div>
-      <div v-else>
-        <!-- Create new post -->
-        <form class="flex flex-col max-w-lg font-mono" @submit.prevent="">
-          <input v-model="title" type="text" name="Title" placeholder="Insert title here" />
+      <div class="flex" v-if="$store.state.user.uid == '4P7X6XaRLlNWUnsw6kaSp32nFtB2'">
+        <form class="flex flex-col w-full font-mono" @submit.prevent="submitPost">
+          <h1 class="mb-4">Hi Taylor! Create a new Blog Post:</h1>
+          <input
+            class="mb-4 border-black"
+            v-model="title"
+            type="text"
+            name="Title"
+            placeholder="Insert title here"
+          />
           <textarea
             rows="10"
             class="font-mono border-solid border-2 border-black"
@@ -23,12 +19,13 @@
             name="Create Post"
             placeholder="Write your post in Markdown..."
           />
-          <button @click="submitPost()" type="submit">Submit</button>
-          <button @click="addPost = false">Cancel</button>
+          <button class="m-2 p-2 cursor-pointer bg-teal-600 rounded-lg" type="submit">
+            Submit
+          </button>
         </form>
       </div>
+
       <div class="flex-col w-full">
-        <!-- Show Posts -->
         <div class="p-4 w-full " v-for="post in sortedPosts" :key="post.id">
           <markedPost :post="post"></markedPost>
         </div>
@@ -70,6 +67,13 @@ export default {
   },
   methods: {
     async submitPost() {
+      if (this.text == "" || this.title == "") {
+        this.$store.dispatch("notify", {
+          type: "error",
+          text: "You gotta enter a title and some text!"
+        });
+        return;
+      }
       const clean = DOMPurify.sanitize(this.text);
 
       const post = {
@@ -82,7 +86,7 @@ export default {
         await db.collection("posts").add(post);
       } catch (error) {
         console.log(error);
-        this.$store.dispatch("notify", { type: "error", text: "Ooops! Something went wrong..." });
+        this.$store.dispatch("notify", { type: "error", text: error });
       }
 
       this.$store.dispatch("notify", { type: "info", text: "Your post has been created" });
