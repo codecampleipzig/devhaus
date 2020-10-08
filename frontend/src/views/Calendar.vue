@@ -119,16 +119,15 @@
                 </h3>
               </div>
             </div>
-
             <div
               v-for="hour in range(0, 24)"
               :key="hour"
-              class="border-b border-gray-400 text-gray-400 text-xs"
+              class=" text-gray-400 text-xs"
               :style="{ height: `${pixelPerHour}px` }"
               :data-hour="hour"
             >
               <div class="w-full border-gray-200 border-b" style="height: 50%;">{{ hour }}:00</div>
-              <div class="w-full" style="height: 50%;">{{ hour }}:30</div>
+              <div class="w-full  border-gray-400 border-b" style="height: 50%;">{{ hour }}:30</div>
             </div>
           </div>
         </div>
@@ -152,7 +151,7 @@ export default {
       viewportWidth: window.innerWidth,
       selection: moment(),
       months: this.range(0, 11),
-      pixelPerHour: 100
+      pixelPerHour: 90
     };
   },
   computed: {
@@ -272,7 +271,7 @@ export default {
       );
     },
     pixelForMs(ms) {
-      return moment.duration(ms).asMinutes() * (this.pixelPerHour / 60);
+      return moment.duration(ms).asMinutes() * (this.pixelPerHour / 60) - 1;
     }
   }
 };
