@@ -66,7 +66,6 @@ describe("Calendar", () => {
       .contains("Calendar")
       .click();
     cy.location("pathname").should("eq", "/calendar");
-
     cy.contains("New Event").click();
     cy.location("pathname").should("eq", "/create-event");
     cy.get("input[placeholder='Event Title']").type("Cypress Test Event");
