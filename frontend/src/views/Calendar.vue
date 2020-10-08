@@ -37,7 +37,7 @@
     </div>
     <header class="flex items-center justify-between mb-2">
       <h2 class="font-bold text-xl">
-        {{ selection.format("MMMM YYYY, D dddd") }}
+        {{ selection.format("dddd, D MMMM YYYY") }}
       </h2>
       <div class="flex flex-row">
         <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
