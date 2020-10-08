@@ -43,6 +43,7 @@
 
 <script>
 import markedPost from "../components/Post";
+import DOMPurify from "dompurify";
 import { db } from "@/firebase";
 import { mapState } from "vuex";
 
@@ -60,7 +61,7 @@ export default {
     ...mapState(["posts"]),
     sortedPosts() {
       return this.posts.slice().sort((a, b) => {
-        return a.date.seconds - b.date.seconds;
+        return b.date.seconds - a.date.seconds;
       });
     }
   },
@@ -73,9 +74,11 @@ export default {
   },
   methods: {
     async submitPost() {
+      const clean = DOMPurify.sanitize(this.text);
+
       const post = {
         title: this.title,
-        text: this.text,
+        text: clean,
         date: new Date(),
         author: this.myProfile.id
       };
