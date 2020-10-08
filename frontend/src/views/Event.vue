@@ -98,6 +98,13 @@ import { db } from "@/firebase";
 import store from "@/store";
 
 export default {
+  name: "Event",
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       times: this.createTimes(),
@@ -110,9 +117,6 @@ export default {
     DateTimePicker
   },
   computed: {
-    id() {
-      return this.$route.params.id;
-    },
     eventFromDB() {
       return this.$store.state.events.find(event => event.id == this.id);
     },
@@ -122,12 +126,10 @@ export default {
         : false;
     }
   },
-  async beforeRouteEnter(to, from, next) {
-    const id = to.params.id;
-    if (!store.state.events.find(event => event.id == id)) {
+  async created() {
+    if (!store.state.events.find(event => event.id == this.id)) {
       await store.dispatch("bindEvents");
     }
-    next();
   },
   methods: {
     editMyEvent() {

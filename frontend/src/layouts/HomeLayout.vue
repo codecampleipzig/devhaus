@@ -67,7 +67,7 @@
     <transition name="slide">
       <div
         v-show="sidebarOpen"
-        class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-md border-l"
+        class="fixed h-full z-20 right-0 top-0 bg-white w-full max-w-screen-sm border-l"
       >
         <header class="flex justify-end p-4">
           <font-awesome-icon
