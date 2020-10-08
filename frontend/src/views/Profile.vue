@@ -1,30 +1,41 @@
 <template>
-  <div class="p-4">
-    <section class="flex space-x-4 mb-4">
+  <div class="m-8">
+    <section class="flex space-x-4">
       <div @click="$refs.imageInput.click()" class="w-48 h-48">
         <img
-          class="bg-gray-100 object-cover h-full w-full"
+          class="bg-gray-100 object-cover rounded-sm h-full w-full"
           :src="profileInfoFromDB.avatar"
           alt=""
         />
       </div>
-      <div class="info">
+      <div class="info border-b leading-8">
         <div v-if="!editInfo">
-          <h1>{{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}</h1>
+          <h1 class="text-3xl font-bold ">
+            {{ profileInfoFromDB.firstName }} {{ profileInfoFromDB.lastName }}
+          </h1>
           <a
             v-if="profileInfoFromDB.githubUsername"
             :href="`https://github.com/${profileInfoFromDB.githubUsername}`"
-            ><p>{{ profileInfoFromDB.githubUsername }}</p></a
+            ><p>
+              <font-awesome-icon class="mr-1" :icon="['fab', 'github']" />{{
+                profileInfoFromDB.githubUsername
+              }}
+            </p></a
           >
           <p class="role" v-if="profileInfoFromDB.class != 99">
+            <font-awesome-icon class="mr-1" :icon="['fa', 'graduation-cap']"></font-awesome-icon>
             Class #{{ profileInfoFromDB.class }} {{ profileInfoFromDB.role }}
           </p>
           <p v-if="profileInfoFromDB.class == 99">{{ profileInfoFromDB.role }}</p>
           <p>
+            <font-awesome-icon class="mr-1" :icon="['fa', 'briefcase']"></font-awesome-icon>
             {{ profileInfoFromDB.jobTitle }}
             <span v-if="profileInfoFromDB.company">at {{ profileInfoFromDB.company }}</span>
           </p>
-          <p>{{ profileInfoFromDB.location }}</p>
+          <p>
+            <font-awesome-icon class="mr-1" :icon="['fa', 'compass']"></font-awesome-icon
+            >{{ profileInfoFromDB.location }}
+          </p>
           <p>{{ profileInfoFromDB.gender }}</p>
           <p>{{ profileInfoFromDB.birthday }}</p>
           <p v-if="profileInfoFromDB.mentor">
@@ -41,7 +52,7 @@
               accept="image/*"
             />
           </div>
-          <form @submit.prevent="commitToDB(profileInfos)">
+          <form class="flex flex-col" @submit.prevent="commitToDB(profileInfos)">
             <input
               v-model="profileInfos.firstName"
               type="text"
@@ -95,197 +106,231 @@
         @click="editInformation"
       />
     </section>
-    <section>
-      <h2>About Me</h2>
-      <div v-if="!editAbout">
-        <p>{{ profileInfoFromDB.about }}</p>
-      </div>
-      <form v-if="editAbout" @submit.prevent="commitToDB({ about: profileAbout })">
-        <textarea
-          id="about"
-          v-model="profileAbout"
-          rows="4"
-          columns="20"
-          :placeholder="profileInfoFromDB.about"
-        />
-        <input type="submit" />
-      </form>
-      <font-awesome-icon
-        v-if="myProfile"
-        id="icon"
-        icon="edit"
-        title="Edit section"
-        @click="editAboutMe"
-      />
-    </section>
-    <section>
-      <div id="social">
-        <h2 class="mt-2">
-          Social Links
+    <div class="flex flex-grid">
+      <section class="flex flex-col mt-8 w-64">
+        <h2 class="text-2xl font-medium border-b border-teal-800">
+          About Me
+          <font-awesome-icon
+            class="text-sm"
+            v-if="myProfile"
+            id="icon"
+            icon="edit"
+            title="Edit section"
+            @click="editAboutMe"
+          />
         </h2>
-        <a :href="profileInfoFromDB.facebook">
-          <font-awesome-icon
-            v-if="profileInfoFromDB.facebook != ''"
-            class="m-3"
-            :icon="['fab', 'facebook-f']"
-          />
-        </a>
-        <a :href="profileInfoFromDB.linkedin">
-          <font-awesome-icon
-            v-if="profileInfoFromDB.linkedin != ''"
-            class="m-3"
-            :icon="['fab', 'linkedin']"
-          />
-        </a>
-        <a :href="profileInfoFromDB.instagram">
-          <font-awesome-icon
-            v-if="profileInfoFromDB.instagram != ''"
-            class="m-3"
-            :icon="['fab', 'instagram']"
-          />
-        </a>
-        <font-awesome-icon
-          v-if="myProfile"
-          id="icon"
-          icon="edit"
-          title="Edit section"
-          @click="editSocialLinks"
-        />
-        <form v-if="editSocial" @submit.prevent="validateLinks({ facebook, linkedin, instagram })">
-          <input
-            v-model.trim="facebook"
-            type="url"
-            placeholder="Facebook"
-            @blur="$v.facebook.$touch()"
-          />
-          <input
-            v-model.trim="linkedin"
-            type="url"
-            placeholder="LinkedIn"
-            @blur="$v.linkedin.$touch()"
-          />
-          <input
-            v-model.trim="instagram"
-            type="url"
-            placeholder="Instagram"
-            @blur="$v.instagram.$touch()"
-          />
-          <input type="submit" />
-        </form>
-      </div>
-      <div id="languages">
-        <h2 class="mt-2">
-          Languages
-        </h2>
-        <p>Technical:</p>
-        <div v-for="language in profileInfoFromDB.techLanguages" :key="language">
-          <p>{{ language }},</p>
+        <div v-if="!editAbout">
+          <p class="leading-normal mt-3">{{ profileInfoFromDB.about }}</p>
         </div>
-        <font-awesome-icon
-          v-if="myProfile"
-          id="icon"
-          icon="edit"
-          title="Edit section"
-          @click="editTechLang"
-        />
-        <form
-          v-if="editTechLanguages"
-          @submit.prevent="
-            commitToDB({
-              techLanguages: profileTechLanguages
-                .filter(language => language.value)
-                .map(language => language.name)
-            })
-          "
-        >
-          <div v-for="language in profileTechLanguages" :key="language.name">
-            <input
-              v-model="language.value"
-              type="checkbox"
-              :true-value="true"
-              :false-value="false"
-            />
-            <label :for="language.name"> {{ language.name }}</label>
-          </div>
+        <form v-if="editAbout" @submit.prevent="commitToDB({ about: profileAbout })">
+          <textarea
+            id="about"
+            v-model="profileAbout"
+            rows="4"
+            columns="20"
+            :placeholder="profileInfoFromDB.about"
+          />
           <input type="submit" />
         </form>
-        <p>Natural:</p>
-        <div v-for="language in profileInfoFromDB.natLanguages" :key="language">
-          <p>{{ language }},</p>
+      </section>
+
+      <section class="flex m-8 flex-col w-64">
+        <div id="social">
+          <h2 class="text-2xl font-medium border-b border-teal-800">
+            Social Links
+            <font-awesome-icon
+              class="text-sm"
+              v-if="myProfile"
+              id="icon"
+              icon="edit"
+              title="Edit section"
+              @click="editSocialLinks"
+            />
+          </h2>
+          <div class="flex justify-evenly mt-4">
+            <a :href="profileInfoFromDB.facebook">
+              <font-awesome-icon
+                v-if="profileInfoFromDB.facebook != ''"
+                class="m-3 text-3xl"
+                :icon="['fab', 'facebook-f']"
+              />
+            </a>
+            <a :href="profileInfoFromDB.linkedin">
+              <font-awesome-icon
+                v-if="profileInfoFromDB.linkedin != ''"
+                class="m-3 text-3xl"
+                :icon="['fab', 'linkedin']"
+              />
+            </a>
+            <a :href="profileInfoFromDB.instagram">
+              <font-awesome-icon
+                v-if="profileInfoFromDB.instagram != ''"
+                class="m-3 text-3xl"
+                :icon="['fab', 'instagram']"
+              />
+            </a>
+          </div>
+          <form
+            v-if="editSocial"
+            @submit.prevent="validateLinks({ facebook, linkedin, instagram })"
+          >
+            <input
+              v-model.trim="facebook"
+              type="url"
+              placeholder="Facebook"
+              @blur="$v.facebook.$touch()"
+            />
+            <input
+              v-model.trim="linkedin"
+              type="url"
+              placeholder="LinkedIn"
+              @blur="$v.linkedin.$touch()"
+            />
+            <input
+              v-model.trim="instagram"
+              type="url"
+              placeholder="Instagram"
+              @blur="$v.instagram.$touch()"
+            />
+            <input type="submit" />
+          </form>
         </div>
-        <form
-          v-if="editNatLanguages"
-          @submit.prevent="
-            commitToDB({
-              natLanguages: profileNatLanguages
-                .filter(language => language.value)
-                .map(language => language.name)
-            })
-          "
-        >
-          <div v-for="language in profileNatLanguages" :key="language.name">
-            <input
-              v-model="language.value"
-              type="checkbox"
-              :true-value="true"
-              :false-value="false"
+      </section>
+    </div>
+    <div class="flex flex-grid">
+      <section class="flex mt-8 flex-col w-64">
+        <div id="languages">
+          <h2 class="text-2xl font-medium border-b border-teal-800">
+            Languages
+          </h2>
+
+          <p class="font-bold mt-3">
+            Technical
+            <font-awesome-icon
+              class="text-sm"
+              v-if="myProfile"
+              id="icon"
+              icon="edit"
+              title="Edit section"
+              @click="editTechLang"
             />
-            <label :for="language.name"> {{ language.name }}</label>
-          </div>
-          <input type="submit" />
-        </form>
-        <font-awesome-icon
-          v-if="myProfile"
-          id="icon"
-          icon="edit"
-          title="Edit section"
-          @click="editNatLang"
-        />
-      </div>
-      <div id="hobbies">
-        <h2 class="mt-2">
-          Hobbies
-        </h2>
-        <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
-          <p>
-            {{ hobby }}
           </p>
-        </div>
-        <form
-          v-if="editHobbies"
-          @submit.prevent="
-            commitToDB({
-              hobbies: profileHobbies.filter(hobby => hobby.value).map(hobby => hobby.name)
-            })
-          "
-        >
-          <div v-for="hobby in profileHobbies" :key="hobby.name">
-            <input v-model="hobby.value" type="checkbox" :true-value="true" :false-vale="false" />
-            <label :for="hobby.name"> {{ hobby.name }} </label>
+          <div
+            class="flex flex-row w-64 flex-wrap"
+            v-for="language in profileInfoFromDB.techLanguages"
+            :key="language"
+          >
+            <p class="flex justify-evenly">{{ language }},</p>
           </div>
-          <input type="submit" />
-        </form>
-        <font-awesome-icon
-          v-if="myProfile"
-          id="icon"
-          icon="edit"
-          title="Edit section"
-          @click="editHobby"
-        />
-      </div>
-    </section>
-    <section v-if="!myProfile" class="contact">
+
+          <form
+            v-if="editTechLanguages"
+            @submit.prevent="
+              commitToDB({
+                techLanguages: profileTechLanguages
+                  .filter(language => language.value)
+                  .map(language => language.name)
+              })
+            "
+          >
+            <div v-for="language in profileTechLanguages" :key="language.name">
+              <input
+                v-model="language.value"
+                type="checkbox"
+                :true-value="true"
+                :false-value="false"
+              />
+              <label :for="language.name"> {{ language.name }}</label>
+            </div>
+            <input type="submit" />
+          </form>
+
+          <p class="font-bold mt-3">
+            Natural
+            <font-awesome-icon
+              v-if="myProfile"
+              id="icon"
+              icon="edit"
+              title="Edit section"
+              @click="editNatLang"
+            />
+          </p>
+
+          <div
+            class="flex flex-row"
+            v-for="language in profileInfoFromDB.natLanguages"
+            :key="language"
+          >
+            <p class="flex justify-evenly ">{{ language }},</p>
+          </div>
+          <form
+            v-if="editNatLanguages"
+            @submit.prevent="
+              commitToDB({
+                natLanguages: profileNatLanguages
+                  .filter(language => language.value)
+                  .map(language => language.name)
+              })
+            "
+          >
+            <div v-for="language in profileNatLanguages" :key="language.name">
+              <input
+                v-model="language.value"
+                type="checkbox"
+                :true-value="true"
+                :false-value="false"
+              />
+              <label :for="language.name"> {{ language.name }}</label>
+            </div>
+            <input type="submit" />
+          </form>
+        </div>
+      </section>
+      <section class="flex m-8 flex-col w-64">
+        <div id="hobbies">
+          <h2 class="text-2xl font-medium border-b border-teal-800">
+            Hobbies
+            <font-awesome-icon
+              class="text-sm"
+              v-if="myProfile"
+              id="icon"
+              icon="edit"
+              title="Edit section"
+              @click="editHobby"
+            />
+          </h2>
+          <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
+            <p class="mt-3">{{ hobby }},</p>
+          </div>
+          <form
+            v-if="editHobbies"
+            @submit.prevent="
+              commitToDB({
+                hobbies: profileHobbies.filter(hobby => hobby.value).map(hobby => hobby.name)
+              })
+            "
+          >
+            <div v-for="hobby in profileHobbies" :key="hobby.name">
+              <input v-model="hobby.value" type="checkbox" :true-value="true" :false-vale="false" />
+              <label :for="hobby.name"> {{ hobby.name }} </label>
+            </div>
+            <input type="submit" />
+          </form>
+        </div>
+      </section>
+    </div>
+    <section v-if="!myProfile" class="contact flex m-8 flex-col">
       <div class="contact-form">
-        <h2>Contact</h2>
+        <h2 class="text-2xl font-medium ">Contact</h2>
         <textarea
           id="message"
-          class="resize-none p-4 border border-black"
+          class="resize-none p-4 mt-2 border border-black"
           name="message"
           cols="50"
           rows="8"
           placeholder="Your message..."
         />
-        <button class="button">
+        <button class="button mt-4">
           Send
         </button>
       </div>
@@ -519,65 +564,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  color: #2e354f;
-}
-
-h2 {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-h3 {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  color: #2e354f;
-}
-
-p {
-  color: #2e354f;
-}
-
-a {
-  font-size: 16px;
-  color: #2e354f;
-}
-
-input,
-textarea {
-  border: 1px solid black;
-  border-radius: 4px;
-}
-
-#icon {
-  cursor: pointer;
-}
-
-.profile-picture {
-  width: 160px;
-  height: 160px;
-  border: 1px solid #000000;
-}
-
-.contact {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  align-content: center;
-}
-
-.contact-input {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  border: solid 1px black;
-  padding: 1rem;
-}
-
 .button {
   @apply border border-black py-2 px-6 text-center font-bold cursor-pointer;
 }
