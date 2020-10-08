@@ -26,7 +26,8 @@ export default {
 
 input[type="text"],
 input[type="password"],
-input[type="number"] {
+input[type="number"],
+textarea {
   @apply border border-black py-2 px-4 font-medium;
 }
 

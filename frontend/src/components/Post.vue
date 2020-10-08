@@ -1,26 +1,7 @@
 <template>
   <div>
-    <div class="flex flex-col p-4 bg-teal-100 rounded">
-      <div class="flex mb-4">
-        <img
-          :src="author.avatar"
-          alt="profilePicture"
-          class="w-12 h-12 rounded-full object-cover mr-4"
-        />
-        <div class="flex-col">
-          <div>{{ author.firstName }} {{ author.lastName }}</div>
-          <div>{{ formattedDate }}</div>
-        </div>
-        <font-awesome-icon
-          v-if="author.id == $store.state.user.uid"
-          id="icon"
-          icon="trash"
-          title="Delete Post"
-          @click="deletePost"
-        />
-      </div>
-
-      {{ post.title }}
+    <div class="">
+      <h2 class="font-bold text-2xl mb-2">{{ post.title }}</h2>
       <div v-if="!editTitle" class="pb-4">
         <font-awesome-icon
           v-if="author.id == $store.state.user.uid"
@@ -42,7 +23,25 @@
           title="Edit section"
           @click="editText = true"
         />
-        <div class="md" v-html="markdown"></div>
+        <div class="md mb-4" v-html="markdown"></div>
+        <div class="flex mb-4">
+          <img
+            :src="author.avatar"
+            alt="profilePicture"
+            class="w-12 h-12 rounded-full object-cover mr-4"
+          />
+          <div class="flex-col">
+            <div class="font-semibold">{{ author.firstName }} {{ author.lastName }}</div>
+            <div class="text-sm font-medium">{{ formattedDate }}</div>
+          </div>
+          <font-awesome-icon
+            v-if="author.id == $store.state.user.uid"
+            id="icon"
+            icon="trash"
+            title="Delete Post"
+            @click="deletePost"
+          />
+        </div>
       </div>
       <div v-else>
         <textarea v-model="post.text" name="text" id="" cols="30" rows="10"></textarea>
@@ -118,6 +117,9 @@ export default {
 
 <style>
 .md h1 {
-  font-weight: bold;
+  @apply font-bold text-2xl mb-2;
+}
+.md h2 {
+  @apply font-bold text-xl mb-2;
 }
 </style>
