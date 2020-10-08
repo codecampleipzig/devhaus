@@ -14,24 +14,15 @@ module.exports = [
     userId: "s6hxMKPQOqa8r65HoWT584xo7zG3" 
   },
   {
-    id: 0,
-    profileName: "I-ssah",
-    firstName: "Issah",
-    lastName: "yussif",
-    email: "chemical@gmail.com",
-    photo: "https://i.imgur.com/R4w9K1Y.jpeg",
-    links: ["https/github.com/i-ssah"],
+    id: '4P7X6XaRLlNWUnsw6kaSp32nFtB2',
+    userName: "dodo",
+    firstName: "Dorian",
+    lastName: "Wilhelm",
+    email: "dorian.wilhelm@oulook.com",
+    avatar: "https://firebasestorage.googleapis.com/v0/b/devhaus-testing.appspot.com/o/avatar%2F4P7X6XaRLlNWUnsw6kaSp32nFtB2?alt=media&token=7d9a61e5-703d-4716-b54f-a1280ff6433d",
     role: "Admin",
-    userClass: "Class3",
-    mentoring: false,
-    userLanguages: ["Python", "JavaScript"],
-    currentProjects: [
-      {
-        name: "finder",
-        description: "",
-        links: [],
-      },
-    ],
+    class: "3",
+    mentor: false,
   },
   {
     id: 1,
