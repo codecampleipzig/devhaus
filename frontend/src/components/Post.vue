@@ -36,6 +36,7 @@
 
 <script>
 import marked from "marked";
+import DOMPurify from "dompurify";
 import moment from "moment";
 import { mapState } from "vuex";
 import { db } from "@/firebase";
@@ -63,17 +64,19 @@ export default {
       return moment(this.post.date.toDate()).format("MMMM Do YYYY, h:mm a");
     },
     markdown() {
-      return marked(this.post.text);
+      const clean = DOMPurify.sanitize(this.post.text);
+      return marked(clean);
     }
   },
   methods: {
     async savePost() {
+      const clean = DOMPurify.sanitize(this.post.text);
       await db
         .collection("posts")
         .doc(this.post.id)
         .update({
           title: this.post.title,
-          text: this.post.text
+          text: clean
         });
 
       this.editText = false;
