@@ -66,12 +66,15 @@ export default {
       attendance: ""
     };
   },
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
 
   computed: {
     ...mapState(["user"]),
-    id() {
-      return this.$route.params.id;
-    },
     eventFromDB() {
       return this.$store.state.events.find(event => event.id == this.id);
     },

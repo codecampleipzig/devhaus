@@ -1,117 +1,110 @@
 <template>
-  <div class="flex flex-col">
-    <transition name="slide"
-      ><div
-        @click="selectEvent(null)"
-        v-if="selectedEvent"
-        class="fixed h-full right-0 top-0 bg-white w-full max-w-lg border-l"
-      >
-        <button class="button">x</button>
-        <div class="flex flex-col justify-center m-6">
-          <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold text-3xl">
-            {{ selectedEvent.title }}
+  <div>
+    <portal to="sidebar">
+      <Event v-if="selectedEventId" :id="selectedEventId"></Event>
+    </portal>
+    <div class="flex flex-col">
+      <div class="flex flex-row justify-between text-center">
+        <div class="flex flex-row">
+          <h1
+            v-if="eventsMode == 'all-events'"
+            class="m-10 text-3xl font-medium border-b-4 border-teal-800"
+          >
+            Upcoming Events
           </h1>
-          <div class="leading-10">
-            <p class="font-medium text-2xl">
-              <font-awesome-icon class="mr-2" :icon="['fa', 'calendar-day']"></font-awesome-icon>
-              {{ moment(selectedEvent.start.toDate()).format("ddd D.MMM HH:mm") }} -
-              {{ moment(selectedEvent.end.toDate()).format("ddd D.MMM HH:mm") }}
-            </p>
-            <p class="text-2xl">
-              <font-awesome-icon class="mr-2" :icon="['fa', 'compass']"></font-awesome-icon
-              >{{ selectedEvent.location }}
-            </p>
-            <p class="m-6 italic text-2xl">{{ selectedEvent.description }}</p>
-          </div>
+          <h1
+            v-if="eventsMode == 'my-events'"
+            class="m-10 text-3xl font-medium border-b-4 border-teal-800"
+          >
+            Your Events
+          </h1>
+          <router-link :to="{ name: 'Calendar' }">
+            <font-awesome-icon
+              class="text-5xl text-teal-900 mt-10"
+              :icon="['fa', 'calendar-alt']"
+            ></font-awesome-icon>
+          </router-link>
         </div>
-      </div></transition
-    >
-    <div class="flex flex-row justify-between text-center">
-      <h1
+        <div class="m-10 flex flex-col text-center">
+          <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
+            Create New Event
+          </router-link>
+          <router-link
+            class="button hover:opacity-75"
+            v-if="eventsMode == 'all-events'"
+            :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
+            >Your Events</router-link
+          >
+          <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'Calendar' }">
+            Calendar
+          </router-link>
+          <router-link
+            class="button hover:opacity-75"
+            v-if="eventsMode == 'my-events'"
+            :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+            >All Events</router-link
+          >
+        </div>
+      </div>
+      <section
+        class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
         v-if="eventsMode == 'all-events'"
-        class="m-10 text-3xl font-medium border-b-4 border-teal-800"
       >
-        Upcoming Events
-      </h1>
-      <h1
+        <div
+          @click="selectEvent(event)"
+          class="leading-8 border-b-4 border-teal-800 m-8 p-2"
+          v-for="event in sortedAllEvents"
+          :key="event.id"
+        >
+          <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+          <p>
+            <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+            {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
+            {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+          </p>
+          <h2>
+            <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.address }}
+          </h2>
+        </div>
+      </section>
+
+      <section
         v-if="eventsMode == 'my-events'"
-        class="m-10 text-3xl font-medium border-b-4 border-teal-800"
+        class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
       >
-        Your Events
-      </h1>
-      <div class="m-10 flex flex-col text-center">
-        <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
-          Create New Event
-        </router-link>
-        <router-link
-          class="button hover:opacity-75"
-          v-if="eventsMode == 'all-events'"
-          :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
-          >Your Events</router-link
+        <div
+          @click="selectEvent(event)"
+          class="leading-8 border-b-4 border-teal-800 m-8 p-2"
+          v-for="event in sortedMyEvents"
+          :key="event.id"
         >
-        <router-link
-          class="button hover:opacity-75"
-          v-if="eventsMode == 'my-events'"
-          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-          >All Events</router-link
-        >
-      </div>
+          <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
+          <p>
+            <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+            {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
+            {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+          </p>
+          <h2>
+            <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.address }}
+          </h2>
+        </div>
+      </section>
     </div>
-    <section
-      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
-      v-if="eventsMode == 'all-events'"
-    >
-      <div
-        @click="selectEvent(event)"
-        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
-        v-for="event in sortedAllEvents"
-        :key="event.id"
-      >
-        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
-          {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-      </div>
-    </section>
-
-    <section
-      v-if="eventsMode == 'my-events'"
-      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
-    >
-      <div
-        @click="selectEvent(event)"
-        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
-        v-for="event in sortedMyEvents"
-        :key="event.id"
-      >
-        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
-          {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-      </div>
-    </section>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import Event from "@/views/Event.vue";
 
 export default {
+  name: "All Events",
+  components: {
+    Event
+  },
   data() {
     return {
-      selectedEvent: null
+      selectedEventId: null
     };
   },
   created() {
@@ -147,7 +140,8 @@ export default {
   },
   methods: {
     selectEvent(event) {
-      this.selectedEvent = event;
+      this.selectedEventId = event.id;
+      this.$store.commit("SHOW_SIDEBAR");
     },
     allEvents() {
       return true;
