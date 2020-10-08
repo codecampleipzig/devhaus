@@ -27,11 +27,20 @@ import router from "@/router";
 import App from "@/App.vue";
 import vSelect from "vue-select";
 import Vuelidate from "vuelidate";
+import NProgress from "vue-nprogress";
 
 import "vue-select/dist/vue-select.css";
 import "./assets/tailwind.css";
 
 Vue.use(Vuelidate);
+
+const nprogress = new NProgress();
+const options = {
+  latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
+  router: false, // Show progressbar when navigating routes, default: true
+  http: false // Show progressbar when doing Vue.http, default: true,\
+};
+Vue.use(NProgress, options);
 
 let markProfilesAsBound = null;
 let profileBoolean = false;
@@ -87,5 +96,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  nprogress,
   render: h => h(App)
 }).$mount("#app");
