@@ -1,14 +1,10 @@
 <template>
   <div>
-    <div class="p-8">
-      <h1 class="text-5xl font-bold">
-        Devhaus Leipzig
-      </h1>
-    </div>
-    <div>
+    <div class="p-4">
       <!-- Whole Blog -->
-      <div v-if="!addPost">
+      <div class="flex justify-center" v-if="!addPost">
         <font-awesome-icon
+          class="text-6xl cursor-pointer text-teal-900"
           id="icon"
           icon="plus-circle"
           title="Add Post"
@@ -31,9 +27,9 @@
           <button @click="addPost = false">Cancel</button>
         </form>
       </div>
-      <div>
+      <div class="flex-col w-full">
         <!-- Show Posts -->
-        <div v-for="post in sortedPosts" :key="post.id">
+        <div class="p-4 w-full " v-for="post in sortedPosts" :key="post.id">
           <markedPost :post="post"></markedPost>
         </div>
       </div>
@@ -43,6 +39,7 @@
 
 <script>
 import markedPost from "../components/Post";
+import DOMPurify from "dompurify";
 import { db } from "@/firebase";
 import { mapState } from "vuex";
 
@@ -60,7 +57,7 @@ export default {
     ...mapState(["posts"]),
     sortedPosts() {
       return this.posts.slice().sort((a, b) => {
-        return a.date.seconds - b.date.seconds;
+        return b.date.seconds - a.date.seconds;
       });
     }
   },
@@ -73,14 +70,20 @@ export default {
   },
   methods: {
     async submitPost() {
+      const clean = DOMPurify.sanitize(this.text);
+
       const post = {
         title: this.title,
-        text: this.text,
+        text: clean,
         date: new Date(),
         author: this.myProfile.id
       };
-
-      await db.collection("posts").add(post);
+      try {
+        await db.collection("posts").add(post);
+      } catch (error) {
+        console.log(error);
+        this.$store.dispatch("notify", { type: "error", text: "Ooops! Something went wrong..." });
+      }
 
       this.$store.dispatch("notify", { type: "info", text: "Your post has been created" });
       this.text = "";
