@@ -52,6 +52,7 @@ const routes = [
         component: Members,
         meta: { requiresAuth: true, requiresProfile: true }
       },
+
       {
         path: "/calendar",
         name: "Calendar",
@@ -64,6 +65,7 @@ const routes = [
         component: AllEvents,
         meta: { requiresAuth: true, requiresProfile: true }
       },
+
       {
         path: "/event/:id",
         name: "Event",

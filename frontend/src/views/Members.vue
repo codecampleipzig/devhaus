@@ -9,6 +9,24 @@
           class="max-w-lg text-lg"
           placeholder="Search"
         />
+        <div class="flex space-x-2 mt-4">
+          <button @click="selectedClass = 1" class="button hover:opacity-75">
+            Class 1
+          </button>
+          <button @click="selectedClass = 2" class="button hover:opacity-75">
+            Class 2
+          </button>
+          <button @click="selectedClass = 3" class="button hover:opacity-75">
+            Class 3
+          </button>
+
+          <button @click="selectedRole = true" class="button hover:opacity-75">
+            Mentors
+          </button>
+          <button @click="this.resetAllMembers" class="button hover:opacity-75">
+            All Members
+          </button>
+        </div>
       </header>
       <main class="profile-grid">
         <div v-for="(profile, i) in results" :key="i" class="py-4">
@@ -65,18 +83,36 @@ export default {
   data() {
     return {
       fuse: null,
-      search: ""
+      search: "",
+      selectedClass: null,
+      selectedRole: undefined
     };
   },
   computed: {
     ...mapState(["profiles"]),
     newProfiles() {
-      return this.profiles.map(profile => ({
-        ...profile,
-        name: `${profile.firstName} ${profile.lastName}`,
-        id: profile.id
-      }));
+      return this.profiles
+        .filter(profile => {
+          if (this.selectedClass) {
+            return profile.class == this.selectedClass;
+          } else {
+            return true;
+          }
+        })
+        .filter(profile => {
+          if (this.selectedRole) {
+            return profile.mentor == this.selectedRole;
+          } else {
+            return true;
+          }
+        })
+        .map(profile => ({
+          ...profile,
+          name: `${profile.firstName} ${profile.lastName}`,
+          id: profile.id
+        }));
     },
+
     results() {
       if (!this.fuse || this.search == "") {
         return this.newProfiles.map(profile => ({ item: profile }));
@@ -96,6 +132,10 @@ export default {
     this.fuse = new Fuse(this.newProfiles, options);
   },
   methods: {
+    resetAllMembers() {
+      this.selectedRole = undefined;
+      this.selectedClass = null;
+    },
     getHighlights(string, match) {
       if (!match) {
         return [
