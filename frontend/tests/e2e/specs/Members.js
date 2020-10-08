@@ -19,6 +19,6 @@ describe("Members", () => {
     cy.get("img")
       .first()
       .click();
-    cy.location("pathname").should("contain", "/profile");
+    cy.contains("About Me");
   });
 });

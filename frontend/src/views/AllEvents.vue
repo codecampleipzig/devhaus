@@ -20,6 +20,7 @@
           </h1>
           <router-link :to="{ name: 'Calendar' }">
             <font-awesome-icon
+              id="show-calendar"
               class="text-5xl text-teal-900 mt-10"
               :icon="['fa', 'calendar-alt']"
             ></font-awesome-icon>
