@@ -31,13 +31,19 @@
         </div>
       </div>
       <header class="flex items-center justify-between mb-2">
-        <h2 class="font-bold text-xl">
-          {{ selection.format("MMMM YYYY, D dddd") }}
-        </h2>
-        <div class="flex flex-row">
+        <div class="flex items-center justify-between">
+          <h2 class="font-bold text-xl">
+            {{ selection.format("dddd, D MMMM YYYY") }}
+          </h2>
+          <div class="flex flex-row">
+            <div class="button mr-2 ml-4" @click="setMoment()">
+              Today
+            </div>
+          </div>
           <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
             New Event
           </router-link>
+
           <router-link
             class="button mt-0"
             :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
@@ -46,16 +52,18 @@
           </router-link>
         </div>
       </header>
+
       <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
         <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
           <div class="flex space-x-2">
             <div
               v-for="day in week"
               :key="`week-day-${day.format()}`"
-              class="cursor-pointer h-6 w-6 rounded-full flex justify-center items-center"
+              class="cursor-pointer border h-6 w-6 rounded-full flex justify-center items-center"
               :class="{
                 'font-bold': day.date() == selection.date(),
-                'bg-blue-100': eventsForDay(day).length
+                'bg-blue-100': eventsForDay(day).length,
+                'border-red-800 border-4': isToday(day)
               }"
               @click="setMoment(day)"
             >
@@ -159,6 +167,10 @@ export default {
       const currentYear = moment().year();
       return this.range(2019, currentYear + 1);
     },
+    todaysDay() {
+      const currentDay = moment().day();
+      return currentDay;
+    },
     weeksInMonth() {
       const momentInMonth = moment(this.selection);
       const datesInMonth = momentInMonth.daysInMonth();
@@ -204,6 +216,14 @@ export default {
     this.scrollIntoView(12);
   },
   methods: {
+    isToday(date) {
+      return (
+        moment()
+          .startOf("day")
+          .diff(date.startOf("day")) == 0
+      );
+    },
+
     selectEvent(event) {
       this.selectedEventId = event.id;
       this.$store.commit("SHOW_SIDEBAR");

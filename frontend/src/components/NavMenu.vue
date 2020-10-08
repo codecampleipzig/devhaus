@@ -27,12 +27,6 @@
         >
           Profile
         </router-link>
-        <router-link :to="{ name: 'Calendar' }">
-          <font-awesome-icon
-            class="text-white text-2xl mt-1"
-            :icon="['fa', 'calendar-alt']"
-          ></font-awesome-icon>
-        </router-link>
       </div>
     </div>
 

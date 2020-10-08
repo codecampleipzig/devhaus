@@ -117,7 +117,6 @@ export default {
     grid-template-rows: auto 1fr;
   }
 }
-
 .router-link-exact-active {
   @apply border-teal-100;
 }

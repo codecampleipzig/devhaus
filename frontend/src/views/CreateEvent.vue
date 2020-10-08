@@ -101,7 +101,9 @@ export default {
       this.event.location = location;
     },
     async submit() {
+      this.$nprogress.start();
       await db.collection("events").add({ ...this.event, creatorId: this.$store.state.user.uid });
+      this.$nprogress.done();
       this.event = this.createEmptyEvent();
       this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
       await this.$router.push({ name: "Calendar" });

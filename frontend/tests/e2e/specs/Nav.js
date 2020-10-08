@@ -26,7 +26,7 @@ describe("Nav", () => {
     cy.get("nav")
       .contains("Profile")
       .click();
-    cy.location("pathname").should("eq", "/profile/9yfZpdDgKIcBwLrmIRenQN9Xdxi1");
+    cy.location("pathname").should("eq", "/profile/s6hxMKPQOqa8r65HoWT584xo7zG3");
     // Home
     cy.get("nav")
       .contains("Home")
