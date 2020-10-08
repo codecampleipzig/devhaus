@@ -1,5 +1,14 @@
 <template>
   <div class="p-4">
+    <transition name="slide"
+      ><div
+        @click="selectEvent(null)"
+        v-if="selectedEvent"
+        class="fixed h-full right-0 top-0 bg-white w-full max-w-sm border-l"
+      >
+        {{ selectedEvent.title }}
+      </div></transition
+    >
     <div class="flex space-x-2">
       <div
         v-for="year in years"
@@ -27,12 +36,25 @@
       </div>
     </div>
     <header class="flex items-center justify-between mb-2">
-      <h2 class="font-bold text-xl">
-        {{ selection.format("MMMM YYYY, D dddd") }}
-      </h2>
-      <router-link class="button mt-0" :to="{ name: 'CreateEvent' }">
-        New Event
-      </router-link>
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-xl">
+          {{ selection.format("dddd, D MMMM YYYY") }}
+        </h2>
+        <div class="flex flex-row">
+          <div class="button mr-2 ml-4" @click="setMoment()">
+            Today
+          </div>
+        </div>
+        <router-link class="button mt-0 mr-4" :to="{ name: 'CreateEvent' }">
+          New Event
+        </router-link>
+        <router-link
+          class="button mt-0"
+          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+        >
+          View All
+        </router-link>
+      </div>
     </header>
     <div class="flex space-x-8 w-screen overflow-x-scroll mb-2">
       <div v-for="week in weeksInMonth" :key="`weeks-${week[0].format()}`">
@@ -40,10 +62,11 @@
           <div
             v-for="day in week"
             :key="`week-day-${day.format()}`"
-            class="cursor-pointer h-6 w-6 rounded-full flex justify-center items-center"
+            class="cursor-pointer border h-6 w-6 rounded-full flex justify-center items-center"
             :class="{
               'font-bold': day.date() == selection.date(),
-              'bg-blue-100': eventsForDay(day).length
+              'bg-blue-100': eventsForDay(day).length,
+              'border-red-800 border-4': isToday(day)
             }"
             @click="setMoment(day)"
           >
@@ -86,7 +109,11 @@
             :key="event.id"
             :to="{ name: 'Event', params: { id: event.id } }"
           >
-            <div class="absolute w-full pl-8" :style="styleForEvent(event, day)">
+            <div
+              class="absolute w-full pl-8"
+              :style="styleForEvent(event, day)"
+              @click="selectEvent(event)"
+            >
               <div
                 class="bg-blue-100 border border-blue-200 border-opacity-50
               bg-opacity-50 p-2 h-full"
@@ -120,6 +147,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
+      sidebarShown: true,
+      selectedEvent: null,
       viewportWidth: window.innerWidth,
       selection: moment(),
       months: this.range(0, 11),
@@ -139,6 +168,10 @@ export default {
     years() {
       const currentYear = moment().year();
       return this.range(2019, currentYear + 1);
+    },
+    todaysDay() {
+      const currentDay = moment().day();
+      return currentDay;
     },
     weeksInMonth() {
       const momentInMonth = moment(this.selection);
@@ -185,6 +218,17 @@ export default {
     this.scrollIntoView(12);
   },
   methods: {
+    isToday(date) {
+      return (
+        moment()
+          .startOf("day")
+          .diff(date.startOf("day")) == 0
+      );
+    },
+
+    selectEvent(event) {
+      this.selectedEvent = event;
+    },
     styleForEvent(event, day) {
       return {
         top: `${this.pixelForMs(event.start.diff(day))}px`,
