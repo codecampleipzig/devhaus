@@ -35,7 +35,11 @@
             id="profile-link"
             :to="{ name: 'Profile', params: { userId: $store.state.user.uid } }"
           >
-            <img class="rounded-full h-10 w-10" :src="$store.getters.myProfile.avatar" alt="" />
+            <img
+              class="rounded-full h-10 w-10 object-fit"
+              :src="$store.getters.myProfile.avatar"
+              alt=""
+            />
           </router-link>
         </div>
       </header>
