@@ -469,7 +469,7 @@ export default {
           class: this.profileInfoFromDB.class,
           mentor: this.profileInfoFromDB.mentor,
           role: this.profileInfoFromDB.role,
-          gender: this.profileInfoFromDB.role,
+          gender: this.profileInfoFromDB.gender,
           birthday: this.profileInfoFromDB.birthday,
           location: this.profileInfoFromDB.location,
           jobTitle: this.profileInfoFromDB.jobTitle,
