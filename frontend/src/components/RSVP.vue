@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     seeAttendees() {
-      console.log(this.eventFromDB);
       if (!this.viewAttendees) {
         this.viewAttendees = true;
       } else {

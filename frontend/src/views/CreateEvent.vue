@@ -103,7 +103,6 @@ export default {
       this.event.location = location;
     },
     async submit() {
-      console.log(this.event);
       this.$nprogress.start();
       await db.collection("events").add({ ...this.event, creatorId: this.$store.state.user.uid });
       this.$nprogress.done();
