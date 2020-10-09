@@ -1,7 +1,7 @@
 <template>
   <div class="p-8 md:pl-16 max-w-screen-md sm:px-12">
     <portal to="header">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center" v-if="$store.state.user.uid == '4P7X6XaRLlNWUnsw6kaSp32nFtB2'">
         <h1 class="font-semibold text-lg">News</h1>
         <font-awesome-icon
           class="text-xl cursor-pointer text-teal-900"
@@ -38,6 +38,18 @@
             name="Create Post"
             placeholder="Write your post in Markdown..."
           />
+<<<<<<< HEAD
+          <button class="m-2 p-2 cursor-pointer bg-teal-600 rounded-lg" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <div class="flex-col w-full">
+        <div class="p-4 w-full " v-for="post in sortedPosts" :key="post.id">
+          <markedPost :post="post"></markedPost>
+        </div>
+=======
           <div class="flex justify-center space-x-4 mt-6 ">
             <button class="button" @click="submitPost()" type="submit">Submit</button>
             <button class="button" @click="addPost = false">Cancel</button>
@@ -53,6 +65,7 @@
           v-for="post in sortedPosts"
           :key="post.id"
         ></markedPost>
+>>>>>>> develop
       </div>
     </div>
   </div>
@@ -91,6 +104,13 @@ export default {
   },
   methods: {
     async submitPost() {
+      if (this.text == "" || this.title == "") {
+        this.$store.dispatch("notify", {
+          type: "error",
+          text: "You gotta enter a title and some text!"
+        });
+        return;
+      }
       const clean = DOMPurify.sanitize(this.text);
 
       const post = {
@@ -103,7 +123,7 @@ export default {
         await db.collection("posts").add(post);
       } catch (error) {
         console.log(error);
-        this.$store.dispatch("notify", { type: "error", text: "Ooops! Something went wrong..." });
+        this.$store.dispatch("notify", { type: "error", text: error });
       }
 
       this.$store.dispatch("notify", { type: "info", text: "Your post has been created" });
