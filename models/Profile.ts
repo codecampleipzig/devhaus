@@ -46,10 +46,9 @@ type hobby =
 
 interface Profile {
   email: String;
-  userName: string;
-  userId: Number;
   firstName: String;
   lastName: String;
+  githubUsername: String;
   class: Number;
   role: String;
   jobTitle: String;
