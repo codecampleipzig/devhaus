@@ -1,117 +1,77 @@
 <template>
-  <div class="flex flex-col">
-    <transition name="slide"
-      ><div
-        @click="selectEvent(null)"
-        v-if="selectedEvent"
-        class="fixed h-full right-0 top-0 bg-white w-full max-w-lg border-l"
-      >
-        <button class="button">x</button>
-        <div class="flex flex-col justify-center m-6">
-          <h1 class="border-b-4 border-teal-800 m-8 p-2 text-center font-bold text-3xl">
-            {{ selectedEvent.title }}
-          </h1>
-          <div class="leading-10">
-            <p class="font-medium text-2xl">
-              <font-awesome-icon class="mr-2" :icon="['fa', 'calendar-day']"></font-awesome-icon>
-              {{ moment(selectedEvent.start.toDate()).format("ddd D.MMM HH:mm") }} -
-              {{ moment(selectedEvent.end.toDate()).format("ddd D.MMM HH:mm") }}
-            </p>
-            <p class="text-2xl">
-              <font-awesome-icon class="mr-2" :icon="['fa', 'compass']"></font-awesome-icon
-              >{{ selectedEvent.location }}
-            </p>
-            <p class="m-6 italic text-2xl">{{ selectedEvent.description }}</p>
-          </div>
+  <div>
+    <portal to="header"
+      ><div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <router-link
+            class="button text-sm py-2 px-4"
+            :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
+            :class="{
+              'button-inverse': eventsMode != 'all-events'
+            }"
+            >All Events</router-link
+          >
+          <router-link
+            class="button text-sm py-2 px-4"
+            :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
+            :class="{
+              'button-inverse': eventsMode != 'my-events'
+            }"
+            >My Events</router-link
+          >
         </div>
-      </div></transition
-    >
-    <div class="flex flex-row justify-between text-center">
-      <h1
-        v-if="eventsMode == 'all-events'"
-        class="m-10 text-3xl font-medium border-b-4 border-teal-800"
-      >
-        Upcoming Events
-      </h1>
-      <h1
-        v-if="eventsMode == 'my-events'"
-        class="m-10 text-3xl font-medium border-b-4 border-teal-800"
-      >
-        Your Events
-      </h1>
-      <div class="m-10 flex flex-col text-center">
-        <router-link class="button mb-4 hover:opacity-75" :to="{ name: 'CreateEvent' }">
-          Create New Event
-        </router-link>
-        <router-link
-          class="button hover:opacity-75"
-          v-if="eventsMode == 'all-events'"
-          :to="{ name: 'AllEvents', params: { whose: 'my-events' } }"
-          >Your Events</router-link
-        >
-        <router-link
-          class="button hover:opacity-75"
-          v-if="eventsMode == 'my-events'"
-          :to="{ name: 'AllEvents', params: { whose: 'all-events' } }"
-          >All Events</router-link
-        >
+        <div class="flex space-x-4 items-center">
+          <router-link
+            class="button hover:opacity-75 text-sm py-2 px-4"
+            :to="{ name: 'CreateEvent' }"
+          >
+            New Event
+          </router-link>
+        </div>
       </div>
+    </portal>
+    <portal to="sidebar">
+      <Event v-if="selectedEventId" :id="selectedEventId"></Event>
+    </portal>
+    <div>
+      <section class="m-8">
+        <div
+          @click="selectEvent(event)"
+          class="max-w-screen-sm leading-8 border-b pb-8 border-opacity-25 border-teal-800 mb-12 cursor-pointer"
+          v-for="event in sortedEvents"
+          :key="event.id"
+        >
+          <div class="flex">
+            <h1 class="font-bold mb-2 border-b-4 border-teal-900 pb-1 text-2xl">
+              {{ event.title }}
+            </h1>
+          </div>
+          <p>
+            <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
+            {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
+            {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
+          </p>
+          <h2>
+            <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.address }}
+          </h2>
+        </div>
+      </section>
     </div>
-    <section
-      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
-      v-if="eventsMode == 'all-events'"
-    >
-      <div
-        @click="selectEvent(event)"
-        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
-        v-for="event in sortedAllEvents"
-        :key="event.id"
-      >
-        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
-          {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-      </div>
-    </section>
-
-    <section
-      v-if="eventsMode == 'my-events'"
-      class="flex flex-grid justify-evenly flex-wrap max-h-screen m-5"
-    >
-      <div
-        @click="selectEvent(event)"
-        class="leading-8 border-b-4 border-teal-800 m-8 p-2"
-        v-for="event in sortedMyEvents"
-        :key="event.id"
-      >
-        <h1 class="font-bold m-2 text-2xl">{{ event.title }}</h1>
-
-        <h2>
-          <font-awesome-icon :icon="['fa', 'compass']"></font-awesome-icon> {{ event.location }}
-        </h2>
-        <p>
-          <font-awesome-icon :icon="['fa', 'calendar-day']"></font-awesome-icon>
-          {{ moment(event.start.toDate()).format("ddd D.MMM HH:mm") }} -
-          {{ moment(event.end.toDate()).format("ddd D.MMM HH:mm") }}
-        </p>
-      </div>
-    </section>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import Event from "@/components/Event.vue";
 
 export default {
+  name: "all Events",
+  components: {
+    Event
+  },
   data() {
     return {
-      selectedEvent: null
+      selectedEventId: null
     };
   },
   created() {
@@ -124,8 +84,12 @@ export default {
     eventFilter() {
       return this.eventsMode == "all-events" ? "all-events" : "my-events";
     },
-    allEventsFilter() {
-      return this.allEvents;
+    sortedEvents() {
+      const events = this.$store.state.events.slice();
+      events.sort((a, b) => {
+        return a.start.seconds - b.start.seconds;
+      });
+      return events.filter(this.eventsMode == "all-events" ? this.allEvents : this.myEvents);
     },
     sortedAllEvents() {
       const events = this.$store.state.events.slice();
@@ -147,10 +111,11 @@ export default {
   },
   methods: {
     selectEvent(event) {
-      this.selectedEvent = event;
+      this.selectedEventId = event.id;
+      this.$store.commit("SHOW_SIDEBAR");
     },
-    allEvents() {
-      return true;
+    allEvents(event) {
+      return moment.unix(event.start.seconds).diff(moment()) > 0;
     },
     myEvents(event) {
       return event.creatorId == this.$store.state.user.uid;
@@ -165,14 +130,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.slide-enter,
-.slide-leave-to {
-  transform: translateX(100%);
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 1s ease-in-out;
-}
-</style>
+<style scoped></style>

@@ -8,11 +8,11 @@ import Members from "../views/Members.vue";
 import Profile from "../views/Profile.vue";
 import Register from "../views/Register.vue";
 import Calendar from "../views/Calendar.vue";
-import Event from "../views/Event.vue";
 import AllEvents from "../views/AllEvents.vue";
 import CreateEvent from "../views/CreateEvent.vue";
 import store from "../store";
 import NotFound from "../views/404.vue";
+
 import { firebaseAuthConnected } from "../main";
 
 Vue.use(VueRouter);
@@ -38,10 +38,14 @@ const routes = [
   },
   {
     path: "/",
+    redirect: "/news"
+  },
+  {
+    path: "/",
     component: HomeLayout,
     children: [
       {
-        path: "/",
+        path: "/news",
         name: "Home",
         component: Home,
         meta: { requiresAuth: true, requiresProfile: true }
@@ -65,12 +69,6 @@ const routes = [
         meta: { requiresAuth: true, requiresProfile: true }
       },
       {
-        path: "/event/:id",
-        name: "Event",
-        component: Event,
-        meta: { requiresAuth: true, requiresProfile: true }
-      },
-      {
         path: "/create-event",
         name: "CreateEvent",
         component: CreateEvent,
@@ -80,6 +78,7 @@ const routes = [
         path: "/profile/:userId",
         name: "Profile",
         component: Profile,
+        props: true,
         meta: { requiresAuth: true, requiresProfile: true }
       },
       { path: "*", component: NotFound, meta: { requiresAuth: true, requiresProfile: true } }
@@ -98,8 +97,6 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     // is the user logged in?
     if (store.state.user) {
-      // is the user logged in and needs a profile to continue?
-      // If we can't find the profile let's bind them now
       if (!store.state.profiles.some(profile => profile.id == store.state.user.uid)) {
         await store.dispatch("bindProfiles");
       }

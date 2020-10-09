@@ -1,5 +1,5 @@
 <template>
-  <div class="m-8">
+  <div class="m-8 mt-16">
     <section class="flex space-x-4">
       <div @click="$refs.imageInput.click()" class="w-48 h-48">
         <img
@@ -52,7 +52,7 @@
               accept="image/*"
             />
           </div>
-          <form class="flex flex-col" @submit.prevent="commitToDB(profileInfos)">
+          <form class="flex flex-col space-y-2" @submit.prevent="commitToDB(profileInfos)">
             <input
               v-model="profileInfos.firstName"
               type="text"
@@ -92,8 +92,10 @@
             />
             <input v-model="profileInfos.gender" type="text" name="gender" placeholder="Gender" />
 
-            <label for="mentor">Mentor</label>
-            <input v-model="profileInfos.mentor" type="checkbox" name="mentor" />
+            <div class="flex flex-col space-x-2">
+              <label for="mentor">Mentor</label>
+              <input v-model="profileInfos.mentor" type="checkbox" name="mentor" />
+            </div>
             <input type="submit" />
           </form>
         </div>
@@ -106,7 +108,7 @@
         @click="editInformation"
       />
     </section>
-    <div class="flex flex-grid">
+    <div class="flex flex-grid flex-wrap">
       <section class="flex flex-col mt-8 w-64">
         <h2 class="text-2xl font-medium border-b border-teal-800">
           About Me
@@ -122,19 +124,24 @@
         <div v-if="!editAbout">
           <p class="leading-normal mt-3">{{ profileInfoFromDB.about }}</p>
         </div>
-        <form v-if="editAbout" @submit.prevent="commitToDB({ about: profileAbout })">
+        <form
+          class="flex flex-col justify-center"
+          v-if="editAbout"
+          @submit.prevent="commitToDB({ about: profileAbout })"
+        >
           <textarea
+            class="border border-black m-4"
             id="about"
             v-model="profileAbout"
-            rows="4"
-            columns="20"
+            rows="6"
+            columns="30"
             :placeholder="profileInfoFromDB.about"
           />
-          <input type="submit" />
+          <input class="p-1" type="submit" />
         </form>
       </section>
 
-      <section class="flex m-8 flex-col w-64">
+      <section class="flex mt-8 flex-col w-64">
         <div id="social">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Social Links
@@ -171,122 +178,136 @@
             </a>
           </div>
           <form
+            class="mt-4 flex flex-col justify-center space-y-3"
             v-if="editSocial"
             @submit.prevent="validateLinks({ facebook, linkedin, instagram })"
           >
             <input
+              class="border border-black p-1"
               v-model.trim="facebook"
               type="url"
               placeholder="Facebook"
               @blur="$v.facebook.$touch()"
             />
             <input
+              class="border border-black p-1"
               v-model.trim="linkedin"
               type="url"
               placeholder="LinkedIn"
               @blur="$v.linkedin.$touch()"
             />
             <input
+              class="border border-black p-1"
               v-model.trim="instagram"
               type="url"
               placeholder="Instagram"
               @blur="$v.instagram.$touch()"
             />
-            <input type="submit" />
+            <input class="p-1" type="submit" />
           </form>
         </div>
       </section>
     </div>
-    <div class="flex flex-grid">
+    <div class="md:flex flex-grid">
       <section class="flex mt-8 flex-col w-64">
         <div id="languages">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Languages
           </h2>
 
-          <p class="font-bold mt-3">
-            Technical
-            <font-awesome-icon
-              class="text-sm"
-              v-if="myProfile"
-              id="icon"
-              icon="edit"
-              title="Edit section"
-              @click="editTechLang"
-            />
-          </p>
-          <div
-            class="flex flex-row w-64 flex-wrap"
-            v-for="language in profileInfoFromDB.techLanguages"
-            :key="language"
-          >
-            <p class="flex justify-evenly">{{ language }},</p>
-          </div>
+          <div class="flex flex-col">
+            <div>
+              <p class="font-bold mt-3 border-b w-1/3 border-black ">
+                Technical
+                <font-awesome-icon
+                  class="text-sm"
+                  v-if="myProfile"
+                  id="icon"
+                  icon="edit"
+                  title="Edit section"
+                  @click="editTechLang"
+                />
+              </p>
+              <div class="mt-3 flex flex-row flex-wrap space-x-2">
+                <div v-for="language in profileInfoFromDB.techLanguages" :key="language">
+                  <p>{{ language }},</p>
+                </div>
+              </div>
 
-          <form
-            v-if="editTechLanguages"
-            @submit.prevent="
-              commitToDB({
-                techLanguages: profileTechLanguages
-                  .filter(language => language.value)
-                  .map(language => language.name)
-              })
-            "
-          >
-            <div v-for="language in profileTechLanguages" :key="language.name">
-              <input
-                v-model="language.value"
-                type="checkbox"
-                :true-value="true"
-                :false-value="false"
-              />
-              <label :for="language.name"> {{ language.name }}</label>
+              <form
+                v-if="editTechLanguages"
+                @submit.prevent="
+                  commitToDB({
+                    techLanguages: profileTechLanguages
+                      .filter(language => language.value)
+                      .map(language => language.name)
+                  })
+                "
+              >
+                <div
+                  class="mt-2 space-x-1"
+                  v-for="language in profileTechLanguages"
+                  :key="language.name"
+                >
+                  <input
+                    v-model="language.value"
+                    type="checkbox"
+                    :true-value="true"
+                    :false-value="false"
+                  />
+                  <label :for="language.name"> {{ language.name }}</label>
+                </div>
+                <input class="w-full p-1 mt-3" type="submit" />
+              </form>
             </div>
-            <input type="submit" />
-          </form>
 
-          <p class="font-bold mt-3">
-            Natural
-            <font-awesome-icon
-              v-if="myProfile"
-              id="icon"
-              icon="edit"
-              title="Edit section"
-              @click="editNatLang"
-            />
-          </p>
+            <div>
+              <p class="font-bold border-b w-1/3 border-black mt-3">
+                Natural
+                <font-awesome-icon
+                  v-if="myProfile"
+                  id="icon"
+                  icon="edit"
+                  title="Edit section"
+                  @click="editNatLang"
+                />
+              </p>
 
-          <div
-            class="flex flex-row"
-            v-for="language in profileInfoFromDB.natLanguages"
-            :key="language"
-          >
-            <p class="flex justify-evenly ">{{ language }},</p>
-          </div>
-          <form
-            v-if="editNatLanguages"
-            @submit.prevent="
-              commitToDB({
-                natLanguages: profileNatLanguages
-                  .filter(language => language.value)
-                  .map(language => language.name)
-              })
-            "
-          >
-            <div v-for="language in profileNatLanguages" :key="language.name">
-              <input
-                v-model="language.value"
-                type="checkbox"
-                :true-value="true"
-                :false-value="false"
-              />
-              <label :for="language.name"> {{ language.name }}</label>
+              <div class="mt-3 flex flex-row flex-wrap space-x-2">
+                <div v-for="language in profileInfoFromDB.natLanguages" :key="language">
+                  <p>{{ language }},</p>
+                </div>
+              </div>
+              <form
+                v-if="editNatLanguages"
+                @submit.prevent="
+                  commitToDB({
+                    natLanguages: profileNatLanguages
+                      .filter(language => language.value)
+                      .map(language => language.name)
+                  })
+                "
+              >
+                <div
+                  class="mt-2 space-x-1"
+                  v-for="language in profileNatLanguages"
+                  :key="language.name"
+                >
+                  <input
+                    v-model="language.value"
+                    type="checkbox"
+                    :true-value="true"
+                    :false-value="false"
+                  />
+                  <label :for="language.name"> {{ language.name }}</label>
+                </div>
+                <input class="w-full p-1 mt-3" type="submit" />
+              </form>
             </div>
-            <input type="submit" />
-          </form>
+          </div>
         </div>
       </section>
-      <section class="flex m-8 flex-col w-64">
+      <section class="flex mt-8 flex-col w-64">
         <div id="hobbies">
           <h2 class="text-2xl font-medium border-b border-teal-800">
             Hobbies
@@ -299,8 +320,10 @@
               @click="editHobby"
             />
           </h2>
-          <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
-            <p class="mt-3">{{ hobby }},</p>
+          <div class="mt-3 flex flex-row flex-wrap space-x-2">
+            <div v-for="hobby in profileInfoFromDB.hobbies" :key="hobby">
+              <p>{{ hobby }},</p>
+            </div>
           </div>
           <form
             v-if="editHobbies"
@@ -310,7 +333,7 @@
               })
             "
           >
-            <div v-for="hobby in profileHobbies" :key="hobby.name">
+            <div class="mt-2 space-x-1" v-for="hobby in profileHobbies" :key="hobby.name">
               <input v-model="hobby.value" type="checkbox" :true-value="true" :false-vale="false" />
               <label :for="hobby.name"> {{ hobby.name }} </label>
             </div>
@@ -319,14 +342,14 @@
         </div>
       </section>
     </div>
-    <section v-if="!myProfile" class="contact flex m-8 flex-col">
+    <section v-if="!myProfile" class="contact flex mt-8 flex-col md:justify-left">
       <div class="contact-form">
         <h2 class="text-2xl font-medium ">Contact</h2>
         <textarea
           id="message"
           class="resize-none p-4 mt-2 border border-black"
           name="message"
-          cols="50"
+          cols="30"
           rows="8"
           placeholder="Your message..."
         />
@@ -391,7 +414,12 @@ const hobbies = [
 ];
 export default {
   name: "Profile",
-
+  props: {
+    userId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       imageFile: null,
@@ -421,15 +449,12 @@ export default {
     avatar() {
       return this.profileImagesRef.getDownloadURL();
     },
-    userId() {
-      return this.$route.params.userId;
-    },
     profileInfoFromDB() {
       const profileUID = this.userId;
       return this.profiles.find(profile => profile.id == profileUID);
     },
     myProfile() {
-      return this.$route.params.userId == this.$store.state.user.uid;
+      return this.userId == this.$store.state.user.uid;
     }
   },
 
@@ -444,7 +469,7 @@ export default {
           class: this.profileInfoFromDB.class,
           mentor: this.profileInfoFromDB.mentor,
           role: this.profileInfoFromDB.role,
-          gender: this.profileInfoFromDB.role,
+          gender: this.profileInfoFromDB.gender,
           birthday: this.profileInfoFromDB.birthday,
           location: this.profileInfoFromDB.location,
           jobTitle: this.profileInfoFromDB.jobTitle,

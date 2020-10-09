@@ -1,5 +1,10 @@
 <template>
-  <div class="p-4 text-center" :class="`notification-${type}`" @click="$emit('remove')">
+  <div
+    class="p-4 text-lg font-medium w-screen max-w-lg border-2 border-black
+  bg-white m-2 cursor-pointer"
+    :class="`notification-${type}`"
+    @click="$emit('remove')"
+  >
     <h1>{{ text }}</h1>
   </div>
 </template>
@@ -22,10 +27,9 @@ export default {
 
 <style scoped>
 .notification-info {
-  background-color: #44cb8f;
+  @apply border-teal-900;
 }
-
 .notification-error {
-  background-color: #fb9e9e;
+  @apply border-red-700 bg-red-100 text-red-700;
 }
 </style>

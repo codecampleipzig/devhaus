@@ -1,30 +1,32 @@
 <template>
-  <div class="flex flex-row justify-evenly mt-8">
-    <div class="m-8 text-1xl ">
-      <h1 class="m-6 justify-center text-3xl font-medium border-b border-black pb-2 ">
-        New Event
-      </h1>
-      <form class="flex flex-col" @submit.prevent="submit">
+  <div class="flex justify-center mt-8">
+    <div class="m-8">
+      <div class="flex">
+        <h1 class="text-3xl font-semibold border-b-4 border-teal-900 pb-2 mb-8 ">
+          New Event
+        </h1>
+      </div>
+      <form class="flex flex-col text-lg" @submit.prevent="submit">
         <input
           v-model="event.title"
           type="text"
-          placeholder="Event Title"
+          placeholder="Title"
           required
           class="mb-4 leading-8 border-black border-b p-2"
         />
         <input
           v-model="event.description"
           type="text"
-          placeholder="Event Description"
+          placeholder="Description"
           class="mb-4 leading-8 border-black border-b p-2"
         />
         <div class="flex gap-2">
           <div class="w-1/2 flex flex-col">
-            <h2>Event start:</h2>
+            <h2 class="font-medium uppercase tracking-widest text-sm">Start</h2>
             <DateTimePicker v-model="event.start" @input="adjustEndTime" />
           </div>
           <div class="w-1/2 flex flex-col">
-            <h2>Event end:</h2>
+            <h2 class="font-medium uppercase tracking-widest text-sm">End</h2>
             <DateTimePicker v-model="event.end" />
           </div>
         </div>
@@ -54,7 +56,7 @@
             class="w-full"
           />
         </div>
-        <input type="submit" class="button mt-4" value="Create event" />
+        <input type="submit" class="button mt-4 text-base" value="Create event" />
       </form>
       <router-link class="button mt-4" :to="{ name: 'AllEvents', params: { whose: 'all-events' } }">
         View All Events
@@ -75,7 +77,7 @@ export default {
   data() {
     return {
       times: this.createTimes(),
-      location: ["online", "local", "hybrid"],
+      location: ["Online", "Local", "Hybrid"],
       event: this.createEmptyEvent()
     };
   },
@@ -101,7 +103,9 @@ export default {
       this.event.location = location;
     },
     async submit() {
+      this.$nprogress.start();
       await db.collection("events").add({ ...this.event, creatorId: this.$store.state.user.uid });
+      this.$nprogress.done();
       this.event = this.createEmptyEvent();
       this.$store.dispatch("notify", { type: "info", text: "Your event has been created" });
       await this.$router.push({ name: "Calendar" });
@@ -114,7 +118,10 @@ export default {
         end: new Date(),
         location: "",
         link: "",
-        address: ""
+        address: "",
+        attendees: [],
+        maybes: [],
+        nots: []
       };
     },
     adjustEndTime() {

@@ -16,33 +16,37 @@
     </div>
 
     <form class="flex flex-col" @submit.prevent="submit">
-      <input
-        v-model="email"
-        class="bg-white mb-4 email"
-        type="text"
-        placeholder="Email"
-        required
-        @blur="$v.email.$touch()"
-      />
-      <div v-if="!$v.email.required && $v.email.$dirty" class="error">
-        Email is required
+      <div class="mb-4 w-full">
+        <input
+          v-model="email"
+          class="bg-white email w-full"
+          type="text"
+          placeholder="Email"
+          required
+          @blur="$v.email.$touch()"
+        />
+        <div v-if="!$v.email.required && $v.email.$dirty" class="error">
+          Email is required
+        </div>
+        <div v-if="!$v.email.email && $v.email.$dirty" class="error">
+          Email is invalid
+        </div>
       </div>
-      <div v-if="!$v.email.email && $v.email.$dirty" class="error">
-        Email is invalid
-      </div>
-      <input
-        v-model="password"
-        class="bg-white mb-4"
-        type="password"
-        placeholder="Password"
-        @blur="$v.password.$touch()"
-        required
-      />
-      <div v-if="!$v.password.required && $v.password.$dirty" class="error">
-        Password is required
-      </div>
-      <div v-if="!$v.password.minLength && $v.password.$dirty" class="error">
-        Password must have at least {{ $v.password.$params.minLength.min }} charachters.
+      <div class="mb-4 w-full">
+        <input
+          v-model="password"
+          class="bg-white w-full"
+          type="password"
+          placeholder="Password"
+          @blur="$v.password.$touch()"
+          required
+        />
+        <div v-if="!$v.password.required && $v.password.$dirty" class="error">
+          Password is required
+        </div>
+        <div v-if="!$v.password.minLength && $v.password.$dirty" class="error">
+          Password must have at least {{ $v.password.$params.minLength.min }} charachters.
+        </div>
       </div>
 
       <input
@@ -124,8 +128,6 @@ export default {
     async signIn() {
       try {
         await auth.signInWithEmailAndPassword(this.email, this.password);
-        this.email = "";
-        this.password = "";
         await this.$router.push({ name: "Home" });
       } catch (error) {
         this.error = "Invalid email or password.";
@@ -134,8 +136,6 @@ export default {
     async signUp() {
       try {
         await auth.createUserWithEmailAndPassword(this.email, this.password);
-        this.email = "";
-        this.password = "";
         await this.$router.push({ name: "Register" });
       } catch (error) {
         this.error = "User already exists!";
@@ -155,6 +155,9 @@ export default {
 </script>
 
 <style scoped>
+.error {
+  @apply text-sm text-red-500;
+}
 .router-link-active {
   @apply border-teal-700;
 }
